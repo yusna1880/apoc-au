@@ -30,11 +30,12 @@ export default function Home() {
   const [sparkles, setSparkles] = useState<Sparkle[]>([]);
   const [isVideoPlaying, setIsVideoPlaying] = useState(false);
   const [isMuted, setIsMuted] = useState(false);
-  const [audioStarted, setAudioStarted] = useState(false);
+  const [isAudioPlaying, setIsAudioPlaying] = useState(false);
   const audioRef = useRef<HTMLAudioElement | null>(null);
   const videoRef = useRef<HTMLVideoElement | null>(null);
   const particleIdRef = useRef(0);
   const sparkleIdRef = useRef(0);
+  const isPlayingRef = useRef(false);
 
   useEffect(() => {
     const initialParticles: Particle[] = [];
@@ -73,38 +74,46 @@ export default function Home() {
   }, []);
 
   useEffect(() => {
-    if (!isVideoPlaying && !audioStarted) {
-      const audio = new Audio(bgMusic);
-      audio.loop = true;
-      audio.volume = 0.5;
-      audioRef.current = audio;
-      
-      const startAudio = () => {
-        if (audioRef.current && !audioStarted) {
-          audioRef.current.play().then(() => {
-            setAudioStarted(true);
-          }).catch(() => {});
-        }
-      };
-      
-      document.addEventListener("click", startAudio, { once: true });
-      document.addEventListener("keydown", startAudio, { once: true });
+    if (isVideoPlaying) return;
 
-      return () => {
-        document.removeEventListener("click", startAudio);
-        document.removeEventListener("keydown", startAudio);
-      };
-    }
-  }, [isVideoPlaying, audioStarted]);
+    const audio = new Audio(bgMusic);
+    audio.loop = true;
+    audio.volume = 0.5;
+    audio.preload = "auto";
+    audioRef.current = audio;
 
-  useEffect(() => {
-    return () => {
-      if (audioRef.current) {
-        audioRef.current.pause();
-        audioRef.current = null;
+    const safePlay = async () => {
+      if (isPlayingRef.current || !audioRef.current) return;
+      
+      try {
+        isPlayingRef.current = true;
+        await audioRef.current.play();
+        setIsAudioPlaying(true);
+      } catch (err) {
+        isPlayingRef.current = false;
       }
     };
-  }, []);
+
+    const handleInteraction = () => {
+      safePlay();
+    };
+
+    document.addEventListener("click", handleInteraction);
+    document.addEventListener("keydown", handleInteraction);
+
+    return () => {
+      document.removeEventListener("click", handleInteraction);
+      document.removeEventListener("keydown", handleInteraction);
+      
+      if (audioRef.current) {
+        const currentAudio = audioRef.current;
+        currentAudio.pause();
+        currentAudio.src = "";
+        audioRef.current = null;
+      }
+      isPlayingRef.current = false;
+    };
+  }, [isVideoPlaying]);
 
   useEffect(() => {
     if (audioRef.current) {
@@ -116,6 +125,8 @@ export default function Home() {
     if (audioRef.current) {
       audioRef.current.pause();
       audioRef.current.currentTime = 0;
+      setIsAudioPlaying(false);
+      isPlayingRef.current = false;
     }
   }, []);
 
@@ -166,31 +177,35 @@ export default function Home() {
     setIsVideoPlaying(false);
   };
 
+  const handleVideoPlay = useCallback(async () => {
+    if (videoRef.current) {
+      try {
+        await videoRef.current.play();
+      } catch (err) {
+        // User interaction required or other error
+      }
+    }
+  }, []);
+
   if (isVideoPlaying) {
     return (
       <div className="fixed inset-0 bg-black z-50">
         <video
           ref={videoRef}
           src={introVideo}
-          className="w-full h-full object-cover"
+          className="w-full h-full object-contain"
           autoPlay
           playsInline
+          preload="auto"
+          onLoadedData={handleVideoPlay}
           onEnded={handleVideoEnd}
-          onClick={() => {
-            if (videoRef.current) {
-              if (videoRef.current.paused) {
-                videoRef.current.play();
-              } else {
-                videoRef.current.pause();
-              }
-            }
-          }}
+          onError={handleVideoEnd}
           data-testid="video-intro"
         />
         <Button
           variant="ghost"
           size="sm"
-          className="absolute bottom-8 right-8 text-white/70 hover:text-white"
+          className="absolute bottom-8 right-8 text-white/70 hover:text-white bg-black/50 backdrop-blur-sm"
           onClick={handleVideoEnd}
           data-testid="button-skip-video"
         >
