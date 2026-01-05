@@ -240,7 +240,7 @@ export default function Home() {
     { speaker: "렌쟈", expression: "자연스럽게", text: "그럼 난 다음.", background: bgLivingRoom, character: "렌쟈" },
     { speaker: "란", expression: "즉각", text: "확인했습니다.", background: bgLivingRoom, character: "란" },
     { speaker: "시스템", text: "논의는 없다. 이건 즉석 팀이 아니다. 엘은 말없이 창 쪽에 서 있다가 조용히 문을 연다.", background: bgLivingRoom, isProgress: true },
-    { speaker: "엘", text: "바람 좀 고 올게.", background: bgLivingRoom, character: "엘" },
+    { speaker: "엘", text: "바람 좀 쐬고 올게.", background: bgLivingRoom, character: "엘" },
     { speaker: "렌쟈", text: "오빠 그러다가 데일 언니처럼 감기걸려", background: bgLivingRoom, character: "렌쟈" },
     { speaker: "엘", text: "너도 와.", background: bgLivingRoom, character: "엘" },
     { speaker: "시스템", text: "나는 고개를 끄덕이고 엘을 따라간다.", background: bgLivingRoom, isProgress: true },
@@ -283,25 +283,22 @@ export default function Home() {
     
     // #C6 - 숲근처 (Dialogue index 139)
     { marker: "#C6", speaker: "시스템", text: "밤 공기가 무겁다. 풀잎이 젖어 있다. 소리가 가까워진다. 나는 숨을 죽인다. 귀가 먼저 반응한다. …발소리. 아니다. 발을 끄는 소리다.", background: bgNearForest, isProgress: true, audio: bgMusicBalcony },
-    { speaker: "란", text: "저쪽입니다.", background: bgNearForest, character: "란" },
-    { speaker: "시스템", text: "나무 사이로 그게 보인다. 사람의 형태. 하지만— 고개가 너무 아래로 숙여져 있다. 팔이 흔들리지 않는다. 무릎이 꺾이지 않는다. 걷는 게 아니라, 떨어지는 걸 반복하는 느낌.", background: bgNearForest, isProgress: true },
-    { speaker: "파스닐", text: "저건… 사람이 아니다.", background: bgNearForest, isMonologue: true },
-    { speaker: "시스템", text: "그것이 고개를 든다. 눈이 너무 늦게 움직인다.", background: bgNearForest, isProgress: true },
-    { speaker: "란", text: "…확인했습니다. 따라오세요. 지금은 돌아가야 합니다.", background: bgNearForest, character: "란", choices: [
-      { text: "1. 혼자 더 확인하려 한다", targetIndex: 145 },
+    { speaker: "시스템", text: "앞서 걷는 란을 따라간다. 나무 사이로 그게 보인다. 사람의 형태. 하지만— 고개가 너무 아래로 숙여져 있다. 팔이 흔들리지 않는다. 무릎이 꺾이지 않는다. 걷는 게 아니라, 떨어지는 걸 반복하는 느낌.", background: bgNearForest, isProgress: true },
+    { speaker: "란", text: "저쪽입니다. 확인했습니다. 따라오세요. 지금은 돌아가야 합니다.", background: bgNearForest, character: "란", choices: [
+      { text: "1. 혼자 더 확인하려 한다", targetIndex: 142 },
       { text: "2. 란을 믿고 바로 따른다", targetIndex: 147 }
     ]},
     { speaker: "시스템", text: "나는 멈춘다. 한 걸음만 더. 그 순간, 그것의 고개가 나를 정확히 향한다. 너무 정확해서— 도망칠 생각이 늦는다.", isProgress: true, background: bgNearForest },
-    { speaker: "란", text: "파스닐—!", background: bgNearForest, character: "란" },
+    { speaker: "란", expression: "처음으로 목소리가 높아진다", text: "파스닐—!", background: bgNearForest, character: "란" },
     { speaker: "시스템", text: "[데드엔딩] 잡아당기는 힘. 넘어짐. 이빨이 너무 가까이 있다. 혼자 확인하는 건 용기가 아니라 이탈이다.", isProgress: true, background: bgNearForest, onComplete: () => { setGameState("start"); setDialogueIndex(0); } },
     
-    { speaker: "시스템", text: "나는 망설이지 않고 란의 뒤를 따른다. 지금은 판단을 나눌 때다. 외부, 창고 근처. 밤. 공기엔 풀 냄새와 함께 어딘지 모르게 탁한 기운이 섞여 있다.", isProgress: true, background: bgNearForest },
-    { speaker: "란", text: "바람 방향은 북동. 공기 중에 연소 냄새… 나무 타는 냄새가 아닌데.. 여기일지도 몰라.", background: bgNearForest, character: "란" },
+    { speaker: "시스템", text: "나는 망설이지 않고 란의 뒤를 따른다. 지금은 판단을 나눌 때다. 외부, 창고 근처. 밤. 공기엔 풀 냄새와 함께 어딘지 모르게 탁한 기운이 섞여 있다. 손전등이 어두운 숲길을 조심스럽게 비춘다. 나뭇잎 흔들리는 소리가 불규칙하게 울린다.", isProgress: true, background: bgNearForest },
+    { speaker: "란", text: "바람 방향은 북동. 공기 중에 연소 냄새… 나무 타는 냄새가 아닌데.. 창고 앞에 도착했다. 여기일지도 몰라.", background: bgNearForest, character: "란" },
     
     // #C7 - 창고 (Dialogue index 149)
-    { marker: "#C7", speaker: "시스템", text: "끼익. 문이 작게 열리고, 먼지 낀 냄새가 확 풍긴다. 창고 안엔 오래된 캠핑 장비, 예비용 발전기, 부탄가스 박스 등이 정리돼 있다.", background: bgStorage, isProgress: true, audio: "stop" },
-    { speaker: "란", text: "누군가 손 댄 흔적이… 우리 중 누군가가 이걸 손봤나? 오늘 누구도 창고엔 안 왔는데. ...이건 별장에서 보관한 적 없는 물건이다.", background: bgStorage, character: "란" },
-    { speaker: "시스템", text: "그때, 창고 외부에서 '탁', 무언가가 떨어지는 소리. 란과 나는 재빨리 몸을 낮추고 손전등을 끈다. 숨소리를 죽인다.", isProgress: true, background: bgStorage },
+    { marker: "#C7", speaker: "시스템", text: "끼익. 문이 작게 열리고, 먼지 낀 냄새가 확 풍긴다. 창고 안엔 오래된 캠핑 장비, 예비용 발전기, 부탄가스 박스 등이 정리돼 있다. 그러나 그중 한 박스가 미묘하게 어긋나 있다.", background: bgStorage, isProgress: true, audio: "stop" },
+    { speaker: "란", text: "누군가 손 댄 흔적이… 우리 중 누군가가 이걸 손봤나? 오늘 누구도 창고엔 안 왔는데. ...이건 별장에서 보관한 적 없는 물건이다. 군용 의료 마스크. 이미 포장을 뜯은 흔적이 있는, 낯선 브랜드.", background: bgStorage, character: "란" },
+    { speaker: "시스템", text: "그때, 창고 외부에서 '탁', 무언가가 떨어지는 소리. 란과 나는 재빨리 몸을 낮추고 손전등을 끈다. 숨소리를 죽인다. 밖에선 바람이 흔드는 나뭇잎 소리와는 전혀 다른… 천천히 끌리는 발소리가 들려온다.", isProgress: true, background: bgStorage },
     { speaker: "란", text: "이건, 짐승이 아니네요. 걸음이… 너무 느려요.", background: bgStorage, character: "란" },
     
     // #C8 - 거실 (Dialogue index 153)
@@ -466,7 +463,7 @@ export default function Home() {
   };
 
   const getCharacterImage = (name?: string, index?: number) => {
-    if (!name || name === "시스템") return null;
+    if (!name || name === "시스템" || name === "TV" || name === "TV 앵커") return null;
     
     // Character V2 logic (starting from #C10 which is index 173)
     const isV2 = index !== undefined && index >= 173;
