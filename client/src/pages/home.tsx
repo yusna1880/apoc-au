@@ -2,8 +2,8 @@ import { useState, useEffect, useRef, useCallback } from "react";
 import { Button } from "@/components/ui/button";
 import { Volume2, VolumeX, Settings, Info } from "lucide-react";
 import backgroundImage from "@assets/Naughty_Dog_The_Last_of_Us__Part_IArt_Blast_-_ArtStation_Maga_1767621865144.jfif";
-import introVideo from "@assets/lv_0_20260105222257_1767622294139.mp4";
-import bgMusic from "@assets/Screen_Recording_20260105-231735_YouTube_(1)_1767622770600.mp3";
+import introVideo from "@assets/lv_0_20260105222257_1767623908654.mp4";
+import bgMusic from "@assets/Screen_Recording_20260105-231735_YouTube_1767624088058.mp3";
 
 interface Particle {
   id: number;
@@ -30,6 +30,7 @@ export default function Home() {
   const [sparkles, setSparkles] = useState<Sparkle[]>([]);
   const [isVideoPlaying, setIsVideoPlaying] = useState(false);
   const [isMuted, setIsMuted] = useState(false);
+  const [audioStarted, setAudioStarted] = useState(false);
   const audioRef = useRef<HTMLAudioElement | null>(null);
   const videoRef = useRef<HTMLVideoElement | null>(null);
   const particleIdRef = useRef(0);
@@ -72,35 +73,51 @@ export default function Home() {
   }, []);
 
   useEffect(() => {
-    if (!isVideoPlaying) {
-      audioRef.current = new Audio(bgMusic);
-      audioRef.current.loop = true;
-      audioRef.current.volume = 0.5;
+    if (!isVideoPlaying && !audioStarted) {
+      const audio = new Audio(bgMusic);
+      audio.loop = true;
+      audio.volume = 0.5;
+      audioRef.current = audio;
       
-      const playAudio = () => {
-        if (audioRef.current) {
-          audioRef.current.play().catch(() => {});
+      const startAudio = () => {
+        if (audioRef.current && !audioStarted) {
+          audioRef.current.play().then(() => {
+            setAudioStarted(true);
+          }).catch(() => {});
         }
       };
       
-      playAudio();
-      document.addEventListener("click", playAudio, { once: true });
+      document.addEventListener("click", startAudio, { once: true });
+      document.addEventListener("keydown", startAudio, { once: true });
 
       return () => {
-        if (audioRef.current) {
-          audioRef.current.pause();
-          audioRef.current = null;
-        }
-        document.removeEventListener("click", playAudio);
+        document.removeEventListener("click", startAudio);
+        document.removeEventListener("keydown", startAudio);
       };
     }
-  }, [isVideoPlaying]);
+  }, [isVideoPlaying, audioStarted]);
+
+  useEffect(() => {
+    return () => {
+      if (audioRef.current) {
+        audioRef.current.pause();
+        audioRef.current = null;
+      }
+    };
+  }, []);
 
   useEffect(() => {
     if (audioRef.current) {
       audioRef.current.muted = isMuted;
     }
   }, [isMuted]);
+
+  const stopAudio = useCallback(() => {
+    if (audioRef.current) {
+      audioRef.current.pause();
+      audioRef.current.currentTime = 0;
+    }
+  }, []);
 
   const handleMouseMove = useCallback((e: React.MouseEvent) => {
     const centerX = window.innerWidth / 2;
@@ -137,10 +154,12 @@ export default function Home() {
   }, []);
 
   const handleStartGame = () => {
-    if (audioRef.current) {
-      audioRef.current.pause();
-    }
+    stopAudio();
     setIsVideoPlaying(true);
+  };
+
+  const handleButtonClick = () => {
+    stopAudio();
   };
 
   const handleVideoEnd = () => {
@@ -155,8 +174,17 @@ export default function Home() {
           src={introVideo}
           className="w-full h-full object-cover"
           autoPlay
+          playsInline
           onEnded={handleVideoEnd}
-          onClick={() => videoRef.current?.paused ? videoRef.current?.play() : videoRef.current?.pause()}
+          onClick={() => {
+            if (videoRef.current) {
+              if (videoRef.current.paused) {
+                videoRef.current.play();
+              } else {
+                videoRef.current.pause();
+              }
+            }
+          }}
           data-testid="video-intro"
         />
         <Button
@@ -268,6 +296,7 @@ export default function Home() {
           <Button
             variant="ghost"
             className="w-48 h-12 text-lg font-medium text-white/80 hover:text-white bg-white/5 hover:bg-white/10 border border-white/20"
+            onClick={handleButtonClick}
             data-testid="button-continue"
           >
             이어하기
@@ -275,6 +304,7 @@ export default function Home() {
           <Button
             variant="ghost"
             className="w-48 h-12 text-lg font-medium text-white/80 hover:text-white bg-white/5 hover:bg-white/10 border border-white/20"
+            onClick={handleButtonClick}
             data-testid="button-settings"
           >
             <Settings className="w-5 h-5 mr-2" />
@@ -283,6 +313,7 @@ export default function Home() {
           <Button
             variant="ghost"
             className="w-48 h-12 text-lg font-medium text-white/80 hover:text-white bg-white/5 hover:bg-white/10 border border-white/20"
+            onClick={handleButtonClick}
             data-testid="button-credits"
           >
             <Info className="w-5 h-5 mr-2" />
