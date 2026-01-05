@@ -177,16 +177,6 @@ export default function Home() {
     setIsVideoPlaying(false);
   };
 
-  const handleVideoPlay = useCallback(async () => {
-    if (videoRef.current) {
-      try {
-        await videoRef.current.play();
-      } catch (err) {
-        // User interaction required or other error
-      }
-    }
-  }, []);
-
   if (isVideoPlaying) {
     return (
       <div className="fixed inset-0 bg-black z-50">
@@ -197,9 +187,13 @@ export default function Home() {
           autoPlay
           playsInline
           preload="auto"
-          onLoadedData={handleVideoPlay}
           onEnded={handleVideoEnd}
           onError={handleVideoEnd}
+          onCanPlayThrough={() => {
+            if (videoRef.current) {
+              videoRef.current.play().catch(() => {});
+            }
+          }}
           data-testid="video-intro"
         />
         <Button
