@@ -1,6 +1,6 @@
 import { useState, useEffect, useRef, useCallback, useMemo } from "react";
 import { Button } from "@/components/ui/button";
-import { Volume2, VolumeX, Settings, Info, ChevronRight } from "lucide-react";
+import { Volume2, VolumeX, Settings, Info, ChevronRight, Save, Bookmark } from "lucide-react";
 import { motion, AnimatePresence } from "framer-motion";
 
 // Assets - Backgrounds
@@ -51,6 +51,7 @@ interface DialogueLine {
   triggerTransition?: boolean;
   audio?: string | "stop";
   marker?: string;
+  locationName?: string;
 }
 
 interface Choice {
@@ -86,6 +87,8 @@ export default function Home() {
   const [dustParticles, setDustParticles] = useState<DustParticle[]>([]);
   const audioRef = useRef<HTMLAudioElement | null>(null);
   const sparkleIdRef = useRef(0);
+  const [typingLocation, setTypingLocation] = useState("");
+  const [showSaveSuccess, setShowSaveSuccess] = useState(false);
 
   // Initialize Dust Particles for Start Screen
   useEffect(() => {
@@ -113,14 +116,14 @@ export default function Home() {
   // Story Data
   const story: DialogueLine[] = useMemo(() => [
     // CLIP 1
-    { speaker: "파스닐", text: "요즘 ai가 발전해서 내가 할 일이 없네", background: bgClip1, character: "파스닐", isMonologue: true },
+    { speaker: "파스닐", text: "요즘 ai가 발전해서 내가 할 일이 없네", background: bgClip1, character: "파스닐", isMonologue: true, locationName: "도심 외곽" },
     { speaker: "파스닐", expression: "이메일을 확인한다", text: "...", background: bgClip1, character: "파스닐", isMonologue: true },
     { speaker: "파스닐", text: "초청 DJ 문의? 수상하긴 하지만 원체 부자들은 외진 곳을 좋아하니깐..", background: bgClip1, character: "파스닐", isMonologue: true },
     { speaker: "파스닐", text: "가 아니라 하필 나를?!", background: bgClip1, character: "파스닐", isMonologue: true },
     { speaker: "파스닐", expression: "통장장고가 눈에 스쳐지나간다.", text: "뭐 익명 파티인가 보지.", background: bgClip1, character: "파스닐", isMonologue: true, triggerTransition: true },
     
     // CLIP 2 (Dialogue starts here)
-    { speaker: "하카", expression: "차 문을 열고 먼저 내린다", text: "와. 공기 좋네.", background: bgClip2, character: "하카" },
+    { speaker: "하카", expression: "차 문을 열고 먼저 내린다", text: "와. 공기 좋네.", background: bgClip2, character: "하카", locationName: "별장 외부" },
     { speaker: "파스닐", text: "이런 데를 별장이라고 부르는 사람을 난 오늘 처음 본다.", background: bgClip2, isMonologue: true },
     { speaker: "시스템", text: "...", isProgress: true, background: bgClip2 },
     { speaker: "시스템", text: "나는 장비 가방을 둘러멘 채 차에서 내렸다.", isProgress: true, background: bgClip2 },
@@ -197,7 +200,7 @@ export default function Home() {
     { speaker: "하카", expression: "손뼉을 한 번 친다", text: "자, 다 왔네. 일단 안으로 들어가자.", background: bgClip2, character: "하카", audio: "stop" },
     
     // #C3 - 거실 (Dialogue index 62)
-    { marker: "#C3", speaker: "시스템", text: "문이 닫히는 소리가 뒤에서 났다. 확실하게. 나는 장비 가방을 바닥에 내려놓고 자리를 잡는다.", background: bgLivingRoom, isProgress: true },
+    { marker: "#C3", speaker: "시스템", text: "문이 닫히는 소리가 뒤에서 났다. 확실하게. 나는 장비 가방을 바닥에 내려놓고 자리를 잡는다.", background: bgLivingRoom, isProgress: true, locationName: "별장 거실" },
     { speaker: "하카", expression: "소파에 털썩 앉아 다리를 뻗는다", text: "아직 다 살아 있네. 일단.", background: bgLivingRoom, character: "하카" },
     { speaker: "엘", expression: "가방을 내려놓으며 담담하게", text: "여기까지 왔는데 안 괜찮을 확률이 더 낮지.", background: bgLivingRoom, character: "엘" },
     { speaker: "렌쟈", expression: "사람들 얼굴을 한 번씩 훑는다", text: "괜찮아 보여도 체크는 해야지.", background: bgLivingRoom, character: "렌쟈" },
@@ -246,7 +249,7 @@ export default function Home() {
     { speaker: "시스템", text: "나는 고개를 끄덕이고 엘을 따라간다.", background: bgLivingRoom, isProgress: true },
     
     // #C4 - 발코니 (Dialogue index 107)
-    { marker: "#C4", speaker: "시스템", text: "발코니. 문이 닫히자 실내의 소리가 뚝 끊겼다. 바람이 불어온다. 차갑지도, 따뜻하지도 않은 공기.", background: bgBalcony, isProgress: true, audio: bgMusicBalcony },
+    { marker: "#C4", speaker: "시스템", text: "발코니. 문이 닫히자 실내의 소리가 뚝 끊겼다. 바람이 불어온다. 차갑지도, 따뜻하지도 않은 공기.", background: bgBalcony, isProgress: true, audio: bgMusicBalcony, locationName: "발코니" },
     { speaker: "엘", expression: "난간에 팔을 얹는다", text: "음악 하는 사람은 소리에 예민하지.", background: bgBalcony, character: "엘" },
     { speaker: "파스닐", text: "직업병 같은 거죠.", background: bgBalcony, isMonologue: true },
     { speaker: "엘", expression: "고개를 끄덕인다", text: "방금. 안 들렸어?", background: bgBalcony, character: "엘" },
@@ -264,7 +267,7 @@ export default function Home() {
     { speaker: "시스템", text: "멀리서 연기처럼 피어오르는 무언가가 보인다. 그리고 바람이 방향을 바꾸자 희미한 비명이 들려온다. 너무 멀어서 확신할 수는 없다.", background: bgBalcony, isProgress: true },
     
     // #C5 - 거실 (Dialogue index 123)
-    { marker: "#C5", speaker: "시스템", text: "발코니 문을 열고 안으로 돌아온다. 거실에서는 렌쟈가 하카의 장난에 웃고 있고, 란은 조용히 커피를 내리고 있다.", background: bgLivingRoom, isProgress: true, audio: bgMusic1 },
+    { marker: "#C5", speaker: "시스템", text: "발코니 문을 열고 안으로 돌아온다. 거실에서는 렌쟈가 하카의 장난에 웃고 있고, 란은 조용히 커피를 내리고 있다.", background: bgLivingRoom, isProgress: true, audio: bgMusic1, locationName: "별장 거실" },
     { speaker: "TV 앵커", text: "...오늘 오후, 고지나 제약 연구단지에서 원인 불명의 폭발 사고가 발생했습니다. 정확한 사고 원인은—", background: bgLivingRoom },
     { speaker: "하카", text: "고지나? 여기서 그렇게 안 먼데.", background: bgLivingRoom, character: "하카" },
     { speaker: "렌쟈", text: "거기... 군 시설 아니었어? 제약회사로 바뀐 거야?", background: bgLivingRoom, character: "렌쟈" },
@@ -282,7 +285,7 @@ export default function Home() {
     { speaker: "란", text: "확인만 하겠습니다. 같이 가시죠.", background: bgLivingRoom, character: "란" },
     
     // #C6 - 숲근처 (Dialogue index 139)
-    { marker: "#C6", speaker: "시스템", text: "밤 공기가 무겁다. 풀잎이 젖어 있다. 소리가 가까워진다. 나는 숨을 죽인다. 귀가 먼저 반응한다. …발소리. 아니다. 발을 끄는 소리다.", background: bgNearForest, isProgress: true, audio: bgMusicBalcony },
+    { marker: "#C6", speaker: "시스템", text: "밤 공기가 무겁다. 풀잎이 젖어 있다. 소리가 가까워진다. 나는 숨을 죽인다. 귀가 먼저 반응한다. …발소리. 아니다. 발을 끄는 소리다.", background: bgNearForest, isProgress: true, audio: bgMusicBalcony, locationName: "숲 근처" },
     { speaker: "시스템", text: "앞서 걷는 란을 따라간다. 나무 사이로 그게 보인다. 사람의 형태. 하지만— 고개가 너무 아래로 숙여져 있다. 팔이 흔들리지 않는다. 무릎이 꺾이지 않는다. 걷는 게 아니라, 떨어지는 걸 반복하는 느낌.", background: bgNearForest, isProgress: true },
     { speaker: "란", text: "저쪽입니다. 확인했습니다. 따라오세요. 지금은 돌아가야 합니다.", background: bgNearForest, character: "란", choices: [
       { text: "1. 혼자 더 확인하려 한다", targetIndex: 142 },
@@ -296,13 +299,13 @@ export default function Home() {
     { speaker: "란", text: "바람 방향은 북동. 공기 중에 연소 냄새… 나무 타는 냄새가 아닌데.. 창고 앞에 도착했다. 여기일지도 몰라.", background: bgNearForest, character: "란" },
     
     // #C7 - 창고 (Dialogue index 149)
-    { marker: "#C7", speaker: "시스템", text: "끼익. 문이 작게 열리고, 먼지 낀 냄새가 확 풍긴다. 창고 안엔 오래된 캠핑 장비, 예비용 발전기, 부탄가스 박스 등이 정리돼 있다. 그러나 그중 한 박스가 미묘하게 어긋나 있다.", background: bgStorage, isProgress: true, audio: "stop" },
+    { marker: "#C7", speaker: "시스템", text: "끼익. 문이 작게 열리고, 먼지 낀 냄새가 확 풍긴다. 창고 안엔 오래된 캠핑 장비, 예비용 발전기, 부탄가스 박스 등이 정리돼 있다. 그러나 그중 한 박스가 미묘하게 어긋나 있다.", background: bgStorage, isProgress: true, audio: "stop", locationName: "창고" },
     { speaker: "란", text: "누군가 손 댄 흔적이… 우리 중 누군가가 이걸 손봤나? 오늘 누구도 창고엔 안 왔는데. ...이건 별장에서 보관한 적 없는 물건이다. 군용 의료 마스크. 이미 포장을 뜯은 흔적이 있는, 낯선 브랜드.", background: bgStorage, character: "란" },
     { speaker: "시스템", text: "그때, 창고 외부에서 '탁', 무언가가 떨어지는 소리. 란과 나는 재빨리 몸을 낮추고 손전등을 끈다. 숨소리를 죽인다. 밖에선 바람이 흔드는 나뭇잎 소리와는 전혀 다른… 천천히 끌리는 발소리가 들려온다.", isProgress: true, background: bgStorage },
     { speaker: "란", text: "이건, 짐승이 아니네요. 걸음이… 너무 느려요.", background: bgStorage, character: "란" },
     
     // #C8 - 거실 (Dialogue index 153)
-    { marker: "#C8", speaker: "란", text: "돌아왔습니다.", background: bgLivingRoom, character: "란", audio: bgMusicCity },
+    { marker: "#C8", speaker: "란", text: "돌아왔습니다.", background: bgLivingRoom, character: "란", audio: bgMusicCity, locationName: "별장 거실" },
     { speaker: "하카", text: "그래서.", background: bgLivingRoom, character: "하카" },
     { speaker: "엘", text: "봤어?", background: bgLivingRoom, character: "엘" },
     { speaker: "란", text: "…정상적인 사람이 아닙니다. 복수입니다.", background: bgLivingRoom, character: "란" },
@@ -326,21 +329,21 @@ export default function Home() {
     { speaker: "하카", text: "돌아오면 보고부터 해. 무용담 말고, 사실만.", background: bgLivingRoom, character: "하카" },
     
     // #C10 - 도시1 (Dialogue index 173)
-    { marker: "#C10", speaker: "시스템", text: "도심 진입. 숲을 빠져나오자 아스팔트가 드러난다. 도로는 도로였던 흔적만 남아 있다.", background: bgCity1, isProgress: true },
+    { marker: "#C10", speaker: "시스템", text: "도심 진입. 숲을 빠져나오자 아스팔트가 드러난다. 도로는 도로였던 흔적만 남아 있다.", background: bgCity1, isProgress: true, locationName: "도심 구역" },
     { speaker: "렌쟈", text: "…와. …그렇다는건 한쪽으로만 도망쳤다는 거네. …여긴 오래 있으면 안 되겠다.", background: bgCity1, character: "렌쟈" },
     { speaker: "엘", text: "폭발은 아니야. 마트만 들른다.", background: bgCity1, character: "엘" },
     { speaker: "시스템", text: "차들은 멈춘 채가 아니라 도망치다 멈춘 자세로 박혀 있다. 차체 옆면, 콘크리트 벽면, 셔터. 모두 같은 방향으로 긁혀 있다.", isProgress: true, background: bgCity1 },
     { speaker: "파스닐", text: "사람이 나가려다 멈춘 게 아니라 뭔가가 들어오려다 멈춘 것처럼.", background: bgCity1, isMonologue: true },
     
     // #C11 - 마트 (Dialogue index 178)
-    { marker: "#C11", speaker: "시스템", text: "마트. 자동문은 열려 있다. 전기가 있어서가 아니라 부서져서. 안은 생각보다 조용하다. 선반은 많이 비어 있지만 완전히 털린 건 아니다.", background: bgMart, isProgress: true, audio: "stop" },
+    { marker: "#C11", speaker: "시스템", text: "마트. 자동문은 열려 있다. 전기가 있어서가 아니라 부서져서. 안은 생각보다 조용하다. 선반은 많이 비어 있지만 완전히 털린 건 아니다.", background: bgMart, isProgress: true, audio: "stop", locationName: "버려진 마트" },
     { speaker: "엘", text: "필요한 것만. 이 정도면 충분해. 시간 됐다. 보지 마.", background: bgMart, character: "엘" },
     { speaker: "렌쟈", text: "통조림, 물, 건전지. 유통기한 긴 걸로. 의약품도 있으면 좋고. 의약품은 따로 없네. 걱정이야.", background: bgMart, character: "렌쟈" },
     { speaker: "시스템", text: "멀리서 무언가 떨어지는 소리. 세 사람 모두 멈춘다. 듣는다. 발을 끄는 소리.", isProgress: true, background: bgMart },
     { speaker: "시스템", text: "마트를 나설 때 무심코 뒤를 보고말았다. 계산대 너머, 어둠 속에 사람 크기의 형체가 서 있다. 움직이지 않는다. 셋은 뛰지 않고 빠르게 걷는다.", isProgress: true, background: bgMart },
     
     // #C12 - 거실 (Dialogue index 183)
-    { marker: "#C12", speaker: "하카", text: "표정이 그 답이네. 엘 너 얼굴 완전웃겨. 거울이 없는게 한이다. ", background: bgLivingRoom, character: "하카" },
+    { marker: "#C12", speaker: "하카", text: "표정이 그 답이네. 엘 너 얼굴 완전웃겨. 거울이 없는게 한이다. ", background: bgLivingRoom, character: "하카", locationName: "별장 거실" },
     { speaker: "엘", text: "도심은 끝났어. ……", background: bgLivingRoom, character: "엘" },
     { speaker: "렌쟈", text: "마트는 아직 쓸 수 있어. 하지만 오래는 아니야. 이건 오늘 밤까지, 이건 이틀. 대충하면 바로 티 나.", background: bgLivingRoom, character: "렌쟈" },
     { speaker: "란", text: "이미 ‘보는 것’들이 있다는거네요.", background: bgLivingRoom, character: "란" },
@@ -382,18 +385,18 @@ export default function Home() {
     { speaker: "하카", text: "감염은 아닌거같고. 알긴하네. 내가 뭘.. 진통제도 거의 없지. 의약품이 필요해. 뭘 당연한걸. 렌쟈야 엘 오빠가 내일은 늦잠 좀 자고싶었대.", background: bgLivingRoom, character: "하카" },
     
     // #C13 - 병원 가는 길 (Dialogue index 214)
-    { marker: "#C13", speaker: "시스템", text: "3일차. 병원으로 가는 길. 차 문이 닫히는 소리가 아침 안개를 밀어낸다. 엘이 운전석에 앉아 시동을 건다.", background: bgNearForest, isProgress: true, audio: bgMusicBalcony },
+    { marker: "#C13", speaker: "시스템", text: "3일차. 병원으로 가는 길. 차 문이 닫히는 소리가 아침 안개를 밀어낸다. 엘이 운전석에 앉아 시동을 건다.", background: bgNearForest, isProgress: true, audio: bgMusicBalcony, locationName: "병원 가는 길" },
     { speaker: "렌쟈", text: "아침부터 병원이라니. 세상 참 성실하게 망했네. …어제보다 차 더 는거같기도 하고. 정리라기엔 다들 너무 급했잖아. 여기,다시는 오면 안 될 곳이야.", background: bgNearForest, character: "렌쟈" },
     { speaker: "엘", text: "입 다물고 주변 봐. 똑같다는 게 문제지. 하룻밤 새에 정리될 리 없지.", background: bgNearForest, character: "엘" },
     { speaker: "파스닐", text: "어제는 선택지였는데, 오늘은 일정이 됐구만..", background: bgNearForest, isMonologue: true },
     
     // #C14 - 병원 근처 (Dialogue index 218)
-    { marker: "#C14", speaker: "시스템", text: "도심 외곽 — 병원 근처. 병원 건물은 멀리서 보면 멀쩡하다. 가까이 가면 아니다. 유리창엔 테이프 자국, 출입문엔 밀린 흔적.", background: bgNearHospital, isProgress: true },
+    { marker: "#C14", speaker: "시스템", text: "도심 외곽 — 병원 근처. 병원 건물은 멀리서 보면 멀쩡하다. 가까이 가면 아니다. 유리창엔 테이프 자국, 출입문엔 밀린 흔적.", background: bgNearHospital, isProgress: true, locationName: "병원 입구" },
     { speaker: "렌쟈", text: "와… 딱 ‘도망치다 만 병원’이잖아. 역시 걸어 들어가야 긴장 풀리지? 파스닐. 들리면 바로 말해. ‘괜찮을 것 같아요’ 이런 말 말고. 그 톤 좋아.", background: bgNearHospital, character: "렌쟈" },
     { speaker: "엘", text: "차 세운다. 여기서. 말 줄여. 들리기 전에 움직이면 그땐 내가 멈춘다. 가.", background: bgNearHospital, character: "엘" },
     
     // #C15 - 병원 내부 (Dialogue index 221)
-    { marker: "#C15", speaker: "시스템", text: "병원 내부. 자동문은 열린 게 아니라 고정돼 있다. 안은 약 냄새보다 먼지 냄새가 먼저 온다. 렌쟈는 들어오자마자 표지판을 본다.", background: bgHospital, isProgress: true, audio: "stop" },
+    { marker: "#C15", speaker: "시스템", text: "병원 내부. 자동문은 열린 게 아니라 고정돼 있다. 안은 약 냄새보다 먼지 냄새가 먼저 온다. 렌쟈는 들어오자마자 표지판을 본다.", background: bgHospital, isProgress: true, audio: "stop", locationName: "병원 내부" },
     { speaker: "렌쟈", text: "응급실, 약국, 처치실… 다 한 방향이네. 역시 현실적. 진통제, 소염제, 항생제… 아, 이건 란이 싫어하겠다. 사람 마음은 안 챙겨주네. 아쉽네. 초코우유는 없었는데. 하카오빠가 갖다달랬어. 이럴 때일수록 사소한 게 오래 남아.", background: bgHospital, character: "렌쟈" },
     { speaker: "엘", text: "약국 먼저. 다 챙겨. 몸이 먼저야. ‘버틴다’는 말 되게 듣기싫다. 봤어. 가방 닫아. 지금 그게 아쉬워?", background: bgHospital, character: "엘" },
     { speaker: "파스닐", text: "이 정도면 며칠은 버텨요. (선택지가 없는 소리다.)", background: bgHospital, isMonologue: true },
@@ -401,6 +404,39 @@ export default function Home() {
   ], []);
 
   const currentDialogue = story[dialogueIndex];
+
+  // Location Typing Effect
+  useEffect(() => {
+    if (currentDialogue?.locationName) {
+      setTypingLocation("");
+      let i = 0;
+      const fullText = currentDialogue.locationName;
+      const interval = setInterval(() => {
+        setTypingLocation(prev => prev + fullText[i]);
+        i++;
+        if (i >= fullText.length) clearInterval(interval);
+      }, 100);
+      return () => clearInterval(interval);
+    } else {
+      setTypingLocation("");
+    }
+  }, [currentDialogue?.locationName, dialogueIndex]);
+
+  // Save/Load Logic
+  const handleSave = useCallback(() => {
+    localStorage.setItem("apoau_save", JSON.stringify({ index: dialogueIndex }));
+    setShowSaveSuccess(true);
+    setTimeout(() => setShowSaveSuccess(false), 2000);
+  }, [dialogueIndex]);
+
+  const handleLoad = useCallback(() => {
+    const saved = localStorage.getItem("apoau_save");
+    if (saved) {
+      const { index } = JSON.parse(saved);
+      setDialogueIndex(index);
+      setGameState("story");
+    }
+  }, []);
 
   // Preload Background Images
   useEffect(() => {
@@ -552,41 +588,81 @@ export default function Home() {
           ))}
         </AnimatePresence>
 
-        <div className="absolute top-0 left-0 w-full h-[10%] bg-black z-30 pointer-events-none" />
+        {/* UI Layer: Top Right Buttons */}
+        <div className="absolute top-8 right-8 z-50 flex flex-col items-end gap-2">
+          <Button
+            size="sm"
+            variant="ghost"
+            className="text-white/40 hover:text-white hover:bg-white/10 flex items-center gap-2 border border-white/5 backdrop-blur-md"
+            onClick={(e) => { e.stopPropagation(); handleSave(); }}
+          >
+            <Save className="w-3.5 h-3.5" />
+            <span className="text-[10px] tracking-widest font-light uppercase">Save</span>
+          </Button>
+          <AnimatePresence>
+            {showSaveSuccess && (
+              <motion.span
+                initial={{ opacity: 0, x: 10 }}
+                animate={{ opacity: 1, x: 0 }}
+                exit={{ opacity: 0 }}
+                className="text-[10px] text-red-500 font-bold tracking-widest uppercase mr-1"
+              >
+                Saved!
+              </motion.span>
+            )}
+          </AnimatePresence>
+        </div>
+
+        {/* Cinematic Typing Location */}
+        <AnimatePresence>
+          {typingLocation && (
+            <motion.div
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              exit={{ opacity: 0 }}
+              className="absolute top-12 left-12 z-40"
+            >
+              <span className="text-white/30 text-[11px] font-light tracking-[0.4rem] uppercase border-l border-white/20 pl-4 py-1">
+                {typingLocation}
+              </span>
+            </motion.div>
+          )}
+        </AnimatePresence>
+
+        <div className="absolute top-0 left-0 w-full h-[12%] bg-gradient-to-b from-black via-black/80 to-transparent z-30 pointer-events-none" />
         
         <div className="absolute inset-0 z-0">
           <AnimatePresence mode="wait">
             <motion.div
               key={currentDialogue.background}
-              initial={{ opacity: 0 }}
-              animate={{ opacity: 1 }}
-              exit={{ opacity: 0 }}
-              transition={{ duration: 1.0 }}
+              initial={{ opacity: 0, scale: 1.1 }}
+              animate={{ opacity: 1, scale: 1.0 }}
+              exit={{ opacity: 0, scale: 1.05 }}
+              transition={{ duration: 1.5, ease: "easeOut" }}
               className="w-full h-full"
             >
               <img 
                 src={currentDialogue.background || bgClip1} 
-                className="w-full h-full object-cover filter brightness-[0.6] contrast-[1.1] saturate-[0.8]"
+                className="w-full h-full object-cover filter brightness-[0.5] contrast-[1.2] saturate-[0.7] blur-[0.5px]"
               />
             </motion.div>
           </AnimatePresence>
-          <div className="absolute inset-0 bg-gradient-to-t from-black via-transparent to-transparent opacity-60" />
-          <div className="absolute inset-0 bg-gradient-to-br from-white/5 via-transparent to-transparent pointer-events-none" />
+          <div className="absolute inset-0 bg-gradient-to-t from-black via-black/40 to-transparent opacity-80" />
         </div>
 
         <AnimatePresence mode="wait">
           {charImg && (
             <motion.div
               key={`${currentDialogue.character || currentDialogue.speaker}-${dialogueIndex}`}
-              initial={{ opacity: 0, x: 20 }}
-              animate={{ opacity: 1, x: 0 }}
-              exit={{ opacity: 0, x: -20 }}
-              transition={{ duration: 0.5 }}
-              className="absolute bottom-[-15%] h-[100%] w-auto pointer-events-none z-10"
+              initial={{ opacity: 0, y: 30, filter: "brightness(0)" }}
+              animate={{ opacity: 1, y: 0, filter: "brightness(1)" }}
+              exit={{ opacity: 0, y: 10, filter: "brightness(0)" }}
+              transition={{ duration: 0.8, ease: "anticipate" }}
+              className="absolute bottom-[-10%] h-[95%] w-auto pointer-events-none z-10"
             >
               <img 
                 src={charImg} 
-                className="h-full object-contain drop-shadow-[0_0_40px_rgba(0,0,0,0.9)]"
+                className="h-full object-contain drop-shadow-[0_0_50px_rgba(0,0,0,1)]"
               />
             </motion.div>
           )}
@@ -595,46 +671,46 @@ export default function Home() {
         <motion.div 
           initial={{ y: 20, opacity: 0 }}
           animate={{ y: 0, opacity: 1 }}
-          className="relative z-20 w-[85%] max-w-3xl mb-16 cursor-pointer group"
+          className="relative z-20 w-[80%] max-w-2xl mb-20 cursor-pointer group"
           onClick={handleNext}
         >
           {currentDialogue.isProgress ? (
-            <div className="bg-black/20 p-5 rounded-lg text-center">
-              <p className="text-white/50 text-base font-light tracking-widest italic uppercase">
+            <div className="bg-black/10 p-4 rounded-lg text-center backdrop-blur-[2px]">
+              <p className="text-white/40 text-sm font-light tracking-[0.3rem] italic uppercase">
                 {currentDialogue.text}
               </p>
             </div>
           ) : (
-            <div className="bg-neutral-950/90 backdrop-blur-md p-6 rounded-sm border border-white/5 shadow-2xl relative overflow-hidden">
-              <div className="absolute top-0 left-0 w-1 h-full bg-red-600/50" />
-              <div className="flex items-center gap-3 mb-2">
-                <span className="text-red-600 font-bold text-base tracking-tight uppercase">
+            <div className="bg-neutral-950/80 backdrop-blur-xl p-6 rounded-sm border border-white/5 shadow-2xl relative overflow-visible">
+              <div className="absolute -top-[1px] left-0 w-12 h-[1px] bg-red-600/60" />
+              <div className="flex items-center gap-4 mb-3">
+                <span className="text-red-600 font-bold text-sm tracking-[0.2rem] uppercase">
                   {currentDialogue.speaker}
                 </span>
                 {currentDialogue.expression && (
-                  <span className="text-white/30 text-[10px] font-normal tracking-wide bg-white/5 px-2 py-0.5 rounded border border-white/5">
+                  <span className="text-white/20 text-[9px] font-normal tracking-widest bg-white/5 px-2 py-0.5 rounded border border-white/5 uppercase">
                     {currentDialogue.expression}
                   </span>
                 )}
               </div>
               
-              <div className={`text-white/90 text-lg font-normal leading-relaxed ${currentDialogue.isMonologue ? 'text-white/60 italic' : ''}`}>
+              <div className={`text-white/80 text-lg font-light leading-relaxed tracking-wide ${currentDialogue.isMonologue ? 'text-white/50 italic font-thin' : ''}`}>
                 {currentDialogue.text}
               </div>
 
               {currentDialogue.choices && (
-                <div className="mt-6 grid grid-cols-1 gap-2">
+                <div className="mt-8 grid grid-cols-1 gap-3">
                   {currentDialogue.choices.map((choice, i) => (
                     <Button
                       key={i}
                       variant="ghost"
-                      className="w-full justify-start py-4 text-base font-medium border border-white/10 bg-white/5 hover:bg-white/10 hover:text-white transition-all rounded-none text-white/80"
+                      className="w-full justify-start py-5 text-sm font-light border border-white/10 bg-white/5 hover:bg-red-950/20 hover:border-red-600/30 transition-all rounded-none text-white/60 hover:text-white"
                       onClick={(e) => {
                         e.stopPropagation();
                         handleChoice(choice.targetIndex);
                       }}
                     >
-                      <span className="mr-4 text-red-600 font-bold opacity-50">{i + 1}</span>
+                      <span className="mr-6 text-red-700 font-bold opacity-30 w-4">{i + 1}</span>
                       {choice.text}
                     </Button>
                   ))}
@@ -642,15 +718,15 @@ export default function Home() {
               )}
 
               {!currentDialogue.choices && (
-                <div className="absolute bottom-4 right-6 opacity-30 group-hover:opacity-100 transition-opacity">
-                  <ChevronRight className="w-4 h-4 text-white animate-pulse" />
+                <div className="absolute bottom-4 right-6 opacity-20 group-hover:opacity-60 transition-opacity">
+                  <ChevronRight className="w-3 h-3 text-white animate-pulse" />
                 </div>
               )}
             </div>
           )}
         </motion.div>
 
-        <div className="absolute bottom-0 left-0 w-full h-[10%] bg-black z-30 pointer-events-none" />
+        <div className="absolute bottom-0 left-0 w-full h-[12%] bg-gradient-to-t from-black via-black/80 to-transparent z-30 pointer-events-none" />
       </div>
     );
   }
@@ -659,8 +735,8 @@ export default function Home() {
     <div
       className="relative w-full h-screen overflow-hidden bg-black flex items-center p-16"
       onMouseMove={(e) => {
-        const x = (e.clientX - window.innerWidth / 2) / 120;
-        const y = (e.clientY - window.innerHeight / 2) / 120;
+        const x = (e.clientX - window.innerWidth / 2) / 150;
+        const y = (e.clientY - window.innerHeight / 2) / 150;
         setMousePosition({ x, y });
       }}
       onClick={handleClick}
@@ -699,11 +775,11 @@ export default function Home() {
       </AnimatePresence>
 
       <div
-        className="absolute inset-0 transition-transform duration-700 ease-out"
-        style={{ transform: `translate(${mousePosition.x}px, ${mousePosition.y}px) scale(1.03)` }}
+        className="absolute inset-0 transition-transform duration-1000 ease-out"
+        style={{ transform: `translate(${mousePosition.x}px, ${mousePosition.y}px) scale(1.05)` }}
       >
-        <img src={bgStart} className="w-full h-full object-cover opacity-40 filter saturate-[0.5] contrast-[1.2]" />
-        <div className="absolute inset-0 bg-gradient-to-r from-black via-black/30 to-transparent" />
+        <img src={bgStart} className="w-full h-full object-cover opacity-50 filter saturate-[0.4] contrast-[1.3]" />
+        <div className="absolute inset-0 bg-gradient-to-r from-black via-black/40 to-transparent" />
       </div>
 
       <div className="relative z-10 flex w-full max-w-7xl mx-auto items-center justify-between">
@@ -711,10 +787,10 @@ export default function Home() {
           <motion.h1 
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
-            className="text-7xl font-black text-red-600/90 tracking-tighter leading-none" 
+            className="text-8xl font-black text-red-600/90 tracking-tighter leading-none" 
             style={{ 
               fontFamily: "'Oxanium', sans-serif",
-              filter: 'drop-shadow(0 0 20px rgba(220, 38, 38, 0.3))' 
+              filter: 'drop-shadow(0 0 30px rgba(220, 38, 38, 0.4))' 
             }}
           >
             아포AU
@@ -723,7 +799,7 @@ export default function Home() {
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             transition={{ delay: 0.3 }}
-            className="text-3xl font-light text-red-600/60 tracking-[0.8rem] mt-2 ml-2"
+            className="text-4xl font-light text-red-600/60 tracking-[1rem] mt-3 ml-2"
           >
             2026
           </motion.h2>
@@ -732,15 +808,20 @@ export default function Home() {
         <div className="flex flex-col gap-4">
           <Button
             size="lg"
-            className="w-52 h-12 text-lg font-bold bg-red-700/80 hover:bg-red-600 text-white rounded-none border border-red-500/30 transition-all hover:translate-x-2"
+            className="w-60 h-14 text-xl font-bold bg-red-700/80 hover:bg-red-600 text-white rounded-none border border-red-500/30 transition-all hover:translate-x-3"
             onClick={() => setGameState("video")}
           >
             시작하기
           </Button>
-          <Button variant="ghost" className="w-52 h-10 text-base text-white/40 hover:text-white hover:bg-white/5 rounded-none border border-white/5">
+          <Button 
+            variant="ghost" 
+            className="w-60 h-12 text-lg text-white/50 hover:text-white hover:bg-white/5 rounded-none border border-white/5 flex items-center justify-center gap-3"
+            onClick={handleLoad}
+          >
+            <Bookmark className="w-4 h-4" />
             이어하기
           </Button>
-          <Button variant="ghost" className="w-52 h-10 text-base text-white/40 hover:text-white hover:bg-white/5 rounded-none border border-white/5">
+          <Button variant="ghost" className="w-60 h-12 text-lg text-white/40 hover:text-white hover:bg-white/5 rounded-none border border-white/5">
             설정
           </Button>
         </div>
