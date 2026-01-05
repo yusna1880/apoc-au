@@ -344,23 +344,60 @@ export default function Home() {
     { speaker: "엘", text: "도심은 끝났어. ……", background: bgLivingRoom, character: "엘" },
     { speaker: "렌쟈", text: "마트는 아직 쓸 수 있어. 하지만 오래는 아니야. 이건 오늘 밤까지, 이건 이틀. 대충하면 바로 티 나.", background: bgLivingRoom, character: "렌쟈" },
     { speaker: "란", text: "이미 ‘보는 것’들이 있다는거네요.", background: bgLivingRoom, character: "란" },
-    { speaker: "시스템", text: "오후 — 별장. 현관문이 닫히는 소리가 아직 남아 있다. 란과 하카가 떠난 뒤 별장은 이상할 만큼 조용해졌다.", isProgress: true, background: bgLivingRoom },
+    { speaker: "시스템", text: "오후 — 별장. 현관문이 닫히는 소리가 아직 남아 있다. 란과 하카가 떠난 뒤 별장은 이상할 만큼 조용해졌다. 나는 거실 테이블에 박스를 줄 세운다.", isProgress: true, background: bgLivingRoom },
     { speaker: "파스닐", text: "이제 남은 사람들만의 시간이다. 생각보다 체계적이네요.", background: bgLivingRoom, isMonologue: true },
     { speaker: "렌쟈", text: "있잖아 파스닐, 너 이런 상황 익숙해?", background: bgLivingRoom, character: "렌쟈", choices: [
-      { text: "1. “아니요. 음악 말곤 해본 게 없어요.”", targetIndex: 190 },
-      { text: "2. “일이 꼬이는 건… 좀 겪어봤어요.”", targetIndex: 190 },
-      { text: "3. “익숙해지고 싶진 않네요.”", targetIndex: 190 }
+      { text: "1. “아니요. 음악 말곤 해본 게 없어요.”", targetIndex: 191 },
+      { text: "2. “일이 꼬이는 건… 좀 겪어봤어요.”", targetIndex: 191 },
+      { text: "3. “익숙해지고 싶진 않네요.”", targetIndex: 191 }
     ]},
-    { speaker: "시스템", text: "렌쟈는 고개를 끄덕일 뿐이다. 렌쟈가 찻잔을 들고 온다. 세 잔. 렌쟈는 아무 말 없이 설탕을 내려놓는다.", isProgress: true, background: bgLivingRoom },
-    { speaker: "엘", text: "괜히 과하게 나서지 마. 지금 위치가 딱 좋아.", background: bgLivingRoom, character: "엘" },
-    { speaker: "파스닐", text: "익숙한 행동.", background: bgLivingRoom, isMonologue: true, onComplete: () => { setGameState("start"); setDialogueIndex(0); } },
+    { speaker: "시스템", text: "렌쟈는 고개를 끄덕일 뿐이다. 렌쟈가 찻잔을 들고 온다. 세 잔. 렌쟈는 아무 말 없이 설탕을 내려놓는다. 익숙한 행동. 자주 있었던 일이다.", isProgress: true, background: bgLivingRoom },
+    { speaker: "렌쟈", text: "너는?", background: bgLivingRoom, character: "렌쟈", choices: [
+      { text: "1. “조금만요.”", targetIndex: 194 },
+      { text: "2. “괜찮아요.”", targetIndex: 194 },
+      { text: "3. “상관없어요.”", targetIndex: 194 }
+    ]},
+    { speaker: "렌쟈", text: "취향은 나중에 알아도 되지.", background: bgLivingRoom, character: "렌쟈" },
+    { speaker: "엘", text: "괜히 과하게 나서지 마. 지금 위치가 딱 좋아. 여기선 ‘나중’이 너무 빨리 와.", background: bgLivingRoom, character: "엘" },
+    { speaker: "렌쟈", text: "그래도 오는 건 오니까.", background: bgLivingRoom, character: "렌쟈" },
+    { speaker: "시스템", text: "멀리서 바람이 아니라 무언가 부딪히는 소리가 난다. 렌쟈의 손이 멈춘다. 엘은 바로 창에서 떨어진다. 정리된 오후. 물자는 정리됐고 사람들은 각자 자리에 있다.", isProgress: true, background: bgLivingRoom },
+    { speaker: "엘", text: "…아직은.", background: bgLivingRoom, character: "엘" },
+    { speaker: "파스닐", text: "아직이라는 말이 얼마나 남았다는 뜻일까. 두 사람 조합이 특이하긴 해요.", background: bgLivingRoom, isMonologue: true },
+    { speaker: "렌쟈", text: "하카랑 란, 늦네.", background: bgLivingRoom, character: "렌쟈", choices: [
+      { text: "1. “두 사람 조합이 특이하긴 해요.”", targetIndex: 202 },
+      { text: "2. “란은 생각보다 침착해 보이던데요.”", targetIndex: 202 },
+      { text: "3. “하카는… 늘 여유 있어 보이네요.”", targetIndex: 202 }
+    ]},
+    { speaker: "렌쟈", text: "그게 더 불안하지?", background: bgLivingRoom, character: "렌쟈" },
+    { speaker: "엘", text: "둘 다 자기 판단 믿는 타입이야.", background: bgLivingRoom, character: "엘" },
+    { speaker: "시스템", text: "그 말에 걱정도, 신뢰도 같이 섞여 있다. 해가 기울 무렵, 현관 쪽에서 익숙한 소리가 난다. 하카와 란이 돌아왔다.", isProgress: true, background: bgLivingRoom },
+    { speaker: "엘", text: "왔다.", background: bgLivingRoom, character: "엘" },
+    { speaker: "하카", text: "별일은 없어. 조용해. 주변 도로 몇 군데 막혔어. 차량 방치된 곳도 많고.", background: bgLivingRoom, character: "하카" },
+    { speaker: "란", text: "사람은 보지 못했습니다.", background: bgLivingRoom, character: "란" },
+    { speaker: "시스템", text: "해가 완전히 지기 전, 란은 혼자 바깥으로 나가 펜스 쪽을 다시 점검하고 있었다. (금속이 삐걱이는 소리) (둔탁한 충격음)", isProgress: true, background: bgLivingRoom },
+    { speaker: "렌쟈", text: "란!", background: bgLivingRoom, character: "렌쟈" },
+    { speaker: "엘", text: "움직이지 마. … 버티기 힘들겠네. 내일 아침, 소수로 움직이자. 그래.", background: bgLivingRoom, character: "엘" },
+    { speaker: "란", text: "탈골은… 아닌 것 같습니다. 제가 조심했어야 했습니다.", background: bgLivingRoom, character: "란" },
+    { speaker: "렌쟈", text: "붓는 속도가 빨라. 고정은 했어. 하지만 약이 부족해. 마트 뒤쪽에 작은 민간 병원 있었어. 재고 남아 있을지도. 나랑 엘오빠, 파스닐.", background: bgLivingRoom, character: "렌쟈" },
+    { speaker: "하카", text: "감염은 아닌거같고. 알긴하네. 내가 뭘.. 진통제도 거의 없지. 의약품이 필요해. 뭘 당연한걸. 렌쟈야 엘 오빠가 내일은 늦잠 좀 자고싶었대.", background: bgLivingRoom, character: "하카" },
     
-    // #C13 - 숲근처 (Placeholder for future expansion)
-    { marker: "#C13", speaker: "시스템", text: "다시 숲 근처로 이동했다.", background: bgNearForest, isProgress: true },
-    // #C14 - 병원 근처 (Placeholder)
-    { marker: "#C14", speaker: "시스템", text: "병원 건물이 보이는 근처까지 왔다.", background: bgNearHospital, isProgress: true },
-    // #C15 - 병원 (Placeholder)
-    { marker: "#C15", speaker: "시스템", text: "병원 내부로 진입했다.", background: bgHospital, isProgress: true, onComplete: () => { setGameState("start"); setDialogueIndex(0); } }
+    // #C13 - 병원 가는 길 (Dialogue index 214)
+    { marker: "#C13", speaker: "시스템", text: "3일차. 병원으로 가는 길. 차 문이 닫히는 소리가 아침 안개를 밀어낸다. 엘이 운전석에 앉아 시동을 건다.", background: bgNearForest, isProgress: true, audio: bgMusicBalcony },
+    { speaker: "렌쟈", text: "아침부터 병원이라니. 세상 참 성실하게 망했네. …어제보다 차 더 는거같기도 하고. 정리라기엔 다들 너무 급했잖아. 여기,다시는 오면 안 될 곳이야.", background: bgNearForest, character: "렌쟈" },
+    { speaker: "엘", text: "입 다물고 주변 봐. 똑같다는 게 문제지. 하룻밤 새에 정리될 리 없지.", background: bgNearForest, character: "엘" },
+    { speaker: "파스닐", text: "어제는 선택지였는데, 오늘은 일정이 됐구만..", background: bgNearForest, isMonologue: true },
+    
+    // #C14 - 병원 근처 (Dialogue index 218)
+    { marker: "#C14", speaker: "시스템", text: "도심 외곽 — 병원 근처. 병원 건물은 멀리서 보면 멀쩡하다. 가까이 가면 아니다. 유리창엔 테이프 자국, 출입문엔 밀린 흔적.", background: bgNearHospital, isProgress: true },
+    { speaker: "렌쟈", text: "와… 딱 ‘도망치다 만 병원’이잖아. 역시 걸어 들어가야 긴장 풀리지? 파스닐. 들리면 바로 말해. ‘괜찮을 것 같아요’ 이런 말 말고. 그 톤 좋아.", background: bgNearHospital, character: "렌쟈" },
+    { speaker: "엘", text: "차 세운다. 여기서. 말 줄여. 들리기 전에 움직이면 그땐 내가 멈춘다. 가.", background: bgNearHospital, character: "엘" },
+    
+    // #C15 - 병원 내부 (Dialogue index 221)
+    { marker: "#C15", speaker: "시스템", text: "병원 내부. 자동문은 열린 게 아니라 고정돼 있다. 안은 약 냄새보다 먼지 냄새가 먼저 온다. 렌쟈는 들어오자마자 표지판을 본다.", background: bgHospital, isProgress: true, audio: "stop" },
+    { speaker: "렌쟈", text: "응급실, 약국, 처치실… 다 한 방향이네. 역시 현실적. 진통제, 소염제, 항생제… 아, 이건 란이 싫어하겠다. 사람 마음은 안 챙겨주네. 아쉽네. 초코우유는 없었는데. 하카오빠가 갖다달랬어. 이럴 때일수록 사소한 게 오래 남아.", background: bgHospital, character: "렌쟈" },
+    { speaker: "엘", text: "약국 먼저. 다 챙겨. 몸이 먼저야. ‘버틴다’는 말 되게 듣기싫다. 봤어. 가방 닫아. 지금 그게 아쉬워?", background: bgHospital, character: "엘" },
+    { speaker: "파스닐", text: "이 정도면 며칠은 버텨요. (선택지가 없는 소리다.)", background: bgHospital, isMonologue: true },
+    { speaker: "시스템", text: "멀리서 무언가 끌리는 소리. 이번엔 확실하다. 렌쟈의 손이 멈춘다. 세 사람은 뛰지 않는다. 렌쟈는 나오면서 한 번 뒤를 본다.", isProgress: true, background: bgHospital, onComplete: () => { setGameState("start"); setDialogueIndex(0); } }
   ], []);
 
   const currentDialogue = story[dialogueIndex];
