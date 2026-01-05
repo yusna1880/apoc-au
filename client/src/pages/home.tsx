@@ -317,6 +317,32 @@ export default function Home() {
 
   const currentDialogue = story[dialogueIndex];
 
+  // Preload Background Images
+  useEffect(() => {
+    const backgrounds = [
+      bgStart, bgClip1, bgClip2, bgLivingRoom, bgBalcony, 
+      bgNearForest, bgStorage, bgCity1, bgMart, bgNearHospital, bgHospital
+    ];
+    backgrounds.forEach(src => {
+      const img = new Image();
+      img.src = src;
+    });
+  }, []);
+
+  // Keyboard navigation
+  useEffect(() => {
+    const handleKeyDown = (e: KeyboardEvent) => {
+      if (gameState === "story" && !currentDialogue?.choices) {
+        if (e.key === "Enter" || e.key === " ") {
+          e.preventDefault();
+          handleNext();
+        }
+      }
+    };
+    window.addEventListener("keydown", handleKeyDown);
+    return () => window.removeEventListener("keydown", handleKeyDown);
+  }, [gameState, dialogueIndex, currentDialogue]);
+
   // Audio handling
   useEffect(() => {
     if (gameState === "story") {
@@ -348,7 +374,7 @@ export default function Home() {
     };
   }, [gameState, currentDialogue?.audio, currentDialogue?.marker]);
 
-  const handleNext = () => {
+  const handleNext = useCallback(() => {
     if (currentDialogue.choices) return;
     
     if (currentDialogue.onComplete) {
@@ -367,7 +393,7 @@ export default function Home() {
       setGameState("start");
       setDialogueIndex(0);
     }
-  };
+  }, [currentDialogue, dialogueIndex, story]);
 
   const handleChoice = (targetIndex: number) => {
     setDialogueIndex(targetIndex);
