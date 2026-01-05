@@ -1,6 +1,6 @@
 import { useState, useEffect, useRef, useCallback, useMemo } from "react";
 import { Button } from "@/components/ui/button";
-import { Volume2, VolumeX, Settings, Info, ChevronRight } from "lucide-react";
+import { Volume2, VolumeX, Settings, Info, ChevronRight, Save } from "lucide-react";
 import { motion, AnimatePresence } from "framer-motion";
 
 // Assets - Backgrounds
@@ -86,6 +86,15 @@ export default function Home() {
   const [dustParticles, setDustParticles] = useState<DustParticle[]>([]);
   const audioRef = useRef<HTMLAudioElement | null>(null);
   const sparkleIdRef = useRef(0);
+  const [hasSaveData, setHasSaveData] = useState(false);
+
+  // Check for save data on mount
+  useEffect(() => {
+    const savedIndex = localStorage.getItem("game_save_index");
+    if (savedIndex !== null) {
+      setHasSaveData(true);
+    }
+  }, []);
 
   // Initialize Dust Particles for Start Screen
   useEffect(() => {
@@ -202,7 +211,7 @@ export default function Home() {
     { speaker: "엘", expression: "가방을 내려놓으며 담담하게", text: "여기까지 왔는데 안 괜찮을 확률이 더 낮지.", background: bgLivingRoom, character: "엘" },
     { speaker: "렌쟈", expression: "사람들 얼굴을 한 번씩 훑는다", text: "괜찮아 보여도 체크는 해야지.", background: bgLivingRoom, character: "렌쟈" },
     { speaker: "란", expression: "바로 고개 숙여", text: "필요한 물품이나 불편한 점 있으면 말씀 주십시오.", background: bgLivingRoom, character: "란" },
-    { speaker: "하카", expression: "입꼬리 올리며", text: "봐라. 이래서 란이 있지.", background: bgLivingRoom, character: "하카" },
+    { speaker: "하카", expression: "입꼬리 올리며", text: "봐라. 이래서 란이 있지.", background: bgLivingRoom, character: "란" },
     { speaker: "란", expression: "조금 난처하게", text: "…습관입니다.", background: bgLivingRoom, character: "란" },
     { speaker: "하카", text: "하카는 더 말하지 않고 웃는다. 의미 없는 웃음은 아니다.", background: bgLivingRoom, character: "하카" },
     { speaker: "시스템", text: "나는 콘센트 위치를 다시 확인한다. 손이 바쁘면, 시선이 덜 튄다. 이 사람들, 말보다 표정이 더 빠르다.", background: bgLivingRoom, isProgress: true },
@@ -383,7 +392,7 @@ export default function Home() {
     
     // #C13 - 병원 가는 길 (Dialogue index 214)
     { marker: "#C13", speaker: "시스템", text: "3일차. 병원으로 가는 길. 차 문이 닫히는 소리가 아침 안개를 밀어낸다. 엘이 운전석에 앉아 시동을 건다.", background: bgNearForest, isProgress: true, audio: bgMusicBalcony },
-    { speaker: "렌쟈", text: "아침부터 병원이라니. 세상 참 성실하게 망했네. …어제보다 차 더 는거같기도 하고. 정리라기엔 다들 너무 급했잖아. 여기,다시는 오면 안 될 곳이야.", background: bgNearForest, character: "렌쟈" },
+    { speaker: "렌쟈", text: "아침부터 병원이라니. 세상 참 성실하게 망했네. …어제보다 차 더 는거같기도 하고. 정리라기엔 다들 너무급했잖아. 여기,다시는 오면 안 될 곳이야.", background: bgNearForest, character: "렌쟈" },
     { speaker: "엘", text: "입 다물고 주변 봐. 똑같다는 게 문제지. 하룻밤 새에 정리될 리 없지.", background: bgNearForest, character: "엘" },
     { speaker: "파스닐", text: "어제는 선택지였는데, 오늘은 일정이 됐구만..", background: bgNearForest, isMonologue: true },
     
@@ -499,6 +508,26 @@ export default function Home() {
     }, 600);
   };
 
+  const saveGame = (e: React.MouseEvent) => {
+    e.stopPropagation();
+    localStorage.setItem("game_save_index", dialogueIndex.toString());
+    setHasSaveData(true);
+    // Visual feedback for save
+    const btn = e.currentTarget as HTMLButtonElement;
+    btn.style.color = "#22c55e"; // green
+    setTimeout(() => {
+      btn.style.color = "";
+    }, 1000);
+  };
+
+  const loadGame = () => {
+    const savedIndex = localStorage.getItem("game_save_index");
+    if (savedIndex !== null) {
+      setDialogueIndex(parseInt(savedIndex));
+      setGameState("story");
+    }
+  };
+
   const getCharacterImage = (name?: string, index?: number) => {
     if (!name || name === "시스템" || name === "TV" || name === "TV 앵커") return null;
     
@@ -540,6 +569,20 @@ export default function Home() {
     const charImg = getCharacterImage(currentDialogue.character || currentDialogue.speaker, dialogueIndex);
     return (
       <div className="relative w-full h-screen overflow-hidden bg-black flex flex-col items-center justify-end" onClick={handleClick}>
+        {/* Save Button */}
+        <div className="absolute top-8 right-8 z-50 flex items-center gap-2">
+          <Button
+            variant="ghost"
+            size="sm"
+            className="h-8 px-2 text-[10px] text-white/30 hover:text-white hover:bg-white/5 border border-white/5 uppercase tracking-tighter"
+            onClick={saveGame}
+            data-testid="button-save"
+          >
+            <Save className="w-3 h-3 mr-1" />
+            Save Point
+          </Button>
+        </div>
+
         <AnimatePresence>
           {sparkles.map(s => (
             <motion.div
@@ -734,13 +777,24 @@ export default function Home() {
             size="lg"
             className="w-52 h-12 text-lg font-bold bg-red-700/80 hover:bg-red-600 text-white rounded-none border border-red-500/30 transition-all hover:translate-x-2"
             onClick={() => setGameState("video")}
+            data-testid="button-start"
           >
             시작하기
           </Button>
-          <Button variant="ghost" className="w-52 h-10 text-base text-white/40 hover:text-white hover:bg-white/5 rounded-none border border-white/5">
+          <Button 
+            variant="ghost" 
+            className={`w-52 h-10 text-base rounded-none border border-white/5 transition-all ${
+              hasSaveData 
+                ? "text-white hover:text-white hover:bg-white/10 border-white/20" 
+                : "text-white/10 cursor-not-allowed opacity-50"
+            }`}
+            onClick={hasSaveData ? loadGame : undefined}
+            disabled={!hasSaveData}
+            data-testid="button-continue"
+          >
             이어하기
           </Button>
-          <Button variant="ghost" className="w-52 h-10 text-base text-white/40 hover:text-white hover:bg-white/5 rounded-none border border-white/5">
+          <Button variant="ghost" className="w-52 h-10 text-base text-white/40 hover:text-white hover:bg-white/5 rounded-none border border-white/5" data-testid="button-settings">
             설정
           </Button>
         </div>
