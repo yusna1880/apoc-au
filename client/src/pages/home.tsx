@@ -2,7 +2,6 @@ import { useState, useEffect, useRef, useCallback } from "react";
 import { Button } from "@/components/ui/button";
 import { Volume2, VolumeX, Settings, Info } from "lucide-react";
 import backgroundImage from "@assets/Naughty_Dog_The_Last_of_Us__Part_IArt_Blast_-_ArtStation_Maga_1767621865144.jfif";
-import introVideo from "@assets/lv_0_20260105222257_1767623908654.mp4";
 import bgMusic from "@assets/Screen_Recording_20260105-231735_YouTube_1767624088058.mp3";
 
 interface Particle {
@@ -30,9 +29,7 @@ export default function Home() {
   const [sparkles, setSparkles] = useState<Sparkle[]>([]);
   const [isVideoPlaying, setIsVideoPlaying] = useState(false);
   const [isMuted, setIsMuted] = useState(false);
-  const [isAudioPlaying, setIsAudioPlaying] = useState(false);
   const audioRef = useRef<HTMLAudioElement | null>(null);
-  const videoRef = useRef<HTMLVideoElement | null>(null);
   const particleIdRef = useRef(0);
   const sparkleIdRef = useRef(0);
   const isPlayingRef = useRef(false);
@@ -88,7 +85,6 @@ export default function Home() {
       try {
         isPlayingRef.current = true;
         await audioRef.current.play();
-        setIsAudioPlaying(true);
       } catch (err) {
         isPlayingRef.current = false;
       }
@@ -106,9 +102,8 @@ export default function Home() {
       document.removeEventListener("keydown", handleInteraction);
       
       if (audioRef.current) {
-        const currentAudio = audioRef.current;
-        currentAudio.pause();
-        currentAudio.src = "";
+        audioRef.current.pause();
+        audioRef.current.src = "";
         audioRef.current = null;
       }
       isPlayingRef.current = false;
@@ -125,7 +120,6 @@ export default function Home() {
     if (audioRef.current) {
       audioRef.current.pause();
       audioRef.current.currentTime = 0;
-      setIsAudioPlaying(false);
       isPlayingRef.current = false;
     }
   }, []);
@@ -173,34 +167,21 @@ export default function Home() {
     stopAudio();
   };
 
-  const handleVideoEnd = () => {
-    setIsVideoPlaying(false);
-  };
-
   if (isVideoPlaying) {
     return (
       <div className="fixed inset-0 bg-black z-50">
-        <video
-          ref={videoRef}
-          src={introVideo}
-          className="w-full h-full object-contain"
-          autoPlay
-          playsInline
-          preload="auto"
-          onEnded={handleVideoEnd}
-          onError={handleVideoEnd}
-          onCanPlayThrough={() => {
-            if (videoRef.current) {
-              videoRef.current.play().catch(() => {});
-            }
-          }}
+        <iframe
+          src="https://www.youtube.com/embed/ogS_HHnWwK8?autoplay=1&mute=0&controls=0&rel=0"
+          className="w-full h-full border-0"
+          allow="autoplay; encrypted-media; fullscreen"
+          allowFullScreen
           data-testid="video-intro"
         />
         <Button
           variant="ghost"
           size="sm"
           className="absolute bottom-8 right-8 text-white/70 hover:text-white bg-black/50 backdrop-blur-sm"
-          onClick={handleVideoEnd}
+          onClick={() => setIsVideoPlaying(false)}
           data-testid="button-skip-video"
         >
           건너뛰기
