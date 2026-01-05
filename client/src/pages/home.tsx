@@ -24,10 +24,10 @@ import imgEl from "@assets/엘_1767627793842.png";
 import imgPasnil from "@assets/파스닐_1767631756273.png";
 
 // Assets - Characters (V2)
-import imgHaka2 from "@assets/하카2_1767635896254.png";
-import imgRan2 from "@assets/란2_1767635896250.png";
-import imgRenja2 from "@assets/렌쟈2_1767635896253.png";
-import imgEl2 from "@assets/엘2_1767635896257.png";
+import imgHaka2 from "@assets/하카2_1767637478411.png";
+import imgRan2 from "@assets/란2_1767637478406.png";
+import imgRenja2 from "@assets/렌쟈2_1767637478408.png";
+import imgEl2 from "@assets/엘2_1767637478414.png";
 
 // Assets - Audio
 import bgMusicStart from "@assets/Screen_Recording_20260106-003832_YouTube_1767628059034.mp3";
@@ -240,7 +240,7 @@ export default function Home() {
     { speaker: "렌쟈", expression: "자연스럽게", text: "그럼 난 다음.", background: bgLivingRoom, character: "렌쟈" },
     { speaker: "란", expression: "즉각", text: "확인했습니다.", background: bgLivingRoom, character: "란" },
     { speaker: "시스템", text: "논의는 없다. 이건 즉석 팀이 아니다. 엘은 말없이 창 쪽에 서 있다가 조용히 문을 연다.", background: bgLivingRoom, isProgress: true },
-    { speaker: "엘", text: "바람 좀 쐬고 올게.", background: bgLivingRoom, character: "엘" },
+    { speaker: "엘", text: "바람 좀 고 올게.", background: bgLivingRoom, character: "엘" },
     { speaker: "렌쟈", text: "오빠 그러다가 데일 언니처럼 감기걸려", background: bgLivingRoom, character: "렌쟈" },
     { speaker: "엘", text: "너도 와.", background: bgLivingRoom, character: "엘" },
     { speaker: "시스템", text: "나는 고개를 끄덕이고 엘을 따라간다.", background: bgLivingRoom, isProgress: true },
@@ -282,37 +282,88 @@ export default function Home() {
     { speaker: "란", text: "확인만 하겠습니다. 같이 가시죠.", background: bgLivingRoom, character: "란" },
     
     // #C6 - 숲근처 (Dialogue index 139)
-    { marker: "#C6", speaker: "시스템", text: "숲 근처. 밤 공기가 무겁다. 소리가 가까워진다. 나는 숨을 죽인다. 발을 끄는 소리다.", background: bgNearForest, isProgress: true, audio: bgMusicBalcony },
+    { marker: "#C6", speaker: "시스템", text: "밤 공기가 무겁다. 풀잎이 젖어 있다. 소리가 가까워진다. 나는 숨을 죽인다. 귀가 먼저 반응한다. …발소리. 아니다. 발을 끄는 소리다.", background: bgNearForest, isProgress: true, audio: bgMusicBalcony },
     { speaker: "란", text: "저쪽입니다.", background: bgNearForest, character: "란" },
-    { speaker: "시스템", text: "나무 사이로 그게 보인다. 사람의 형태. 하지만 고개가 너무 아래로 숙여져 있다. 무릎이 꺾이지 않는다.", background: bgNearForest, isProgress: true },
-    { speaker: "파스닐", text: "(저건… 사람이 아니다.)", background: bgNearForest, isMonologue: true },
+    { speaker: "시스템", text: "나무 사이로 그게 보인다. 사람의 형태. 하지만— 고개가 너무 아래로 숙여져 있다. 팔이 흔들리지 않는다. 무릎이 꺾이지 않는다. 걷는 게 아니라, 떨어지는 걸 반복하는 느낌.", background: bgNearForest, isProgress: true },
+    { speaker: "파스닐", text: "저건… 사람이 아니다.", background: bgNearForest, isMonologue: true },
+    { speaker: "시스템", text: "그것이 고개를 든다. 눈이 너무 늦게 움직인다.", background: bgNearForest, isProgress: true },
+    { speaker: "란", text: "…확인했습니다. 따라오세요. 지금은 돌아가야 합니다.", background: bgNearForest, character: "란", choices: [
+      { text: "1. 혼자 더 확인하려 한다", targetIndex: 145 },
+      { text: "2. 란을 믿고 바로 따른다", targetIndex: 147 }
+    ]},
+    { speaker: "시스템", text: "나는 멈춘다. 한 걸음만 더. 그 순간, 그것의 고개가 나를 정확히 향한다. 너무 정확해서— 도망칠 생각이 늦는다.", isProgress: true, background: bgNearForest },
+    { speaker: "란", text: "파스닐—!", background: bgNearForest, character: "란" },
+    { speaker: "시스템", text: "[데드엔딩] 잡아당기는 힘. 넘어짐. 이빨이 너무 가까이 있다. 혼자 확인하는 건 용기가 아니라 이탈이다.", isProgress: true, background: bgNearForest, onComplete: () => { setGameState("start"); setDialogueIndex(0); } },
     
-    // #C7 - 창고 (Dialogue index 143)
-    { marker: "#C7", speaker: "시스템", text: "창고로 자리를 옮겼다. 소음이 차단되는 곳으로.", background: bgStorage, isProgress: true, audio: "stop" },
+    { speaker: "시스템", text: "나는 망설이지 않고 란의 뒤를 따른다. 지금은 판단을 나눌 때다. 외부, 창고 근처. 밤. 공기엔 풀 냄새와 함께 어딘지 모르게 탁한 기운이 섞여 있다.", isProgress: true, background: bgNearForest },
+    { speaker: "란", text: "바람 방향은 북동. 공기 중에 연소 냄새… 나무 타는 냄새가 아닌데.. 여기일지도 몰라.", background: bgNearForest, character: "란" },
     
-    // #C8 - 거실 (Dialogue index 144)
-    { marker: "#C8", speaker: "시스템", text: "다시 거실로 돌아왔다. 분위기가 이전과는 다르다.", background: bgLivingRoom, isProgress: true, audio: bgMusicCity },
+    // #C7 - 창고 (Dialogue index 149)
+    { marker: "#C7", speaker: "시스템", text: "끼익. 문이 작게 열리고, 먼지 낀 냄새가 확 풍긴다. 창고 안엔 오래된 캠핑 장비, 예비용 발전기, 부탄가스 박스 등이 정리돼 있다.", background: bgStorage, isProgress: true, audio: "stop" },
+    { speaker: "란", text: "누군가 손 댄 흔적이… 우리 중 누군가가 이걸 손봤나? 오늘 누구도 창고엔 안 왔는데. ...이건 별장에서 보관한 적 없는 물건이다.", background: bgStorage, character: "란" },
+    { speaker: "시스템", text: "그때, 창고 외부에서 '탁', 무언가가 떨어지는 소리. 란과 나는 재빨리 몸을 낮추고 손전등을 끈다. 숨소리를 죽인다.", isProgress: true, background: bgStorage },
+    { speaker: "란", text: "이건, 짐승이 아니네요. 걸음이… 너무 느려요.", background: bgStorage, character: "란" },
     
-    // #C9 - 거실 (Dialogue index 145)
-    { marker: "#C9", speaker: "시스템", text: "계속해서 거실에서 대화를 이어간다.", background: bgLivingRoom, isProgress: true },
+    // #C8 - 거실 (Dialogue index 153)
+    { marker: "#C8", speaker: "란", text: "돌아왔습니다.", background: bgLivingRoom, character: "란", audio: bgMusicCity },
+    { speaker: "하카", text: "그래서.", background: bgLivingRoom, character: "하카" },
+    { speaker: "엘", text: "봤어?", background: bgLivingRoom, character: "엘" },
+    { speaker: "란", text: "…정상적인 사람이 아닙니다. 복수입니다.", background: bgLivingRoom, character: "란" },
+    { speaker: "하카", text: "몇이야. 이제 시작이네.", background: bgLivingRoom, character: "하카" },
+    { speaker: "엘", text: "외출 중지. 재미로 보지 마.", background: bgLivingRoom, character: "엘" },
+    { speaker: "렌쟈", text: "단독 행동 금지.", background: bgLivingRoom, character: "렌쟈" },
+    { speaker: "시스템", text: "TV에서 잡음이 다시 커진다. 엘이 리모컨을 들어 끈다. 순간의 정적.", isProgress: true, background: bgLivingRoom },
+    { speaker: "파스닐", text: "이제 난 DJ가 아니다. 나는 귀를 연다. 밖은— 너무 조용하다.", background: bgLivingRoom, isMonologue: true },
     
-    // #C10 - 도시1 (Dialogue index 146)
-    { marker: "#C10", speaker: "시스템", text: "도시 외곽에 도착했다. 파괴된 흔적들이 가득하다.", background: bgCity1, isProgress: true },
+    // #C9 - 거실 (Dialogue index 162)
+    { marker: "#C9", speaker: "시스템", text: "2일차 — 아침, 별장 거실. 아침이라고 부르기엔 공기가 너무 무겁다. 엘은 식탁 위에 지도를 펼쳐 둔 채 서 있다.", background: bgLivingRoom, isProgress: true },
+    { speaker: "엘", text: "상황 정리한다. 밤새 접근 흔적 없음. 소리, 움직임, 전력 이상도 없어. 오늘부터 조를 나눈다. 혼자 움직이는 건 금지.", background: bgLivingRoom, character: "엘" },
+    { speaker: "하카", text: "그래서 더 재수 없지. 아무 일도 없는 밤은 항상 뒤가 더럽거든. 와— 완전 관리직이네. 책상 없어서 아쉽다.", background: bgLivingRoom, character: "하카" },
+    { speaker: "엘", text: "파스닐. 너는 렌쟈랑 같이 식량, 물, 연료. 하루 단위로 정리해서 공유. 지금 제일 중요한 위치야. 팀 상태를 한눈에 볼 수 있어야 해.", background: bgLivingRoom, character: "엘" },
+    { speaker: "렌쟈", text: "소비량 기준도 다시 짤게. 누가 뭘 얼마나 쓰는지 바로 보이게. 응. 나갈게.", background: bgLivingRoom, character: "렌쟈" },
+    { speaker: "란", text: "탐사는 하루 두 번으로 나누는 게 좋겠습니다. 오전, 오후.", background: bgLivingRoom, character: "란" },
+    { speaker: "엘", text: "동의. 오늘 오전은 내가 나갈거야. 나, 너, 파스닐.", background: bgLivingRoom, character: "엘" },
+    { speaker: "시스템", text: "출발 전 — 현관. 엘은 무기를 점검한다. 렌쟈는 가방에 물과 간단한 식량을 넣는다.", isProgress: true, background: bgLivingRoom },
+    { speaker: "렌쟈", text: "너 귀 제일 좋잖아. 앞에 서지 말고, 중간.", background: bgLivingRoom, character: "렌쟈" },
+    { speaker: "엘", text: "뒤는 내가 본다.", background: bgLivingRoom, character: "엘" },
+    { speaker: "하카", text: "돌아오면 보고부터 해. 무용담 말고, 사실만.", background: bgLivingRoom, character: "하카" },
     
-    // #C11 - 마트 (Dialogue index 147)
-    { marker: "#C11", speaker: "시스템", text: "버려진 마트 안. 공기가 서늘하다.", background: bgMart, isProgress: true, audio: "stop" },
+    // #C10 - 도시1 (Dialogue index 173)
+    { marker: "#C10", speaker: "시스템", text: "도심 진입. 숲을 빠져나오자 아스팔트가 드러난다. 도로는 도로였던 흔적만 남아 있다.", background: bgCity1, isProgress: true },
+    { speaker: "렌쟈", text: "…와. …그렇다는건 한쪽으로만 도망쳤다는 거네. …여긴 오래 있으면 안 되겠다.", background: bgCity1, character: "렌쟈" },
+    { speaker: "엘", text: "폭발은 아니야. 마트만 들른다.", background: bgCity1, character: "엘" },
+    { speaker: "시스템", text: "차들은 멈춘 채가 아니라 도망치다 멈춘 자세로 박혀 있다. 차체 옆면, 콘크리트 벽면, 셔터. 모두 같은 방향으로 긁혀 있다.", isProgress: true, background: bgCity1 },
+    { speaker: "파스닐", text: "사람이 나가려다 멈춘 게 아니라 뭔가가 들어오려다 멈춘 것처럼.", background: bgCity1, isMonologue: true },
     
-    // #C12 - 거실 (Dialogue index 148)
-    { marker: "#C12", speaker: "시스템", text: "다시 거실로 돌아와 상황을 정리한다.", background: bgLivingRoom, isProgress: true },
+    // #C11 - 마트 (Dialogue index 178)
+    { marker: "#C11", speaker: "시스템", text: "마트. 자동문은 열려 있다. 전기가 있어서가 아니라 부서져서. 안은 생각보다 조용하다. 선반은 많이 비어 있지만 완전히 털린 건 아니다.", background: bgMart, isProgress: true, audio: "stop" },
+    { speaker: "엘", text: "필요한 것만. 이 정도면 충분해. 시간 됐다. 보지 마.", background: bgMart, character: "엘" },
+    { speaker: "렌쟈", text: "통조림, 물, 건전지. 유통기한 긴 걸로. 의약품도 있으면 좋고. 의약품은 따로 없네. 걱정이야.", background: bgMart, character: "렌쟈" },
+    { speaker: "시스템", text: "멀리서 무언가 떨어지는 소리. 세 사람 모두 멈춘다. 듣는다. 발을 끄는 소리.", isProgress: true, background: bgMart },
+    { speaker: "시스템", text: "마트를 나설 때 무심코 뒤를 보고말았다. 계산대 너머, 어둠 속에 사람 크기의 형체가 서 있다. 움직이지 않는다. 셋은 뛰지 않고 빠르게 걷는다.", isProgress: true, background: bgMart },
     
-    // #C13 - 숲근처 (Dialogue index 149)
+    // #C12 - 거실 (Dialogue index 183)
+    { marker: "#C12", speaker: "하카", text: "표정이 그 답이네. 엘 너 얼굴 완전웃겨. 거울이 없는게 한이다. ", background: bgLivingRoom, character: "하카" },
+    { speaker: "엘", text: "도심은 끝났어. ……", background: bgLivingRoom, character: "엘" },
+    { speaker: "렌쟈", text: "마트는 아직 쓸 수 있어. 하지만 오래는 아니야. 이건 오늘 밤까지, 이건 이틀. 대충하면 바로 티 나.", background: bgLivingRoom, character: "렌쟈" },
+    { speaker: "란", text: "이미 ‘보는 것’들이 있다는거네요.", background: bgLivingRoom, character: "란" },
+    { speaker: "시스템", text: "오후 — 별장. 현관문이 닫히는 소리가 아직 남아 있다. 란과 하카가 떠난 뒤 별장은 이상할 만큼 조용해졌다.", isProgress: true, background: bgLivingRoom },
+    { speaker: "파스닐", text: "이제 남은 사람들만의 시간이다. 생각보다 체계적이네요.", background: bgLivingRoom, isMonologue: true },
+    { speaker: "렌쟈", text: "있잖아 파스닐, 너 이런 상황 익숙해?", background: bgLivingRoom, character: "렌쟈", choices: [
+      { text: "1. “아니요. 음악 말곤 해본 게 없어요.”", targetIndex: 190 },
+      { text: "2. “일이 꼬이는 건… 좀 겪어봤어요.”", targetIndex: 190 },
+      { text: "3. “익숙해지고 싶진 않네요.”", targetIndex: 190 }
+    ]},
+    { speaker: "시스템", text: "렌쟈는 고개를 끄덕일 뿐이다. 렌쟈가 찻잔을 들고 온다. 세 잔. 렌쟈는 아무 말 없이 설탕을 내려놓는다.", isProgress: true, background: bgLivingRoom },
+    { speaker: "엘", text: "괜히 과하게 나서지 마. 지금 위치가 딱 좋아.", background: bgLivingRoom, character: "엘" },
+    { speaker: "파스닐", text: "익숙한 행동.", background: bgLivingRoom, isMonologue: true, onComplete: () => { setGameState("start"); setDialogueIndex(0); } },
+    
+    // #C13 - 숲근처 (Placeholder for future expansion)
     { marker: "#C13", speaker: "시스템", text: "다시 숲 근처로 이동했다.", background: bgNearForest, isProgress: true },
-    
-    // #C14 - 병원 근처 (Dialogue index 150)
+    // #C14 - 병원 근처 (Placeholder)
     { marker: "#C14", speaker: "시스템", text: "병원 건물이 보이는 근처까지 왔다.", background: bgNearHospital, isProgress: true },
-    
-    // #C15 - 병원 (Dialogue index 151)
-    { marker: "#C15", speaker: "시스템", text: "병원 내부로 진입했다. 피 냄새와 소독약 냄새가 섞여 있다.", background: bgHospital, isProgress: true, onComplete: () => { setGameState("start"); setDialogueIndex(0); } }
+    // #C15 - 병원 (Placeholder)
+    { marker: "#C15", speaker: "시스템", text: "병원 내부로 진입했다.", background: bgHospital, isProgress: true, onComplete: () => { setGameState("start"); setDialogueIndex(0); } }
   ], []);
 
   const currentDialogue = story[dialogueIndex];
@@ -417,8 +468,8 @@ export default function Home() {
   const getCharacterImage = (name?: string, index?: number) => {
     if (!name || name === "시스템") return null;
     
-    // Character V2 logic (starting from #C10 which is index 146)
-    const isV2 = index !== undefined && index >= 146;
+    // Character V2 logic (starting from #C10 which is index 173)
+    const isV2 = index !== undefined && index >= 173;
 
     switch (name) {
       case "하카": return isV2 ? imgHaka2 : imgHaka;
