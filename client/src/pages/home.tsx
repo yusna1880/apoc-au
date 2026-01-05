@@ -1,12 +1,12 @@
-import { useState, useEffect, useRef, useCallback } from "react";
+import { useState, useEffect, useRef, useCallback, useMemo } from "react";
 import { Button } from "@/components/ui/button";
 import { Volume2, VolumeX, Settings, Info, ChevronRight } from "lucide-react";
 import { motion, AnimatePresence } from "framer-motion";
 
 // Assets
 import bgStart from "@assets/Naughty_Dog_The_Last_of_Us__Part_IArt_Blast_-_ArtStation_Maga_1767621865144.jfif";
-import bgClip1 from "@assets/CLIP1_1767627793833.png";
-import bgClip2 from "@assets/CLIP2__1767627793836.png";
+import bgClip1 from "@assets/CLIP1_1767629114299.png";
+import bgClip2 from "@assets/CLIP2__1767629114300.png";
 import imgHaka from "@assets/하카_1767627793844.png";
 import imgRan from "@assets/란_1767627793837.png";
 import imgRenja from "@assets/렌쟈_1767627793839.png";
@@ -18,12 +18,15 @@ type SceneType = "start" | "video" | "story";
 interface DialogueLine {
   speaker: string;
   text: string;
+  expression?: string;
   background?: string;
   character?: string;
   isMonologue?: boolean;
+  isProgress?: boolean;
   choices?: Choice[];
   onComplete?: () => void;
-  jumpIndex?: number; // Added jumpIndex for flow control
+  jumpIndex?: number;
+  triggerTransition?: boolean;
 }
 
 interface Choice {
@@ -31,101 +34,151 @@ interface Choice {
   targetIndex: number;
 }
 
+interface Sparkle {
+  id: number;
+  x: number;
+  y: number;
+  size: number;
+  opacity: number;
+  color: string;
+}
+
 export default function Home() {
   const [gameState, setGameState] = useState<SceneType>("start");
   const [dialogueIndex, setDialogueIndex] = useState(0);
   const [mousePosition, setMousePosition] = useState({ x: 0, y: 0 });
   const [isMuted, setIsMuted] = useState(false);
+  const [sparkles, setSparkles] = useState<Sparkle[]>([]);
   const audioRef = useRef<HTMLAudioElement | null>(null);
+  const sparkleIdRef = useRef(0);
+
+  // Preload images to prevent lag
+  useEffect(() => {
+    const images = [bgStart, bgClip1, bgClip2, imgHaka, imgRan, imgRenja, imgEl];
+    images.forEach(src => {
+      const img = new Image();
+      img.src = src;
+    });
+  }, []);
 
   // Story Data
-  const story: DialogueLine[] = [
+  const story: DialogueLine[] = useMemo(() => [
     { speaker: "파스닐", text: "요즘 ai가 발전해서 내가 할 일이 없네", background: bgClip1, isMonologue: true },
-    { speaker: "파스닐", text: "(이메일을 확인한다)", background: bgClip1, isMonologue: true },
+    { speaker: "파스닐", expression: "이메일을 확인한다", text: "...", background: bgClip1, isMonologue: true },
     { speaker: "파스닐", text: "초청 DJ 문의? 수상하긴 하지만 원체 부자들은 외진 곳을 좋아하니깐..", background: bgClip1, isMonologue: true },
     { speaker: "파스닐", text: "가 아니라 하필 나를?!", background: bgClip1, isMonologue: true },
-    { speaker: "파스닐", text: "(통장장고가 눈에 스쳐지나간다.) 뭐 익명 파티인가 보지.", background: bgClip1, isMonologue: true },
+    { speaker: "파스닐", expression: "통장장고가 눈에 스쳐지나간다.", text: "뭐 익명 파티인가 보지.", background: bgClip1, isMonologue: true, triggerTransition: true },
     
     // CLIP 2 (Index 5)
-    { speaker: "하카", text: "(차 문을 열고 먼저 내린다) 와. 공기 좋네.", background: bgClip2, character: "하카" },
+    { speaker: "하카", expression: "차 문을 열고 먼저 내린다", text: "와. 공기 좋네.", background: bgClip2, character: "하카" },
     { speaker: "파스닐", text: "이런 데를 별장이라고 부르는 사람을 난 오늘 처음 본다.", background: bgClip2, isMonologue: true },
-    { speaker: "파스닐", text: "나는 장비 가방을 둘러멘 채 차에서 내렸다. 생각보다… 크네요.", background: bgClip2, isMonologue: true },
-    { speaker: "하카", text: "(웃으면서 별장을 올려다본다) 크지. 관리하기 귀찮을 정도로.", background: bgClip2, character: "하카" },
+    { speaker: "시스템", text: "...", isProgress: true, background: bgClip2 },
+    { speaker: "시스템", text: "나는 장비 가방을 둘러멘 채 차에서 내렸다.", isProgress: true, background: bgClip2 },
+    { speaker: "파스닐", text: "생각보다… 크네요.", background: bgClip2, isMonologue: true },
+    { speaker: "하카", expression: "웃으면서 별장을 올려다본다", text: "크지. 관리하기 귀찮을 정도로.", background: bgClip2, character: "하카" },
     { speaker: "파스닐", text: "귀찮다는 말에서 돈 냄새 난다.", background: bgClip2, isMonologue: true },
+    { speaker: "시스템", text: "주위를 한번 둘러보았다.", isProgress: true, background: bgClip2 },
     { speaker: "파스닐", text: "우리밖에 없네요. 다른 분들은 아직 안 오셨어요?", background: bgClip2, isMonologue: true },
-    { speaker: "하카", text: "(주머니에 넣는다) 곧. 늘 그렇듯 제각각 오겠지.", background: bgClip2, character: "하카" },
+    { speaker: "하카", expression: "휴대폰을 꺼내다 말고 다시 주머니에 넣는다", text: "곧. 늘 그렇듯 제각각 오겠지.", background: bgClip2, character: "하카" },
+    { speaker: "파스닐", expression: "‘늘’이라는 말. 여긴 내가 끼어든 자리가 아니라는 느낌이 든다.", text: "...", background: bgClip2, isMonologue: true },
+    { speaker: "시스템", text: "가방 끈을 다시 고쳐 멘다", isProgress: true, background: bgClip2 },
+    { speaker: "파스닐", text: "그럼 장비는 안에 세팅해둘까요?", background: bgClip2, isMonologue: true },
+    { speaker: "하카", expression: "고개를 끄덕인다", text: "응. 네 판단에 맡길게.", background: bgClip2, character: "하카" },
     
-    // Tutorial & Choices (Index 12)
-    { speaker: "시스템", text: "[튜토리얼] 말 하나, 태도 하나가 곧 결과다. 하카와의 대화 — 선택지", background: bgClip2 },
+    // Tutorial & Choices (Index 19)
+    { speaker: "시스템", text: "[튜토리얼] 이 남자는 날 고용했고, 난 이 남자의 기분에 월급이 달려 있다. 말 하나, 태도 하나가 곧 결과다.", isProgress: true, background: bgClip2 },
     { 
       speaker: "하카", 
+      expression: "별장 문을 열며",
       text: "긴장한 것 같네.", 
       background: bgClip2, 
       character: "하카",
       choices: [
-        { text: "1. 시비를 건다. 🚫", targetIndex: 14 },
-        { text: "2. 웃어넘긴다", targetIndex: 19 },
-        { text: "3. 솔직히 말한다", targetIndex: 22 }
+        { text: "1. 시비를 건다.", targetIndex: 21 },
+        { text: "2. 웃어넘긴다", targetIndex: 28 },
+        { text: "3. 솔직히 말한다", targetIndex: 31 }
       ]
     },
 
-    // 1. 시비를 건다 (Dead End) (Index 14)
-    { speaker: "파스닐", text: "이런 데서 굳이 DJ까지 부를 필요는 없지 않아요?", background: bgClip2, isMonologue: true },
-    { speaker: "하카", text: "음. 그럼 필요 없는 사람을 부른 셈이네.", background: bgClip2, character: "하카" },
-    { speaker: "하카", text: "(차 키를 던진다) 집에 가. 오늘 일은 없던 걸로 하자.", background: bgClip2, character: "하카" },
-    { speaker: "시스템", text: "[데드엔딩] 〈해고〉 아포칼립스는 오지 않았다. 하지만 나는, 이 이야기 안으로 들어가지도 못했다.", background: bgClip2, onComplete: () => setGameState("start") },
-    { speaker: "시스템", text: "다시 시작하시겠습니까?", background: bgClip2, choices: [{ text: "처음으로", targetIndex: 0 }] },
+    // 1. 시비를 건다 (Index 21)
+    { speaker: "파스닐", text: "돈 많은 사람들은 이런 말 좋아하던데. 이런 데서 굳이 DJ까지 부를 필요는 없지 않아요?", background: bgClip2, isMonologue: true },
+    { speaker: "하카", expression: "걸음을 멈춘다", text: "음.", background: bgClip2, character: "하카" },
+    { speaker: "하카", expression: "천천히 고개를 돌려 파스닐을 본다", text: "그럼 필요 없는 사람을 부른 셈이네.", background: bgClip2, character: "하카" },
+    { speaker: "파스닐", text: "농담이 안 통했다.", background: bgClip2, isMonologue: true },
+    { speaker: "시스템", text: "나는 입을 다물었다.", isProgress: true, background: bgClip2 },
+    { speaker: "하카", expression: "차 키를 던진다", text: "집에 가. 오늘 일은 없던 걸로 하자.", background: bgClip2, character: "하카" },
+    { speaker: "파스닐", text: "…알겠습니다.", background: bgClip2, isMonologue: true },
+    { speaker: "시스템", text: "[데드엔딩] 〈해고〉 아포칼립스는 오지 않았다. 하지만 나는, 이 이야기 안으로 들어가지도 못했다.", isProgress: true, background: bgClip2, onComplete: () => setGameState("start") },
 
-    // 2. 웃어넘긴다 (Index 19)
-    { speaker: "파스닐", text: "아무래도 이런 장소는 처음이라서요.", background: bgClip2, isMonologue: true },
-    { speaker: "하카", text: "금방 익숙해질 거야. 다들 그래.", background: bgClip2, character: "하카", jumpIndex: 24 }, // Jump to meeting others
+    // 2. 웃어넘긴다 (Index 29)
+    { speaker: "파스닐", text: "웃어넘기는 게 제일 안전하다. 아무래도 이런 장소는 처음이라서요.", background: bgClip2, isMonologue: true },
+    { speaker: "하카", expression: "별장 문을 열다 말고 웃는다", text: "금방 익숙해질 거야. 다들 그래.", background: bgClip2, character: "하카", jumpIndex: 34 },
 
-    // 3. 솔직히 말한다 (Index 22)
+    // 3. 솔직히 말한다 (Index 31)
     { speaker: "파스닐", text: "사실… 분위기가 좀 독특해서요.", background: bgClip2, isMonologue: true },
-    { speaker: "하카", text: "금방 익숙해질 거야. 다들 그래.", background: bgClip2, character: "하카" },
+    { speaker: "하카", expression: "별장 문을 열다 말고 웃는다", text: "금방 익숙해질 거야. 다들 그래.", background: bgClip2, character: "하카" },
 
-    // Meeting others (Index 24)
-    { speaker: "시스템", text: "멀리서 차 소리가 났다. 두 사람의 기척이 느껴졌다.", background: bgClip2 },
-    { speaker: "렌쟈", text: "여기 맞지?", background: bgClip2, character: "렌쟈" },
-    { speaker: "하카", text: "오늘 음악 맡은 애야.", background: bgClip2, character: "하카" },
-    { speaker: "렌쟈", text: "반가워. 난 드렌쟈야. 렌쟈라고 불러.", background: bgClip2, character: "렌쟈" },
-    { speaker: "란", text: "처음 뵙겠습니다. 전 한 란 이에요. 란이라고 불러주세요.", background: bgClip2, character: "란" },
+    // Progress (Index 33)
+    { speaker: "시스템", text: "나는 그 말이 위로인지, 그냥 흘려보낸 말인지 판단하지 못한 채 고개를 끄덕였다. 문이 열리자 서늘한 공기가 안쪽에서 흘러나왔다.", isProgress: true, background: bgClip2 },
     
-    // El arrives
-    { speaker: "시스템", text: "무거운 공기가 먼저 움직였다. 엘이 도착했다.", background: bgClip2 },
-    { speaker: "하카", text: "응. 어서와 엘", background: bgClip2, character: "하카" },
-    { speaker: "엘", text: "데일은 감기래. 오늘은 못 온다고.", background: bgClip2, character: "엘" },
-    { speaker: "렌쟈", text: "그럴 줄 알았어.", background: bgClip2, character: "렌쟈" },
+    // Meeting others (Index 34)
+    { speaker: "시스템", text: "멀리서 차 소리가 났다. 이번엔 두 사람의 기척이 거의 동시에 느껴졌다.", isProgress: true, background: bgClip2 },
+    { speaker: "시스템", text: "(차가 멈추고, 문이 연달아 닫힌다)", isProgress: true, background: bgClip2 },
+    { speaker: "하카", expression: "고개만 돌린다", text: "왔네.", background: bgClip2, character: "하카" },
+    { speaker: "시스템", text: "차에서 먼저 내린 건 붉은 머리의 여자였다. 차분한 동작, 주변을 빠르게 훑는 시선.", isProgress: true, background: bgClip2 },
+    { speaker: "렌쟈", text: "여기 맞지?", background: bgClip2, character: "렌쟈" },
+    { speaker: "하카", expression: "손을 들어 가볍게 흔든다", text: "응.", background: bgClip2, character: "하카" },
+    { speaker: "시스템", text: "그 뒤를 따라 내린 다른 남자는 가볍게 숨을 고르며 주변을 살폈다.", isProgress: true, background: bgClip2 },
+    { speaker: "란", expression: "남자가 허리를 숙인다", text: "누님, 길은 괜찮으셨어요?", background: bgClip2, character: "란" },
+    { speaker: "렌쟈", text: "응. 생각보다 덜 미끄러웠어.", background: bgClip2, character: "렌쟈" },
+    { speaker: "시스템", text: "나는 그 짧은 대화에서 두 사람이 이미 역할이 정해진 관계라는 걸 느꼈다.", isProgress: true, background: bgClip2 },
+    { speaker: "하카", expression: "나를 가리키며", text: "오늘 음악 맡은 애야.", background: bgClip2, character: "하카" },
+    { speaker: "렌쟈", expression: "시선을 나에게 옮긴다", text: "…아, 그렇구나. 반가워. 난 드렌쟈야. 렌쟈라고 불러.", background: bgClip2, character: "렌쟈" },
+    { speaker: "란", expression: "한 박자 늦게 고개를 숙인다", text: "처음 뵙겠습니다. 전 한 란 이에요. 란이라고 불러주세요.", background: bgClip2, character: "란" },
+    { speaker: "시스템", text: "나는 반사적으로 고개를 숙였다. 누가 봐도 이 자리에 익숙하지 않은 건 나였다.", isProgress: true, background: bgClip2 },
+    { speaker: "파스닐", text: "안녕하세요.", background: bgClip2, isMonologue: true },
+    { speaker: "시스템", text: "렌쟈는 더 묻지 않았다. 란도 마찬가지였다. 둘 다, 필요 이상의 관심은 두지 않는 눈이었다.", isProgress: true, background: bgClip2 },
+    
+    // El arrives (Index 51)
+    { speaker: "시스템", text: "이번엔 발소리보다 먼저 기척이 느껴졌다. 무거운 공기가 먼저 움직였다.", isProgress: true, background: bgClip2 },
+    { speaker: "시스템", text: "(차가 멈춘다. 문이 조용히 열린다)", isProgress: true, background: bgClip2 },
+    { speaker: "엘", expression: "내리자마자 주변을 훑는다", text: "여기군.", background: bgClip2, character: "엘" },
+    { speaker: "하카", expression: "가볍게 웃는다", text: "응. 어서와 엘", background: bgClip2, character: "하카" },
+    { speaker: "엘", expression: "엘.. 은 내 쪽을 한 번 본다. 시선이 오래 머무르지 않는다.", text: "데일은 감기래. 오늘은 못 온다고.", background: bgClip2, character: "엘" },
+    { speaker: "렌쟈", expression: "짧게 고개를 끄덕인다", text: "그럴 줄 알았어.", background: bgClip2, character: "렌쟈" },
     { speaker: "란", text: "심한가요?", background: bgClip2, character: "란" },
     { speaker: "엘", text: "본인은 죽을 것 같다더라.", background: bgClip2, character: "엘" },
+    { speaker: "시스템", text: "그 말투엔 걱정도, 장난도 섞이지 않았다. 사실 전달, 딱 그 정도.", isProgress: true, background: bgClip2 },
+    { speaker: "파스닐", text: "나는 이름 하나를 마음속에 적었다. 데일. 아직 보지 못한 사람. 하지만 이미 이들 사이엔 자리가 있다.", background: bgClip2, isMonologue: true },
     
-    { speaker: "하카", text: "자, 다 왔네. 일단 안으로 들어가자.", background: bgClip2, character: "하카" },
-    { speaker: "시스템", text: "이야기는 계속됩니다...", background: bgClip2, onComplete: () => setGameState("start") }
-  ];
+    { speaker: "하카", expression: "손뼉을 한 번 친다", text: "자, 다 왔네. 일단 안으로 들어가자.", background: bgClip2, character: "하카" },
+    { speaker: "시스템", text: "나는 자연스럽게 가장 마지막에 섰다. 누가 시킨 건 아니었지만, 그게 맞는 위치 같았다. 문은 아직 열려 있었다.", isProgress: true, background: bgClip2, onComplete: () => setGameState("start") }
+  ], []);
 
   const currentDialogue = story[dialogueIndex];
 
+  // Audio handling
   useEffect(() => {
-    if (gameState === "story" || gameState === "start") {
-      audioRef.current = new Audio(bgMusic);
-      audioRef.current.loop = true;
-      audioRef.current.volume = 0.5;
-      
-      const playAudio = () => {
-        if (audioRef.current) audioRef.current.play().catch(() => {});
-      };
-
-      if (gameState === "story") playAudio();
-      
-      document.addEventListener("click", playAudio, { once: true });
-      return () => {
-        if (audioRef.current) {
-          audioRef.current.pause();
-          audioRef.current = null;
-        }
-      };
+    if (gameState === "story" && currentDialogue.background === bgClip2) {
+      if (!audioRef.current) {
+        audioRef.current = new Audio(bgMusic);
+        audioRef.current.loop = true;
+        audioRef.current.volume = 0.4;
+        audioRef.current.play().catch(() => {});
+      }
+    } else if (gameState === "start") {
+      if (audioRef.current) {
+        audioRef.current.pause();
+        audioRef.current = null;
+      }
     }
-  }, [gameState]);
+    return () => {
+      if (gameState === "start" && audioRef.current) {
+        audioRef.current.pause();
+        audioRef.current = null;
+      }
+    };
+  }, [gameState, currentDialogue?.background]);
 
   const handleNext = () => {
     if (currentDialogue.choices) return;
@@ -153,6 +206,21 @@ export default function Home() {
     setDialogueIndex(targetIndex);
   };
 
+  const handleClick = (e: React.MouseEvent) => {
+    const newSparkle = {
+      id: sparkleIdRef.current++,
+      x: e.clientX,
+      y: e.clientY,
+      size: Math.random() * 10 + 5,
+      opacity: 1,
+      color: ["#DC2626", "#FFFFFF", "#FCA5A5"][Math.floor(Math.random() * 3)]
+    };
+    setSparkles(prev => [...prev, newSparkle]);
+    setTimeout(() => {
+      setSparkles(prev => prev.filter(s => s.id !== newSparkle.id));
+    }, 600);
+  };
+
   const getCharacterImage = (name?: string) => {
     switch (name) {
       case "하카": return imgHaka;
@@ -173,7 +241,7 @@ export default function Home() {
         />
         <Button
           variant="ghost"
-          className="absolute bottom-8 right-8 text-white/70 bg-black/50"
+          className="absolute bottom-8 right-8 text-white/70 bg-black/50 backdrop-blur-md"
           onClick={() => setGameState("story")}
         >
           건너뛰기
@@ -185,70 +253,116 @@ export default function Home() {
   if (gameState === "story") {
     const charImg = getCharacterImage(currentDialogue.character);
     return (
-      <div className="relative w-full h-screen overflow-hidden bg-black flex flex-col items-center justify-end">
-        {/* Background */}
-        <div className="absolute inset-0">
-          <img 
-            src={currentDialogue.background || bgClip1} 
-            className="w-full h-full object-cover opacity-80"
-          />
-          <div className="absolute inset-0 bg-gradient-to-t from-black via-transparent to-transparent" />
+      <div className="relative w-full h-screen overflow-hidden bg-black flex flex-col items-center justify-end" onClick={handleClick}>
+        <AnimatePresence>
+          {sparkles.map(s => (
+            <motion.div
+              key={s.id}
+              initial={{ scale: 0, opacity: 1 }}
+              animate={{ scale: 2, opacity: 0 }}
+              className="absolute pointer-events-none z-[100] rounded-full"
+              style={{ left: s.x - s.size/2, top: s.y - s.size/2, width: s.size, height: s.size, backgroundColor: s.color, boxShadow: `0 0 15px ${s.color}` }}
+            />
+          ))}
+        </AnimatePresence>
+
+        {/* Cinematic Background */}
+        <div className="absolute inset-0 z-0">
+          <AnimatePresence mode="wait">
+            <motion.div
+              key={currentDialogue.background}
+              initial={{ opacity: 0, scale: 1.1 }}
+              animate={{ opacity: 1, scale: 1 }}
+              exit={{ opacity: 0 }}
+              transition={{ duration: 1.5 }}
+              className="w-full h-full"
+            >
+              <img 
+                src={currentDialogue.background || bgClip1} 
+                className="w-full h-full object-cover filter brightness-[0.7] contrast-[1.1]"
+              />
+            </motion.div>
+          </AnimatePresence>
+          <div className="absolute inset-0 bg-gradient-to-t from-black via-transparent to-black/20" />
+          <div className="absolute inset-0 bg-[url('https://www.transparenttextures.com/patterns/carbon-fibre.png')] opacity-10 pointer-events-none" />
         </div>
 
-        {/* Character Image */}
+        {/* Character Rendering */}
         <AnimatePresence mode="wait">
           {charImg && (
             <motion.div
               key={currentDialogue.character}
-              initial={{ opacity: 0, y: 100 }}
-              animate={{ opacity: 1, y: 0 }}
-              exit={{ opacity: 0, y: 100 }}
-              className="absolute bottom-0 h-[80%] w-auto pointer-events-none"
+              initial={{ opacity: 0, x: 50 }}
+              animate={{ opacity: 1, x: 0 }}
+              exit={{ opacity: 0, x: -50 }}
+              transition={{ duration: 0.6 }}
+              className="absolute bottom-[-10%] h-[95%] w-auto pointer-events-none z-10"
             >
               <img 
                 src={charImg} 
-                className="h-full object-contain scale-125 origin-bottom"
+                className="h-full object-contain scale-[1.4] origin-bottom drop-shadow-[0_0_30px_rgba(0,0,0,0.8)]"
               />
             </motion.div>
           )}
         </AnimatePresence>
 
-        {/* Dialogue Box */}
-        <div 
-          className="relative z-20 w-full max-w-5xl mb-12 p-8 bg-black/70 border-2 border-red-900/50 rounded-lg cursor-pointer"
+        {/* Dialogue UI */}
+        <motion.div 
+          initial={{ y: 50, opacity: 0 }}
+          animate={{ y: 0, opacity: 1 }}
+          className="relative z-20 w-[90%] max-w-6xl mb-12 cursor-pointer group"
           onClick={handleNext}
         >
-          <div className="text-red-600 font-bold mb-2 text-xl tracking-widest">
-            {currentDialogue.speaker}
-          </div>
-          <div className={`text-white text-2xl leading-relaxed ${currentDialogue.isMonologue ? 'italic text-white/80' : ''}`}>
-            {currentDialogue.text}
-          </div>
+          {/* Progress / System Text Style */}
+          {currentDialogue.isProgress ? (
+            <div className="bg-white/5 backdrop-blur-xl p-8 rounded-2xl border border-white/10 text-center">
+              <p className="text-white/60 text-xl font-light tracking-widest italic animate-pulse">
+                {currentDialogue.text}
+              </p>
+            </div>
+          ) : (
+            <div className="bg-black/80 backdrop-blur-2xl p-10 rounded-2xl border border-red-900/30 shadow-[0_0_50px_rgba(0,0,0,0.5)]">
+              <div className="flex items-baseline gap-4 mb-4">
+                <span className="text-red-500 font-black text-2xl tracking-tighter uppercase">
+                  {currentDialogue.speaker}
+                </span>
+                {currentDialogue.expression && (
+                  <span className="text-white/40 text-sm font-medium bg-white/5 px-3 py-1 rounded-full border border-white/10">
+                    {currentDialogue.expression}
+                  </span>
+                )}
+              </div>
+              
+              <div className={`text-white text-3xl font-medium leading-snug ${currentDialogue.isMonologue ? 'text-white/70 italic font-light' : ''}`}>
+                {currentDialogue.text}
+              </div>
 
-          {currentDialogue.choices && (
-            <div className="mt-6 flex flex-col gap-3">
-              {currentDialogue.choices.map((choice, i) => (
-                <Button
-                  key={i}
-                  variant="outline"
-                  className="w-full justify-start text-left h-auto py-4 text-lg border-red-900/30 hover:bg-red-900/20"
-                  onClick={(e) => {
-                    e.stopPropagation();
-                    handleChoice(choice.targetIndex);
-                  }}
-                >
-                  {choice.text}
-                </Button>
-              ))}
+              {currentDialogue.choices && (
+                <div className="mt-10 grid grid-cols-1 gap-4">
+                  {currentDialogue.choices.map((choice, i) => (
+                    <Button
+                      key={i}
+                      variant="outline"
+                      className="w-full justify-center py-8 text-xl font-bold border-red-900/40 bg-red-950/20 hover:bg-red-600 hover:text-white transition-all duration-300 rounded-xl text-white shadow-xl"
+                      onClick={(e) => {
+                        e.stopPropagation();
+                        handleChoice(choice.targetIndex);
+                      }}
+                    >
+                      {choice.text}
+                    </Button>
+                  ))}
+                </div>
+              )}
+
+              {!currentDialogue.choices && (
+                <div className="absolute bottom-6 right-8 opacity-0 group-hover:opacity-100 transition-opacity">
+                  <ChevronRight className="w-8 h-8 text-red-500 animate-pulse" />
+                </div>
+              )}
             </div>
           )}
-
-          {!currentDialogue.choices && (
-            <div className="absolute bottom-4 right-4 animate-bounce">
-              <ChevronRight className="text-red-600" />
-            </div>
-          )}
-        </div>
+        </motion.div>
       </div>
     );
   }
@@ -257,40 +371,64 @@ export default function Home() {
     <div
       className="relative w-full h-screen overflow-hidden bg-black"
       onMouseMove={(e) => {
-        const x = (e.clientX - window.innerWidth / 2) / 100;
-        const y = (e.clientY - window.innerHeight / 2) / 100;
+        const x = (e.clientX - window.innerWidth / 2) / 80;
+        const y = (e.clientY - window.innerHeight / 2) / 80;
         setMousePosition({ x, y });
       }}
+      onClick={handleClick}
     >
-      {/* Parallax Background */}
+      <AnimatePresence>
+        {sparkles.map(s => (
+          <motion.div
+            key={s.id}
+            initial={{ scale: 0, opacity: 1 }}
+            animate={{ scale: 2, opacity: 0 }}
+            className="absolute pointer-events-none z-[100] rounded-full"
+            style={{ left: s.x - s.size/2, top: s.y - s.size/2, width: s.size, height: s.size, backgroundColor: s.color, boxShadow: `0 0 15px ${s.color}` }}
+          />
+        ))}
+      </AnimatePresence>
+
       <div
-        className="absolute inset-0 transition-transform duration-100 ease-out"
+        className="absolute inset-0 transition-transform duration-500 ease-out"
         style={{ transform: `translate(${mousePosition.x}px, ${mousePosition.y}px) scale(1.05)` }}
       >
-        <img src={bgStart} className="w-full h-full object-cover opacity-60" />
-        <div className="absolute inset-0 bg-gradient-to-r from-black via-black/40 to-transparent" />
+        <img src={bgStart} className="w-full h-full object-cover opacity-50 filter grayscale-[0.2]" />
+        <div className="absolute inset-0 bg-gradient-to-r from-black via-black/20 to-transparent" />
       </div>
 
-      <div className="relative z-10 flex h-full p-20">
-        <div className="flex-1 flex flex-col justify-center">
-          <h1 className="text-9xl font-black text-red-600 tracking-tighter" style={{ textShadow: '0 0 50px rgba(220, 38, 38, 0.5)' }}>
+      <div className="relative z-10 flex h-full p-24 items-center">
+        <div className="flex-1">
+          <motion.h1 
+            initial={{ x: -100, opacity: 0 }}
+            animate={{ x: 0, opacity: 1 }}
+            className="text-[12rem] font-black text-red-600 tracking-tighter leading-none" 
+            style={{ textShadow: '0 0 100px rgba(220, 38, 38, 0.4)' }}
+          >
             아포AU
-          </h1>
-          <h2 className="text-6xl font-bold text-red-600 mt-2">2026</h2>
+          </motion.h1>
+          <motion.h2 
+            initial={{ x: -100, opacity: 0 }}
+            animate={{ x: 0, opacity: 1 }}
+            transition={{ delay: 0.2 }}
+            className="text-7xl font-light text-red-600/80 tracking-[1.5rem] mt-4 ml-4"
+          >
+            2026
+          </motion.h2>
         </div>
 
-        <div className="flex flex-col justify-center gap-4">
+        <div className="flex flex-col gap-6">
           <Button
             size="lg"
-            className="w-64 h-16 text-2xl font-bold bg-red-600 hover:bg-red-700 text-white"
+            className="w-80 h-20 text-3xl font-black bg-red-600 hover:bg-red-500 text-white rounded-2xl shadow-[0_0_50px_rgba(220,38,38,0.3)] transition-all hover:scale-105"
             onClick={() => setGameState("video")}
           >
             시작하기
           </Button>
-          <Button variant="ghost" className="w-64 h-14 text-xl text-white/70 hover:text-white bg-white/5">
+          <Button variant="ghost" className="w-80 h-16 text-xl text-white/50 hover:text-white bg-white/5 rounded-xl hover:bg-white/10">
             이어하기
           </Button>
-          <Button variant="ghost" className="w-64 h-14 text-xl text-white/70 hover:text-white bg-white/5">
+          <Button variant="ghost" className="w-80 h-16 text-xl text-white/50 hover:text-white bg-white/5 rounded-xl hover:bg-white/10">
             설정
           </Button>
         </div>
