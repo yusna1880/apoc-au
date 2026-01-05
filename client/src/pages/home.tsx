@@ -415,7 +415,7 @@ export default function Home() {
   };
 
   const getCharacterImage = (name?: string, index?: number) => {
-    if (!name) return null;
+    if (!name || name === "시스템") return null;
     
     // Character V2 logic (starting from #C10 which is index 146)
     const isV2 = index !== undefined && index >= 146;
@@ -452,7 +452,7 @@ export default function Home() {
   }
 
   if (gameState === "story") {
-    const charImg = getCharacterImage(currentDialogue.character, dialogueIndex);
+    const charImg = getCharacterImage(currentDialogue.character || currentDialogue.speaker, dialogueIndex);
     return (
       <div className="relative w-full h-screen overflow-hidden bg-black flex flex-col items-center justify-end" onClick={handleClick}>
         <AnimatePresence>
@@ -492,7 +492,7 @@ export default function Home() {
         <AnimatePresence mode="wait">
           {charImg && (
             <motion.div
-              key={`${currentDialogue.character}-${dialogueIndex}`}
+              key={`${currentDialogue.character || currentDialogue.speaker}-${dialogueIndex}`}
               initial={{ opacity: 0, x: 20 }}
               animate={{ opacity: 1, x: 0 }}
               exit={{ opacity: 0, x: -20 }}
