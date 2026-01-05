@@ -16,12 +16,19 @@ import bgMart from "@assets/마트_1767635092045.png";
 import bgNearHospital from "@assets/병원_근처_1767635318516.png";
 import bgHospital from "@assets/병원_1767635422546.png";
 
+// New Backgrounds from user
+import bgC16 from "@assets/KakaoTalk_20260106_043354949_1767642072955.png";
+import bgHospitalNew from "@assets/병원_1767642481036.png";
+import bgNearHospitalNew from "@assets/병원_근처_1767642517933.png";
+import bgLivingRoomNew from "@assets/거실_1767642563208.png";
+
 // Assets - Characters (Normal)
 import imgHaka from "@assets/하카_1767627793844.png";
 import imgRan from "@assets/란_1767627793837.png";
 import imgRenja from "@assets/렌쟈_1767627793839.png";
 import imgEl from "@assets/엘_1767627793842.png";
 import imgPasnil from "@assets/파스닐_1767631756273.png";
+import imgDale from "@assets/데일_1767642442612.png";
 
 // Assets - Characters (V2)
 import imgHaka2 from "@assets/하카2_1767637478411.png";
@@ -34,6 +41,7 @@ import bgMusicStart from "@assets/Screen_Recording_20260106-003832_YouTube_17676
 import bgMusic1 from "@assets/Screen_Recording_20260106-012639_YouTube_(1)_1767633094663.mp3";
 const bgMusicBalcony = "/attached_assets/videoplayback_1767633518219.weba";
 import bgMusicCity from "@assets/Screen_Recording_20260106-023850_YouTube_1767634933495.mp3";
+import bgMusicC16 from "@assets/Screen_Recording_20260106-044430_YouTube_(1)_1767642743472.mp3";
 
 type SceneType = "start" | "video" | "story";
 
@@ -51,6 +59,7 @@ interface DialogueLine {
   triggerTransition?: boolean;
   audio?: string | "stop";
   marker?: string;
+  hideCharacter?: boolean;
 }
 
 interface Choice {
@@ -370,7 +379,7 @@ export default function Home() {
     // #C11 - 마트 (Dialogue index 199)
     { marker: "#C11", speaker: "시스템", text: "마트. 자동문은 열려 있다. 전기가 있어서가 아니라 부서져서. 안은 생각보다 조용하다. 선반은 많이 비어 있지만 완전히 털린 건 아니다.", background: bgMart, isProgress: true, audio: "stop" },
     { speaker: "엘", text: "필요한 것만. 다시 올 수 있어야 의미가 있어.", background: bgMart, character: "엘" },
-    { speaker: "렌쟈", text: "통조림, 물, 건전지. 유통기한 긴 걸로. 의약품은 따로 없네. 걱정이야.", background: bgMart, character: "렌쟈" },
+    { speaker: "렌쟈", text: "통조림, 물, 건전지. 유통기한 긴 걸로. 의약품도 있으면 좋고.", background: bgMart, character: "렌쟈" },
     { speaker: "파스닐", text: "이 정도면 이틀 반.", background: bgMart, isMonologue: true },
     { speaker: "시스템", text: "그 순간— 멀리서 무언가 떨어지는 소리. 세 사람 모두 멈춘다. 듣는다. 발을 끄는 소리.", isProgress: true, background: bgMart },
     { speaker: "엘", text: "시간 됐다.", background: bgMart, character: "엘" },
@@ -444,7 +453,153 @@ export default function Home() {
     { speaker: "렌쟈", text: "응급실, 약국, 처치실… 다 한 방향이네. 역시 현실적. 진통제, 소염제, 항생제… 아, 이건 란이 싫어하겠다. 사람 마음은 안 챙겨주네. 아쉽네. 초코우유는 없었는데. 하카오빠가 갖다달랬어. 이럴 때일수록 사소한 게 오래 남아.", background: bgHospital, character: "렌쟈" },
     { speaker: "엘", text: "약국 먼저. 다 챙겨. 몸이 먼저야. ‘버틴다’는 말 되게 듣기싫다. 봤어. 가방 닫아. 지금 그게 아쉬워?", background: bgHospital, character: "엘" },
     { speaker: "파스닐", text: "이 정도면 며칠은 버텨요. (선택지가 없는 소리다.)", background: bgHospital, isMonologue: true },
-    { speaker: "시스템", text: "멀리서 무언가 끌리는 소리. 이번엔 확실하다. 렌쟈의 손이 멈춘다. 세 사람은 뛰지 않는다. 렌쟈는 나오면서 한 번 뒤를 본다.", isProgress: true, background: bgHospital, onComplete: () => { setGameState("start"); setDialogueIndex(0); } }
+    { speaker: "시스템", text: "멀리서 무언가 끌리는 소리. 이번엔 확실하다. 렌쟈의 손이 멈춘다. 세 사람은 뛰지 않는다. 렌쟈는 나오면서 한 번 뒤를 본다.", isProgress: true, background: bgHospital },
+    
+    // #C16 (Dialogue index 255)
+    { marker: "#C16", speaker: "렌쟈", text: "“…어?”", background: bgC16, character: "렌쟈", hideCharacter: true, audio: bgMusicC16 },
+    { speaker: "시스템", text: "침대 위 사람은 수척하다. 눈 밑은 검고, 이마엔 열로 번진 땀 자국.", background: bgC16, isProgress: true, hideCharacter: true },
+    { speaker: "엘", text: "“…데일?? ”", background: bgC16, character: "엘", hideCharacter: true },
+    { speaker: "파스닐", text: "아픈 사람의 얼굴인데 편히 아픈 얼굴은 아니다.", background: bgC16, isMonologue: true, hideCharacter: true },
+    { speaker: "시스템", text: "데일은 눈을 뜬다. 느리다. 짜증부터 나온다.", background: bgC16, isProgress: true, hideCharacter: true },
+    { speaker: "데일", text: "“…뭐야.”", background: bgC16, character: "데일", hideCharacter: true },
+    { speaker: "렌쟈", text: "“우와 언니 살아 있었네?”", background: bgC16, character: "렌쟈", hideCharacter: true },
+    { speaker: "데일", text: "“죽었으면 너희가 더 기뻤을까.”", background: bgC16, character: "데일", hideCharacter: true },
+    { speaker: "렌쟈", text: "“와 성격 진짜.”", background: bgC16, character: "렌쟈", hideCharacter: true },
+    { speaker: "데일", text: "“이틀 동안 혼자 살아보면 그래.”", background: bgC16, character: "데일", hideCharacter: true },
+    { speaker: "엘", text: "“왜 여기 있는건데.”", background: bgC16, character: "엘", hideCharacter: true },
+    { speaker: "데일", text: "“감기.”", background: bgC16, character: "데일", hideCharacter: true },
+    { speaker: "엘", text: "“그건 아는데.”", background: bgC16, character: "엘", hideCharacter: true },
+    { speaker: "데일", text: "“…왔더니 갑자기 밖이 저 모양이더라.”", background: bgC16, character: "데일", hideCharacter: true },
+    { speaker: "렌쟈", text: "“그래서?”", background: bgC16, character: "렌쟈", hideCharacter: true },
+    { speaker: "데일", text: "“문 잠기고, 사람들 뛰고, 의사 하나 쓰러지고.”", background: bgC16, character: "데일", hideCharacter: true },
+    { speaker: "렌쟈", text: "“그 다음?”", background: bgC16, character: "렌쟈", hideCharacter: true },
+    { speaker: "데일", text: "“그 다음은 내가 알아서.”", background: bgC16, character: "데일", hideCharacter: true },
+    { speaker: "시스템", text: "말투는 퉁명한데 목소리는 갈라져 있다.", background: bgC16, isProgress: true, hideCharacter: true },
+    { speaker: "파스닐", text: "강제로 버틴 사람이다. 선택지가 없었던 쪽.", background: bgC16, isMonologue: true, hideCharacter: true },
+    { speaker: "시스템", text: "엘은 주변을 훑는다.", background: bgC16, isProgress: true, hideCharacter: true },
+    { speaker: "엘", text: "“이틀 동안 혼자?”", background: bgC16, character: "엘", hideCharacter: true },
+    { speaker: "데일", text: "“아니. 처음엔 몇 명 있었어.”", background: bgC16, character: "데일", hideCharacter: true },
+    { speaker: "렌쟈", text: "“…처음엔.”", background: bgC16, character: "렌쟈", hideCharacter: true },
+    { speaker: "데일", text: "“응. 처음엔.”", background: bgC16, character: "데일", hideCharacter: true },
+    { speaker: "시스템", text: "렌쟈는 더 묻지 않는다. 표정만 굳는다.", background: bgC16, isProgress: true, hideCharacter: true },
+    { speaker: "엘", text: "“진짜 누가 여기서 이틀을 버티긴 했네. 얼른 가자.”", background: bgC16, character: "엘", hideCharacter: true },
+    { speaker: "데일", text: "“…어디로.”", background: bgC16, character: "데일", hideCharacter: true },
+    { speaker: "렌쟈", text: "“별장.”", background: bgC16, character: "렌쟈", hideCharacter: true },
+    { speaker: "데일", text: "“하카 있냐.”", background: bgC16, character: "데일", hideCharacter: true },
+    { speaker: "렌쟈", text: "“응.”", background: bgC16, character: "렌쟈", hideCharacter: true },
+    { speaker: "데일", text: "“…그럼 안가.”", background: bgC16, character: "데일", hideCharacter: true },
+    { speaker: "렌쟈", text: "“와 선택 빠르네.”", background: bgC16, character: "렌쟈", hideCharacter: true },
+    { speaker: "엘", text: "“어차피 선택 없어.”", background: bgC16, character: "엘", hideCharacter: true },
+
+    // #C18 (Dialogue index 289)
+    { marker: "#C18", speaker: "시스템", text: "이동 준비. 렌쟈가 데일을 부축한다.", background: bgHospitalNew, isProgress: true },
+    { speaker: "렌쟈", text: "“서?”", background: bgHospitalNew, character: "렌쟈" },
+    { speaker: "데일", text: "“말은 서게 하지 마.”", background: bgHospitalNew, character: "데일" },
+    { speaker: "렌쟈", text: "“어머나 언니. ”", background: bgHospitalNew, character: "렌쟈" },
+    { speaker: "데일", text: "“농담 아니고 진짜 열 아직 있어.”", background: bgHospitalNew, character: "데일" },
+    { speaker: "엘", text: "“말 줄여.”", background: bgHospitalNew, character: "엘" },
+    { speaker: "데일", text: "“네, 거지 팀장님.”", background: bgHospitalNew, character: "데일" },
+    { speaker: "엘", text: "“저거 열있는거 맞나 좀 봐줘.”", background: bgHospitalNew, character: "엘" },
+    { speaker: "파스닐", text: "파스닐은 뒤를 맡는다.", background: bgHospitalNew, isMonologue: true },
+    { speaker: "시스템", text: "병원 복도 — 철수. 걸음은 느리다. 데일의 숨이 거칠다.", background: bgHospitalNew, isProgress: true },
+    { speaker: "렌쟈", text: "“언니, 이틀 동안 뭐 먹었어?”", background: bgHospitalNew, character: "렌쟈" },
+    { speaker: "데일", text: "“수액, 자판기 물, 그리고 후회.”", background: bgHospitalNew, character: "데일" },
+    { speaker: "렌쟈", text: "“후회는 칼로리 없는데.”", background: bgHospitalNew, character: "렌쟈" },
+    { speaker: "데일", text: "“그래서 이렇게 마른 거야.”", background: bgHospitalNew, character: "데일" },
+    { speaker: "엘", text: "“입은 멀쩡하네.”", background: bgHospitalNew, character: "엘" },
+    { speaker: "데일", text: "“이게 살아 있는 증거지.”", background: bgHospitalNew, character: "데일" },
+    { speaker: "파스닐", text: "이 사람은 살아남은 걸 미안해하지 않는다... 미안해 하는게 더 이상한가?", background: bgHospitalNew, isMonologue: true },
+
+    // #C19 (Dialogue index 306)
+    { marker: "#C19", speaker: "시스템", text: "병원 밖. 차가 보이자 데일은 잠깐 멈춘다.", background: bgNearHospitalNew, isProgress: true },
+    { speaker: "데일", text: "“…밖, 더 심해?”", background: bgNearHospitalNew, character: "데일" },
+    { speaker: "엘", text: "“응.”", background: bgNearHospitalNew, character: "엘" },
+    { speaker: "데일", text: "“…그럼 빨리 가자.”", background: bgNearHospitalNew, character: "데일" },
+    { speaker: "렌쟈", text: "“와, 말 잘 듣네.”", background: bgNearHospitalNew, character: "렌쟈" },
+    { speaker: "데일", text: "“여긴 싫거든.”", background: bgNearHospitalNew, character: "데일" },
+    { speaker: "시스템", text: "차 문이 닫힌다. 엔진이 켜진다. 병원은 아무 말도 하지 않는다.", background: bgNearHospitalNew, isProgress: true },
+    { speaker: "시스템", text: "하지만— 이 사람은 여기서 이틀을 살았다. 그리고 그 흔적은 말투에 그대로 남아 있다.", background: bgNearHospitalNew, isProgress: true },
+    { speaker: "시스템", text: "문을 잠근다. 엔진이 다시 울린다.", background: bgNearHospitalNew, isProgress: true },
+    { speaker: "파스닐", text: "약은 챙겼다. 하지만 이건 치료가 아니라 유예다.", background: bgNearHospitalNew, isMonologue: true },
+    { speaker: "시스템", text: "렌쟈는 좌석에 몸을 기대며 말한다.", background: bgNearHospitalNew, isProgress: true },
+    { speaker: "렌쟈", text: "“란한테 뭐라고 하지?”", background: bgNearHospitalNew, character: "렌쟈" },
+    { speaker: "엘", text: "“사실만.”", background: bgNearHospitalNew, character: "엘" },
+    { speaker: "렌쟈", text: "“그게 제일 아픈데.”", background: bgNearHospitalNew, character: "렌쟈" },
+    { speaker: "엘", text: "“그래도 필요해.”", background: bgNearHospitalNew, character: "엘" },
+    { speaker: "시스템", text: "차는 다시 숲으로 향한다. 병원은 뒤에서 아무 말도 하지 않는다.", background: bgNearHospitalNew, isProgress: true },
+
+    // #C20 (Dialogue index 321)
+    { marker: "#C20", speaker: "시스템", text: "별장 문이 열리자, 안에 있던 공기가 잠깐 멈춘다. 엘이 먼저 들어오고, 그 뒤로 렌쟈가 누군가를 데리고 온다.", background: bgLivingRoomNew, isProgress: true },
+    { speaker: "시스템", text: "고개를 들자마자 다들 동시에 알아본다.", background: bgLivingRoomNew, isProgress: true },
+    { speaker: "란", text: "“…와. 이 누님이 살아있을 줄은 몰랐는데요.”", background: bgLivingRoomNew, character: "란" },
+    { speaker: "하카", text: "“어. 진짜네. 데일이잖아.”", background: bgLivingRoomNew, character: "하카" },
+    { speaker: "시스템", text: "데일은 신발도 제대로 벗지 않고 서 있다가, 피곤한 눈으로 한 바퀴 훑는다.", background: bgLivingRoomNew, isProgress: true },
+    { speaker: "데일", text: "“하. 여기까지 와서 이 얼굴들을 또 보네.”", background: bgLivingRoomNew, character: "데일" },
+    { speaker: "하카", text: "“병원에서 나왔다며.”", background: bgLivingRoomNew, character: "하카" },
+    { speaker: "데일", text: "“나왔다기보단… 이틀 동안 갇혀 있다가 기어 나온 거지.”", background: bgLivingRoomNew, character: "데일" },
+    { speaker: "란", text: "“누님… 괜찮으세요?”", background: bgLivingRoomNew, character: "란" },
+    { speaker: "데일", text: "“괜찮아 보이면 병원에서 그 꼴이었겠어?”", background: bgLivingRoomNew, character: "데일" },
+    { speaker: "시스템", text: "란이 입 다문다. 불쌍하다. 렌쟈가 가볍게 손을 흔든다.", background: bgLivingRoomNew, isProgress: true },
+    { speaker: "렌쟈", text: "“그래도 다행이다. 진짜 죽은 줄 알았거든.”", background: bgLivingRoomNew, character: "렌쟈" },
+    { speaker: "데일", text: "“너는 그런 말 참 쉽게 하지.”", background: bgLivingRoomNew, character: "데일" },
+    { speaker: "렌쟈", text: "“응. 살아있는 사람 앞에서만.”", background: bgLivingRoomNew, character: "렌쟈" },
+    { speaker: "하카", text: "“병원은 어땠어? 아직도 사람들 서로 물어뜯고 있어?”", background: bgLivingRoomNew, character: "하카" },
+    { speaker: "데일", text: "“감염보다 인간이 더 끔찍하더라. 침대 하나 두고 싸우고, 약 숨기고. …딱 네가 좋아할 만한 환경이야.”", background: bgLivingRoomNew, character: "데일" },
+    { speaker: "하카", text: "“칭찬 고맙네. 늙을수록 병원을 가까이 하랬거든”", background: bgLivingRoomNew, character: "하카" },
+    { speaker: "시스템", text: "그때, 한 명. 조금 떨어진 곳에 서 있던 파스닐을 데일이 이제야 본다.", background: bgLivingRoomNew, isProgress: true },
+    { speaker: "데일", text: "“…근데 쟤는 뭐야.”", background: bgLivingRoomNew, character: "데일" },
+    { speaker: "파스닐", text: "“아, 저는—”", background: bgLivingRoomNew, isMonologue: true },
+    { speaker: "엘", text: "“파스닐. 이번에 합류했어.”", background: bgLivingRoomNew, character: "엘" },
+    { speaker: "하카", text: "“맞아. 우리 dj 지. 이제 총무라고 해드려야 하나?”", background: bgLivingRoomNew, character: "하카" },
+    { speaker: "데일", text: "“새 사람?”", background: bgLivingRoomNew, character: "데일" },
+    { speaker: "엘", text: "“그래.”", background: bgLivingRoomNew, character: "엘" },
+    { speaker: "데일", text: "“지금 이 상황에?”", background: bgLivingRoomNew, character: "데일" },
+    { speaker: "시스템", text: "나를 위아래로 훑는다. 무기, 손, 자세. 전부 본다.", background: bgLivingRoomNew, isProgress: true },
+    { speaker: "데일", text: "“우와. 엄청 약해 보이네.”", background: bgLivingRoomNew, character: "데일" },
+    { speaker: "파스닐", text: "…그 말, 처음은 아니다.", background: bgLivingRoomNew, isMonologue: true },
+    { speaker: "렌쟈", text: "“일은 잘해. 물자 정리도 꼼꼼하고.”", background: bgLivingRoomNew, character: "렌쟈" },
+    { speaker: "데일", text: "“그게 여기서 생존이랑 직결돼?”", background: bgLivingRoomNew, character: "데일" },
+    { speaker: "엘", text: "“돼.”", background: bgLivingRoomNew, character: "엘" },
+    { speaker: "시스템", text: "짧고 단호하다. 데일이 입을 다문다.", background: bgLivingRoomNew, isProgress: true },
+    { speaker: "하카", text: "“뭐, 마음에 안 들면 나중에 정리하면 되잖아.”", background: bgLivingRoomNew, character: "하카" },
+    { speaker: "데일", text: "“너 입에서 나오는 ‘정리’는 믿음이 안 가. 그나마 말은 제일 정상적이네.”", background: bgLivingRoomNew, character: "데일" },
+    { speaker: "엘", text: "“일단 쉬어. 내일 의약품 더 필요해.”", background: bgLivingRoomNew, character: "엘" },
+    { speaker: "데일", text: "“나도 가.”", background: bgLivingRoomNew, character: "데일" },
+    { speaker: "란", text: "“누님, 아직 몸—”", background: bgLivingRoomNew, character: "란" },
+    { speaker: "데일", text: "“내가 알아서 해. ”", background: bgLivingRoomNew, character: "데일" },
+    { speaker: "시스템", text: "불쌍하다. 렌쟈가 고개를 끄덕인다.", background: bgLivingRoomNew, isProgress: true },
+    { speaker: "렌쟈", text: "“그래. 언니 어차피 조용히 살 날은 이미 지났잖아.”", background: bgLivingRoomNew, character: "렌쟈" },
+
+    // 4일차 (Dialogue index 361)
+    { speaker: "시스템", text: "4일차. 별장 — 아침. 아침이라고 부르기엔 햇빛이 너무 얇다.", background: bgLivingRoomNew, isProgress: true },
+    { speaker: "시스템", text: "부엌 쪽에서 냄비 뚜껑 닫히는 소리. 렌쟈다.", background: bgLivingRoomNew, isProgress: true },
+    { speaker: "렌쟈", text: "“죽은 세상에서도 아침은 오네. 성실하다.”", background: bgLivingRoomNew, character: "렌쟈" },
+    { speaker: "하카", text: "“세상은 안 성실해. 사람만 출근하지.”", background: bgLivingRoomNew, character: "하카" },
+    { speaker: "데일", text: "“…나 약 냄새 맡기 싫은데.”", background: bgLivingRoomNew, character: "데일" },
+    { speaker: "렌쟈", text: "“그럼 열 내려가든가.”", background: bgLivingRoomNew, character: "렌쟈" },
+    { speaker: "데일", text: "“사람 정서라는 게 있잖아.”", background: bgLivingRoomNew, character: "데일" },
+    { speaker: "렌쟈", text: "“그래서 죽을 뻔했잖아.”", background: bgLivingRoomNew, character: "렌쟈" },
+    { speaker: "데일", text: "“…진짜 성격.”", background: bgLivingRoomNew, character: "데일" },
+    { speaker: "시스템", text: "란이 조심스럽게 다가온다. 어깨는 여전히 고정돼 있다.", background: bgLivingRoomNew, isProgress: true },
+    { speaker: "란", text: "“누님, 열은 좀—”", background: bgLivingRoomNew, character: "란" },
+    { speaker: "데일", text: "“괜찮아. 죽을 정도는 아니야.”", background: bgLivingRoomNew, character: "데일" },
+    { speaker: "하카", text: "“죽을 ‘정도’가 기준인 게 문제지.”", background: bgLivingRoomNew, character: "하카" },
+    { speaker: "엘", text: "“오늘 나간다.”", background: bgLivingRoomNew, character: "엘" },
+    { speaker: "렌쟈", text: "“또?”", background: bgLivingRoomNew, character: "렌쟈" },
+    { speaker: "엘", text: "“약이 부족해.”", background: bgLivingRoomNew, character: "엘" },
+    { speaker: "데일", text: "“어제도 약이었잖아.”", background: bgLivingRoomNew, character: "데일" },
+    { speaker: "엘", text: "“어제는 응급. 오늘은 유지.”", background: bgLivingRoomNew, character: "엘" },
+    { speaker: "하카", text: "“유지 좋아하네. 이 팀이 제일 못하는 건데.”", background: bgLivingRoomNew, character: "하카" },
+    { speaker: "시스템", text: "렌쟈가 웃는다.", background: bgLivingRoomNew, isProgress: true },
+    { speaker: "렌쟈", text: "“그래도 해야지. 안 하면 더 빨리 망하잖아.”", background: bgLivingRoomNew, character: "렌쟈" },
+    { speaker: "엘", text: "“파스닐.”", background: bgLivingRoomNew, character: "엘" },
+    { speaker: "파스닐", text: "“네.”", background: bgLivingRoomNew, isMonologue: true },
+    { speaker: "엘", text: "“오늘도 같이 간다.”", background: bgLivingRoomNew, character: "엘" },
+    { speaker: "데일", text: "“잠깐.”", background: bgLivingRoomNew, character: "데일" },
+    { speaker: "엘", text: "“엘이 데일을 본다.”", background: bgLivingRoomNew, character: "엘" },
+    { speaker: "데일", text: "“어제 본 바로는 쟤 아직도 후방 담당이 더 어울려.”", background: bgLivingRoomNew, character: "데일" },
+    { speaker: "파스닐", text: "아침부터 평가다.", background: bgLivingRoomNew, isMonologue: true },
+    { speaker: "렌쟈", text: "“언니, 어제 이 사람 없었으면”", background: bgLivingRoomNew, character: "렌쟈", onComplete: () => { setGameState("start"); setDialogueIndex(0); } }
   ], []);
 
   const currentDialogue = story[dialogueIndex];
@@ -453,7 +608,8 @@ export default function Home() {
   useEffect(() => {
     const backgrounds = [
       bgStart, bgClip1, bgClip2, bgLivingRoom, bgBalcony, 
-      bgNearForest, bgStorage, bgCity1, bgMart, bgNearHospital, bgHospital
+      bgNearForest, bgStorage, bgCity1, bgMart, bgNearHospital, bgHospital,
+      bgC16, bgHospitalNew, bgNearHospitalNew, bgLivingRoomNew
     ];
     backgrounds.forEach(src => {
       const img = new Image();
@@ -577,6 +733,7 @@ export default function Home() {
       case "란": return isV2 ? imgRan2 : imgRan;
       case "렌쟈": return isV2 ? imgRenja2 : imgRenja;
       case "엘": return isV2 ? imgEl2 : imgEl;
+      case "데일": return imgDale;
       case "파스닐": 
         // Pasnil only visible in CLIP1 (indices 0-4)
         return (index !== undefined && index <= 4) ? imgPasnil : null;
@@ -604,7 +761,7 @@ export default function Home() {
   }
 
   if (gameState === "story") {
-    const charImg = getCharacterImage(currentDialogue.character || currentDialogue.speaker, dialogueIndex);
+    const charImg = currentDialogue.hideCharacter ? null : getCharacterImage(currentDialogue.character || currentDialogue.speaker, dialogueIndex);
     return (
       <div className="relative w-full h-screen overflow-hidden bg-black flex flex-col items-center justify-end" onClick={handleClick}>
         {/* Save Button */}
