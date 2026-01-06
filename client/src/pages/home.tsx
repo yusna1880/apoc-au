@@ -62,12 +62,12 @@ const bgMusicBalcony = "/attached_assets/videoplayback_1767633518219.weba";
 import bgMusicCity from "@assets/Screen_Recording_20260106-023850_YouTube_1767634933495.mp3";
 import bgMusicC16 from "@assets/Screen_Recording_20260106-044430_YouTube_(1)_1767642743472.mp3";
 
-// New Audio from user
-const audioAloneTonight = "/attached_assets/Alone_Tonight_1767734880442.mp3";
-const audioEpicAftermath = "/attached_assets/Epic_Post_Apocalyptic_Music_-_Aftermath_1767734880441.mp3";
-const audioHorrorChase = "/attached_assets/Horror_Chase_Music_Torture_Chamber___Royalty_Free_Action_And_P_1767734880439.mp3";
-const audioHeartBeat = "/attached_assets/Heart_Beat_[SOUND_EFFECT]_1767734880437.mp3";
-const audioSigh = "/attached_assets/Sigh_(Killing_Eve)_1767734880443.mp3";
+// Audio imports
+import audioAloneTonight from "@assets/Alone_Tonight_1767734880442.mp3";
+import audioEpicAftermath from "@assets/Epic_Post_Apocalyptic_Music_-_Aftermath_1767734880441.mp3";
+import audioHorrorChase from "@assets/Horror_Chase_Music_Torture_Chamber___Royalty_Free_Action_And_P_1767734880439.mp3";
+import audioHeartBeat from "@assets/Heart_Beat_[SOUND_EFFECT]_1767734880437.mp3";
+import audioSigh from "@assets/Sigh_(Killing_Eve)_1767734880443.mp3";
 
 type SceneType = "start" | "video" | "story";
 
@@ -1135,11 +1135,11 @@ export default function Home() {
     { speaker: "란", text: "\"지장 없습니다.\"", background: bg_2, character: "란" },
     { speaker: "시스템", text: "그 대답에 렌쟈는 더 묻지 않는다.", background: bg_2, isProgress: true },
 
-    // 선택지 A (대화)
+    // 선택지 A (대화) - 결과 영향 없음, 다음 줄로 진행
     { speaker: "시스템", text: "차가 급커브를 돌며 흔들린다. 잠깐의 정적.", background: bg_2, isProgress: true,
       choices: [
-        { text: "1. \"란은 원래 이런 위험한 일 자주 했어요?\"", targetIndex: 824 },
-        { text: "2. \"렌쟈가 있어서 란이 버티는 것 같네요.\"", targetIndex: 824 }
+        { text: "1. \"란은 원래 이런 위험한 일 자주 했어요?\"", targetIndex: 957 },
+        { text: "2. \"렌쟈가 있어서 란이 버티는 것 같네요.\"", targetIndex: 957 }
       ]
     },
     { speaker: "란", text: "\"…그렇습니다.\"", background: bg_2, character: "란" },
@@ -1163,8 +1163,8 @@ export default function Home() {
     { speaker: "란", text: "\"지금은 '말 듣는 쪽'이 맞습니다.\"", background: bg_2, character: "란" },
     { speaker: "시스템", text: "그 어조는 정중하지만, 단정적이다.", background: bg_2, isProgress: true,
       choices: [
-        { text: "1. \"소리 커지기 전에 통과하는게 낫겠어요.\"", targetIndex: 844 },
-        { text: "2. 란의 말대로 정차하고 상황을 본다.", targetIndex: 852 }
+        { text: "1. \"소리 커지기 전에 통과하는게 낫겠어요.\"", targetIndex: 984 },
+        { text: "2. 란의 말대로 정차하고 상황을 본다.", targetIndex: 994 }
       ]
     },
 
