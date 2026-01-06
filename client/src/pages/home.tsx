@@ -63,11 +63,11 @@ import bgMusicCity from "@assets/Screen_Recording_20260106-023850_YouTube_176763
 import bgMusicC16 from "@assets/Screen_Recording_20260106-044430_YouTube_(1)_1767642743472.mp3";
 
 // New Audio from user
-const audioAloneTonight = "/attached_assets/Alone_Tonight_1767729669950.mp3";
-const audioEpicAftermath = "/attached_assets/Epic_Post_Apocalyptic_Music_-_Aftermath_1767729669949.mp3";
-const audioHorrorChase = "/attached_assets/Horror_Chase_Music_Torture_Chamber___Royalty_Free_Action_And_P_1767729669947.mp3";
-const audioHeartBeat = "/attached_assets/Heart_Beat_[SOUND_EFFECT]_1767729669945.mp3";
-const audioSigh = "/attached_assets/Sigh_(Killing_Eve)_(1)_1767729669952.mp3";
+const audioAloneTonight = "/attached_assets/Alone_Tonight_1767734880442.mp3";
+const audioEpicAftermath = "/attached_assets/Epic_Post_Apocalyptic_Music_-_Aftermath_1767734880441.mp3";
+const audioHorrorChase = "/attached_assets/Horror_Chase_Music_Torture_Chamber___Royalty_Free_Action_And_P_1767734880439.mp3";
+const audioHeartBeat = "/attached_assets/Heart_Beat_[SOUND_EFFECT]_1767734880437.mp3";
+const audioSigh = "/attached_assets/Sigh_(Killing_Eve)_1767734880443.mp3";
 
 type SceneType = "start" | "video" | "story";
 
