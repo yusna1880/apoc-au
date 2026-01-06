@@ -1496,12 +1496,50 @@ export default function Home() {
     }, 1000);
   };
 
+  // Find the appropriate audio for a given index by looking back through story
+  const findAudioForIndex = (index: number): string | null => {
+    for (let i = index; i >= 0; i--) {
+      const line = story[i];
+      if (line.audio) {
+        if (line.audio === "stop") return null;
+        return line.audio;
+      }
+    }
+    return null;
+  };
+
+  // Start audio for a given track
+  const startAudio = (audioSrc: string | null) => {
+    if (audioRef.current) {
+      audioRef.current.pause();
+      audioRef.current = null;
+    }
+    if (audioSrc) {
+      audioRef.current = new Audio(audioSrc);
+      audioRef.current.loop = true;
+      audioRef.current.volume = 0.4;
+      audioRef.current.play().catch(() => {});
+    }
+  };
+
   const loadGame = () => {
     const savedIndex = localStorage.getItem("game_save_index");
     if (savedIndex !== null) {
-      setDialogueIndex(parseInt(savedIndex));
+      const idx = parseInt(savedIndex);
+      setDialogueIndex(idx);
       setGameState("story");
+      // Start appropriate audio for this position
+      const audio = findAudioForIndex(idx);
+      startAudio(audio);
     }
+  };
+
+  const jumpToChapter = (index: number) => {
+    setDialogueIndex(index);
+    setGameState("story");
+    // Start appropriate audio for this chapter
+    const audio = findAudioForIndex(index);
+    startAudio(audio);
   };
 
   const getCharacterImage = (name?: string, index?: number) => {
@@ -1884,10 +1922,7 @@ export default function Home() {
                   key={chapter.id}
                   variant="ghost"
                   disabled={chapter.locked}
-                  onClick={() => {
-                    setDialogueIndex(chapter.index);
-                    setGameState("story");
-                  }}
+                  onClick={() => jumpToChapter(chapter.index)}
                   className={`h-12 justify-between px-4 border border-white/5 rounded-none font-mono text-[10px] tracking-widest uppercase transition-all
                     ${chapter.locked 
                       ? "bg-white/5 text-white/10 cursor-not-allowed" 
