@@ -1389,8 +1389,81 @@ export default function Home() {
     { speaker: "시스템", text: "마치 이미 오래전부터 자리를 잡고 있었던 것처럼.", background: bgLivingRoomUpdate, isProgress: true },
     { speaker: "파스닐", text: "나는 조용히 발을 옮긴다.", background: bgLivingRoomUpdate, isMonologue: true },
 
+    // #신라방
+    { marker: "#신라방", speaker: "시스템", text: "신라의 방.", background: bgSillaRoom, isProgress: true, centeredMonologue: true, hideCharacter: true },
+    { speaker: "시스템", text: "마땅한 방이 남지 않아 다용도실에 작은 매트리스를 두고 그 위에선 신라가 자고있다.", background: bgSillaRoom, isProgress: true, centeredMonologue: true, hideCharacter: true },
+    { speaker: "시스템", text: "그앞에 놓인건", background: bgSillaRoom, isProgress: true, centeredMonologue: true, hideCharacter: true },
+    { speaker: "시스템", text: "처음 만났을 때부터 소중하게 가져온 가방.", background: bgSillaRoom, isProgress: true, centeredMonologue: true, hideCharacter: true },
+    { speaker: "시스템", text: "조심스럽게 열어 안을 살핀다.", background: bgSillaRoom, isProgress: true, centeredMonologue: true, hideCharacter: true, clickHint: true, requireClick: true },
+
+    // #메모조각
+    { marker: "#메모조각", speaker: "시스템", text: "신라의 가방에서 고지나 연구소 표식이 있는 메모 조각.", background: bgSillaRoom, isProgress: true, hideCharacter: true, showMemo: true },
+    { speaker: "시스템", text: "확실하다 이 일이 일어난 첫날 뉴스에서 본 이 표식을 기억한다.", background: bgSillaRoom, isProgress: true, hideCharacter: true },
+    { speaker: "시스템", text: "좌표는 찢겨 있고, 날짜는 이번 사태 이전이다.", background: bgSillaRoom, isProgress: true, hideCharacter: true },
+    { speaker: "시스템", text: "아직 증거는 없다.", background: bgSillaRoom, isProgress: true, hideCharacter: true },
+    { speaker: "시스템", text: "하지만 하나는 확실하다.", background: bgSillaRoom, isProgress: true, hideCharacter: true },
+    { speaker: "파스닐", text: "신라는 이 사태의 '피해자'가 아니다.", background: bgSillaRoom, isMonologue: true, hideCharacter: true },
+    // #메모조각end
+    { marker: "#메모조각end", speaker: "시스템", text: "그리고", background: bgSillaRoom, isProgress: true, hideCharacter: true, hideMemo: true },
+    { speaker: "시스템", text: "그 사실을 말하는 순간, 자신이 쫓겨날 수도 있다는 것도 안다.", background: bgSillaRoom, isProgress: true, hideCharacter: true },
+    { speaker: "시스템", text: "그래서", background: bgSillaRoom, isProgress: true, hideCharacter: true },
+    { speaker: "시스템", text: "아직 아무 말도 하지 않는다.", background: bgSillaRoom, isProgress: true, hideCharacter: true },
+    { speaker: "파스닐", text: "나는 결심한다.", background: bgSillaRoom, isMonologue: true, hideCharacter: true },
+    { speaker: "시스템", text: "엘을 되돌리려면 이 모든 사태의 시작, 고지나 연구소에 가야 한다.", background: bgSillaRoom, isProgress: true, hideCharacter: true },
+    { speaker: "시스템", text: "그 전에, 신라의 정체를 밝혀야 한다.", background: bgSillaRoom, isProgress: true, hideCharacter: true },
+
+    // #RED
+    { marker: "#RED", speaker: "시스템", text: "그러려면", background: bgSillaRoom, isProgress: true, hideCharacter: true, redText: true },
+    { speaker: "시스템", text: "팀원 전부를 설득해야 한다.", background: bgSillaRoom, isProgress: true, hideCharacter: true, redText: true },
+    // #REDEND
+    { marker: "#REDEND", speaker: "시스템", text: "하지만 이걸로는 부족하다.", background: bgSillaRoom, isProgress: true, hideCharacter: true },
+    { speaker: "시스템", text: "엘을 되돌릴 치료를 위해 고지나 연구소를 추적하려면 팀을 설득해야 한다.", background: bgSillaRoom, isProgress: true, hideCharacter: true },
+
+    // #도로숲
+    { marker: "#도로숲", speaker: "시스템", text: "하카, 신라, 데일과 별장 뒤편 숲으로 나간다.", background: bgForestRoad, isProgress: true },
+    { speaker: "시스템", text: "하카가 운전대를 잡고, 신라는 조수석에 앉아 있었다.", background: bgForestRoad, isProgress: true },
+    { speaker: "시스템", text: "데일과 나는 뒷자리에 앉아있다.", background: bgForestRoad, isProgress: true },
+    { speaker: "하카", text: "\"이 근처에 도로 있었나?\"", background: bgForestRoad, character: "하카" },
+    { speaker: "시스템", text: "신라가 망설임 없이 말한다.", background: bgForestRoad, isProgress: true },
+    { speaker: "신라", text: "\"조금만 더 가면 옛 군수도로가 나와요. 고도는 여기서 30미터쯤 더 올라가고.\"", background: bgForestRoad, character: "신라" },
+    { speaker: "시스템", text: "지도는 펼쳐지지 않았다.", background: bgForestRoad, isProgress: true },
+    { speaker: "시스템", text: "차가 실제로 고개를 넘자, 낡은 콘크리트 길이 모습을 드러낸다.", background: bgForestRoad, isProgress: true },
+    { speaker: "하카", text: "\"길눈 하나는 죽이네.\"", background: bgForestRoad, character: "하카" },
+    { speaker: "시스템", text: "하지만 나는 본다. 신라는 주변을 보는 게 아니라, 이미 알고 있는 것처럼 고개를 들었다.", background: bgForestRoad, isProgress: true },
+    { speaker: "시스템", text: "신라는 조용히 말한다.", background: bgForestRoad, isProgress: true },
+    { speaker: "신라", text: "\"근처 약국은 이미 털렸을 거예요. 대신 서쪽에 또다른 물류창고 쪽이 아직 남아있을 가능성이 높아요.\"", background: bgForestRoad, character: "신라" },
+    { speaker: "데일", text: "\"누가 그래?\"", background: bgForestRoad, character: "데일" },
+    { speaker: "시스템", text: "신라는 잠시 입을 다문다.", background: bgForestRoad, isProgress: true },
+    { speaker: "신라", text: "\"사람들 움직임이… 그런 식이에요.\"", background: bgForestRoad, character: "신라" },
+    { speaker: "시스템", text: "구체적인 이름도, 무전도, 기록도 없다. 하지만 방향은 항상 맞다. 이 정보의 출처는 어디지?", background: bgForestRoad, isProgress: true },
+
+    // #독백1
+    { marker: "#독백1", speaker: "시스템", text: "계속 생각에 잠긴다.", background: "black", isProgress: true, blackScreen: true, centeredMonologue: true, hideCharacter: true },
+    { speaker: "시스템", text: "엘이 혼자 떨어진 시간", background: "black", isProgress: true, blackScreen: true, centeredMonologue: true, hideCharacter: true },
+    { speaker: "시스템", text: "데일이 이탈한 직후", background: "black", isProgress: true, blackScreen: true, centeredMonologue: true, hideCharacter: true },
+    { speaker: "시스템", text: "신라가 처음 모습을 드러낸 시점", background: "black", isProgress: true, blackScreen: true, centeredMonologue: true, hideCharacter: true },
+    { speaker: "시스템", text: "너무 깔끔하다.", background: "black", isProgress: true, blackScreen: true, centeredMonologue: true, hideCharacter: true },
+    { speaker: "파스닐", text: "감염 자체보다, 순서가 이상해.", background: "black", isMonologue: true, blackScreen: true, centeredMonologue: true, hideCharacter: true },
+    { speaker: "시스템", text: "모든 게 이어진다.", background: "black", isProgress: true, blackScreen: true, centeredMonologue: true, hideCharacter: true },
+    { speaker: "시스템", text: "신라는 고지와 지형에 익숙하다", background: "black", isProgress: true, blackScreen: true, centeredMonologue: true, hideCharacter: true },
+    { speaker: "시스템", text: "정보의 출처가 없다", background: "black", isProgress: true, blackScreen: true, centeredMonologue: true, hideCharacter: true },
+    { speaker: "시스템", text: "관측소 표식은 고지나 연구소 라인", background: "black", isProgress: true, blackScreen: true, centeredMonologue: true, hideCharacter: true },
+    { speaker: "시스템", text: "엘의 감염 시점과 등장 타이밍", background: "black", isProgress: true, blackScreen: true, centeredMonologue: true, hideCharacter: true },
+    { speaker: "시스템", text: "그리고… 신라는 엘 근처를 피하면서도 끝없이 바라본다.", background: "black", isProgress: true, blackScreen: true, centeredMonologue: true, hideCharacter: true },
+    { speaker: "파스닐", text: "최소한, 이 사태의 \"밖\"에서 온 사람은 아니다.", background: "black", isMonologue: true, blackScreen: true, centeredMonologue: true, hideCharacter: true },
+
+    // #거실
+    { marker: "#거실", speaker: "시스템", text: "별장 거실", background: bgLivingRoom2, isProgress: true },
+    { speaker: "시스템", text: "난로는 꺼져 있다. 불 대신, 긴장이 방을 데우고 있다.", background: bgLivingRoom2, isProgress: true },
+    { speaker: "시스템", text: "렌쟈는 엘과 담소를 나누고있다.", background: bgLivingRoom2, isProgress: true },
+    { speaker: "시스템", text: "란은 테이블 맞은편. 자세는 흐트러짐 없이 곧다.", background: bgLivingRoom2, isProgress: true },
+    { speaker: "시스템", text: "하카는 창가. 데일은 팔짱을 끼고 벽에 기대 있다.", background: bgLivingRoom2, isProgress: true },
+    { speaker: "시스템", text: "그리고—", background: bgLivingRoom2, isProgress: true },
+    { speaker: "시스템", text: "신라. 가운데.", background: bgLivingRoom2, isProgress: true },
+    { speaker: "시스템", text: "파스닐은 한 걸음 앞으로 나온다.", background: bgLivingRoom2, isProgress: true },
+
     // 현재 스토리 끝
-    { marker: "END", speaker: "시스템", text: "현재 스토리의 끝입니다.", isProgress: true, background: bgLivingRoomUpdate, onComplete: () => { setGameState("start"); setDialogueIndex(0); } }
+    { marker: "END", speaker: "시스템", text: "현재 스토리의 끝입니다.", isProgress: true, background: bgLivingRoom2, onComplete: () => { setGameState("start"); setDialogueIndex(0); } }
   ], [dialogueIndex]);
   const chapters: Chapter[] = useMemo(() => [
     { id: 1, title: "1장: 프롤로그", marker: "BEGIN", index: 0, locked: false },
