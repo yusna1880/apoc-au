@@ -1915,7 +1915,7 @@ export default function Home() {
               animate={{ x: 0, opacity: 1, rotate: 0 }}
               exit={{ x: -400, opacity: 0, rotate: -5 }}
               transition={{ duration: 0.6, ease: "easeOut" }}
-              className="absolute left-8 top-1/2 -translate-y-1/2 z-30 pointer-events-none"
+              className="absolute left-8 top-8 z-30 pointer-events-none"
             >
               <img 
                 src={imgMemo} 
