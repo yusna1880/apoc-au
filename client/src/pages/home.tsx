@@ -62,12 +62,18 @@ const bgMusicBalcony = "/attached_assets/videoplayback_1767633518219.weba";
 import bgMusicCity from "@assets/Screen_Recording_20260106-023850_YouTube_1767634933495.mp3";
 import bgMusicC16 from "@assets/Screen_Recording_20260106-044430_YouTube_(1)_1767642743472.mp3";
 
-// Audio imports
-import audioAloneTonight from "@assets/Alone_Tonight_1767734880442.mp3";
+// Audio imports - Background Music
+import audioAloneTonight from "@assets/Alone_Tonight_1767736641617.mp3";
 import audioEpicAftermath from "@assets/Epic_Post_Apocalyptic_Music_-_Aftermath_1767734880441.mp3";
 import audioHorrorChase from "@assets/Horror_Chase_Music_Torture_Chamber___Royalty_Free_Action_And_P_1767734880439.mp3";
-import audioHeartBeat from "@assets/Heart_Beat_[SOUND_EFFECT]_1767734880437.mp3";
 import audioSigh from "@assets/Sigh_(Killing_Eve)_1767734880443.mp3";
+import audioItsNotYou from "@assets/Its_Not_You,_Its_Me_(Killing_Eve)_1767736641609.mp3";
+import audioRemember from "@assets/KaizanBlu_-_Remember_1767736641607.mp3";
+
+// Audio imports - Sound Effects
+import sfxHeartBeat from "@assets/Heart_Beat_[SOUND_EFFECT]_1767734880437.mp3";
+import sfxMetalClang from "@assets/Metal_Clang_Sound_Effect_1767736641613.mp3";
+import sfxCarDriving from "@assets/Car_Slow_Driving_Sound_Effect_1767736641611.mp3";
 
 type SceneType = "start" | "video" | "story";
 
@@ -84,6 +90,9 @@ interface DialogueLine {
   jumpIndex?: number;
   triggerTransition?: boolean;
   audio?: string | "stop";
+  sfx?: string;
+  sfxVolume?: number;
+  audioVolume?: number;
   marker?: string;
   hideCharacter?: boolean;
   isPuzzle?: boolean;
@@ -134,6 +143,7 @@ export default function Home() {
   const [sparkles, setSparkles] = useState<Sparkle[]>([]);
   const [dustParticles, setDustParticles] = useState<DustParticle[]>([]);
   const audioRef = useRef<HTMLAudioElement | null>(null);
+  const sfxRef = useRef<HTMLAudioElement | null>(null);
   const sparkleIdRef = useRef(0);
   const [hasSaveData, setHasSaveData] = useState(false);
   const [puzzleInput, setPuzzleInput] = useState("");
@@ -920,7 +930,7 @@ export default function Home() {
 
     // #D8 - 텍스트 온리 (배경/캐릭터 없음)
     { marker: "#D8", speaker: "시스템", text: "혼자 남는다.", background: "black", isProgress: true, audio: audioHorrorChase, textOnly: true },
-    { speaker: "시스템", text: "멀리서 금속 부딪히는 소리.", background: "black", isProgress: true, textOnly: true },
+    { speaker: "시스템", text: "멀리서 금속 부딪히는 소리.", background: "black", isProgress: true, textOnly: true, sfx: sfxMetalClang, sfxVolume: 0.8 },
     { speaker: "시스템", text: "그리고— 사람의 비명. 짧다. 너무 짧다.", background: "black", isProgress: true, effect: "shake", textOnly: true },
     { speaker: "파스닐", text: "\"엘…?\"", background: "black", isMonologue: true, textOnly: true },
     { speaker: "시스템", text: "그 다음은 소리들이 겹친다. 발. 숨. 부딪힘.", background: "black", isProgress: true, textOnly: true },
@@ -952,7 +962,7 @@ export default function Home() {
     { speaker: "시스템", text: "나는 고개를 끄덕인다. 말이 안 나온다.", background: bgD5_New, isProgress: true },
 
     // #D10 탈출 - 검정 배경, 캐릭터 없음
-    { marker: "#D10", speaker: "시스템", text: "탈출. 계단. 문. 밖.", background: "black", isProgress: true, audio: audioHeartBeat, hideCharacter: true },
+    { marker: "#D10", speaker: "시스템", text: "탈출. 계단. 문. 밖.", background: "black", isProgress: true, sfx: sfxHeartBeat, sfxVolume: 1.0, hideCharacter: true },
     { speaker: "시스템", text: "차가 보인다.", background: "black", isProgress: true, hideCharacter: true },
     { speaker: "하카", text: "\"태운다!\"", background: "black", hideCharacter: true },
     { speaker: "시스템", text: "엘의 숨이 거칠다. 색이 빠르게 변한다.", background: "black", isProgress: true, hideCharacter: true },
@@ -1118,7 +1128,7 @@ export default function Home() {
     { speaker: "엘", text: "\"해 지기 전엔 돌아와.\"", background: bgLivingRoomUpdate, character: "엘" },
 
     // #2 이동 — 산길
-    { marker: "#2_Mountain", speaker: "시스템", text: "이동 — 산길", background: bg_2, isProgress: true },
+    { marker: "#2_Mountain", speaker: "시스템", text: "이동 — 산길", background: bg_2, isProgress: true, audio: sfxCarDriving, audioVolume: 0.3 },
     { speaker: "시스템", text: "차는 오래된 SUV다. 운전석엔 하카, 조수석에 렌쟈, 뒷좌석에 나와 란.", background: bg_2, isProgress: true },
     { speaker: "하카", text: "\"와, 이 조합 오랜만인데?\"", background: bg_2, character: "하카" },
     { speaker: "렌쟈", text: "\"그러게. 정상 둘, 문제 둘.\"", background: bg_2, character: "렌쟈" },
@@ -1197,7 +1207,7 @@ export default function Home() {
     { speaker: "시스템", text: "그걸로 충분하다.", background: bg_2, isProgress: true },
 
     // #4 물류창고 도착
-    { marker: "#4_Warehouse", speaker: "시스템", text: "산을 넘자 풍경이 바뀐다. 숲 대신, 낮은 건물들. 컨테이너와 철문.", background: bg_4, isProgress: true },
+    { marker: "#4_Warehouse", speaker: "시스템", text: "산을 넘자 풍경이 바뀐다. 숲 대신, 낮은 건물들. 컨테이너와 철문.", background: bg_4, isProgress: true, audio: audioItsNotYou },
     { speaker: "하카", text: "\"와… 아직 멀쩡하네.\"", background: bg_4, character: "하카" },
     { speaker: "란", text: "\"완전히 비진 않았습니다.\"", background: bg_4, character: "란" },
     { speaker: "렌쟈", text: "\"확신?\"", background: bg_4, character: "렌쟈" },
@@ -1260,7 +1270,7 @@ export default function Home() {
     { speaker: "하카", text: "\"응. 네 덕에 오늘은 안 죽네.\"", background: bg_5, character: "하카" },
 
     // #7 돌아가는 길
-    { marker: "#7_Return", speaker: "시스템", text: "돌아가는 길", background: bg_2, isProgress: true, audio: audioSigh },
+    { marker: "#7_Return", speaker: "시스템", text: "돌아가는 길", background: bg_2, isProgress: true, sfx: sfxCarDriving, sfxVolume: 0.3 },
     { speaker: "시스템", text: "차 안은 숨소리만 있다. 란은 창가에 기대 앉아 있다. 고통은 분명한데, 소리는 없다.", background: bg_2, isProgress: true },
     { speaker: "시스템", text: "그의 시선은 계속 렌쟈 쪽이다. 의식이 흐려질수록 더 선명해진다.", background: bg_2, isProgress: true },
     { speaker: "란", text: "\"…누님이 계셔서 다행이네요.\"", background: bg_2, character: "란" },
@@ -1268,7 +1278,7 @@ export default function Home() {
     { speaker: "시스템", text: "소년은 아무 말 없이 창밖을 본다. 이제, 그도 함께 간다.", background: bg_2, isProgress: true },
 
     // #8 6일차
-    { marker: "#8_Day6", speaker: "시스템", text: "6일차 — 별장, 평화로운 낮", background: bgLivingRoomUpdate, isProgress: true, audio: audioAloneTonight },
+    { marker: "#8_Day6", speaker: "시스템", text: "6일차 — 별장, 평화로운 낮", background: bgLivingRoomUpdate, isProgress: true, audio: audioRemember },
     { speaker: "시스템", text: "아침 햇빛이 창문을 반쯤만 통과한다.", background: bgLivingRoomUpdate, isProgress: true },
     { speaker: "시스템", text: "별장은 조용하다. 너무 조용해서 '아직 괜찮다'는 착각이 든다.", background: bgLivingRoomUpdate, isProgress: true },
     { speaker: "시스템", text: "렌쟈는 식탁에 앉아 캔을 두드린다.", background: bgLivingRoomUpdate, isProgress: true },
@@ -1404,7 +1414,7 @@ export default function Home() {
     return () => window.removeEventListener("keydown", handleKeyDown);
   }, [gameState, dialogueIndex, currentDialogue]);
 
-  // Audio handling
+  // Audio handling - Background Music
   useEffect(() => {
     if (gameState === "story") {
       if (currentDialogue?.audio === "stop") {
@@ -1418,7 +1428,7 @@ export default function Home() {
         }
         audioRef.current = new Audio(currentDialogue.audio);
         audioRef.current.loop = true;
-        audioRef.current.volume = 0.4;
+        audioRef.current.volume = currentDialogue.audioVolume ?? 0.4;
         audioRef.current.play().catch(() => {});
       }
     } else if (gameState === "start") {
@@ -1434,6 +1444,17 @@ export default function Home() {
       }
     };
   }, [gameState, currentDialogue?.audio, currentDialogue?.marker]);
+
+  // Audio handling - Sound Effects (overlay)
+  useEffect(() => {
+    if (gameState === "story" && currentDialogue?.sfx) {
+      const sfx = new Audio(currentDialogue.sfx);
+      sfx.loop = false;
+      sfx.volume = currentDialogue.sfxVolume ?? 0.6;
+      sfx.play().catch(() => {});
+      sfxRef.current = sfx;
+    }
+  }, [gameState, dialogueIndex, currentDialogue?.sfx]);
 
   const handleNext = useCallback(() => {
     if (currentDialogue.choices) return;
