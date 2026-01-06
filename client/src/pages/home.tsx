@@ -42,7 +42,7 @@ import bg_5 from "@assets/KakaoTalk_20260107_021010473_09_1767724794617.png";
 // Assets - Characters (Normal)
 import imgHaka from "@assets/하카_1767627793844.png";
 import imgRan from "@assets/란_1767627793837.png";
-import imgRenja from "@assets/렌쟈_1767627793837.png"; // Fix: Use the same asset if missing
+import imgRenja from "@assets/렌쟈_1767627793839.png"; // Fix: Use the same asset if missing
 import imgEl from "@assets/엘_1767627793842.png";
 import imgPasnil from "@assets/파스닐_1767631756273.png";
 import imgDale from "@assets/데일_1767642442612.png";
