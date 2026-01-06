@@ -1944,7 +1944,7 @@ export default function Home() {
               <LayoutGrid className="w-4 h-4" />
               <span className="text-[10px] font-mono tracking-widest uppercase italic">Chapter Selection Protocol</span>
             </div>
-            <div className="h-[200px] overflow-y-auto overflow-x-hidden scrollbar-thin scrollbar-thumb-red-600/30 scrollbar-track-transparent pr-2">
+            <div className="h-[200px] overflow-y-auto overflow-x-hidden chapter-scroll pr-2">
               <div className="grid grid-cols-2 gap-3 w-[450px]">
                 {chapters.map(chapter => (
                   <Button
