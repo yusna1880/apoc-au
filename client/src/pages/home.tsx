@@ -1919,7 +1919,7 @@ export default function Home() {
             >
               <img 
                 src={imgMemo} 
-                className="w-[420px] h-auto drop-shadow-[0_0_40px_rgba(0,0,0,0.9)]"
+                className="w-[900px] h-auto drop-shadow-[0_0_50px_rgba(0,0,0,0.95)]"
               />
             </motion.div>
           )}
