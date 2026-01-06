@@ -785,9 +785,9 @@ export default function Home() {
       background: bgD5, 
       character: "엘",
       choices: [
-        { text: "1. 하카와 간다", targetIndex: 502 },
-        { text: "2. 데일과 간다", targetIndex: 502 },
-        { text: "3. 엘과 간다", targetIndex: 502 }
+        { text: "1. 하카와 간다", targetIndex: 521 },
+        { text: "2. 데일과 간다", targetIndex: 521 },
+        { text: "3. 엘과 간다", targetIndex: 521 }
       ]
     },
     // 선택 후 통합 루트
@@ -871,8 +871,8 @@ export default function Home() {
       background: bgD5_New, 
       isProgress: true,
       choices: [
-        { text: "1. 데일을 따라간다", targetIndex: 570 },
-        { text: "2. 엘의 말을 따른다", targetIndex: 589 }
+        { text: "1. 데일을 따라간다", targetIndex: 592 },
+        { text: "2. 엘의 말을 따른다", targetIndex: 611 }
       ]
     },
 
