@@ -1650,7 +1650,7 @@ export default function Home() {
           className="relative z-20 w-[85%] max-w-3xl mb-16 cursor-pointer group"
           onClick={handleNext}
         >
-          {currentDialogue.isProgress ? (
+          {currentDialogue.isProgress && !currentDialogue.choices ? (
             <div className="bg-black/20 p-5 rounded-lg text-center">
               <p className="text-white/50 text-base font-light tracking-widest italic uppercase">
                 {currentDialogue.text}
