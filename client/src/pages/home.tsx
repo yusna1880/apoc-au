@@ -51,7 +51,7 @@ import imgSilla from "@assets/신라_1767737204993.png";
 
 // Assets - Characters (V2)
 import imgHaka2 from "@assets/하카2_1767637478411.png";
-import imgRan2 from "@assets/란2_1767637478406.png";
+import imgRan2 from "@assets/란수정_1767737558677.png";
 import imgRenja2 from "@assets/렌쟈2_1767637478408.png";
 import imgEl2 from "@assets/엘2_1767637478414.png";
 
