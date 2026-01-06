@@ -41,6 +41,12 @@ import bg_2 from "@assets/KakaoTalk_20260107_021010473_07_1767724794622.png";
 import bg_4 from "@assets/KakaoTalk_20260107_021010473_08_1767724794619.png";
 import bg_5 from "@assets/KakaoTalk_20260107_021010473_09_1767724794617.png";
 
+// New scene backgrounds
+import bgSillaRoom from "@assets/신라방_1767739540393.png";
+import imgMemo from "@assets/메모장_1767739540390.png";
+import bgForestRoad from "@assets/도로숲_1767739809224.png";
+import bgLivingRoom2 from "@assets/거실_1767739883546.png";
+
 // Assets - Characters (Normal)
 import imgHaka from "@assets/하카_1767627793844.png";
 import imgRan from "@assets/란_1767627793837.png";
@@ -104,6 +110,13 @@ interface DialogueLine {
   isDeadEnd?: boolean;
   deadEndTitle?: string;
   deadEndSubtitle?: string;
+  centeredMonologue?: boolean;
+  clickHint?: boolean;
+  requireClick?: boolean;
+  showMemo?: boolean;
+  hideMemo?: boolean;
+  redText?: boolean;
+  blackScreen?: boolean;
 }
 
 interface Choice {
