@@ -1148,8 +1148,8 @@ export default function Home() {
     // 선택지 A (대화) - 결과 영향 없음, 다음 줄로 진행
     { speaker: "시스템", text: "차가 급커브를 돌며 흔들린다. 잠깐의 정적.", background: bg_2, isProgress: true,
       choices: [
-        { text: "1. \"란은 원래 이런 위험한 일 자주 했어요?\"", targetIndex: 957 },
-        { text: "2. \"렌쟈가 있어서 란이 버티는 것 같네요.\"", targetIndex: 957 }
+        { text: "1. \"란은 원래 이런 위험한 일 자주 했어요?\"", targetIndex: 801 },
+        { text: "2. \"렌쟈가 있어서 란이 버티는 것 같네요.\"", targetIndex: 801 }
       ]
     },
     { speaker: "란", text: "\"…그렇습니다.\"", background: bg_2, character: "란" },
@@ -1173,8 +1173,8 @@ export default function Home() {
     { speaker: "란", text: "\"지금은 '말 듣는 쪽'이 맞습니다.\"", background: bg_2, character: "란" },
     { speaker: "시스템", text: "그 어조는 정중하지만, 단정적이다.", background: bg_2, isProgress: true,
       choices: [
-        { text: "1. \"소리 커지기 전에 통과하는게 낫겠어요.\"", targetIndex: 984 },
-        { text: "2. 란의 말대로 정차하고 상황을 본다.", targetIndex: 994 }
+        { text: "1. \"소리 커지기 전에 통과하는게 낫겠어요.\"", targetIndex: 819 },
+        { text: "2. 란의 말대로 정차하고 상황을 본다.", targetIndex: 827 }
       ]
     },
 
