@@ -1907,49 +1907,50 @@ export default function Home() {
           </AnimatePresence>
         )}
 
-        {/* Memo Display */}
+        {/* Memo Display - Large, Left Side */}
         <AnimatePresence>
           {showMemo && (
             <motion.div
-              initial={{ y: 300, opacity: 0, rotate: -5 }}
-              animate={{ y: 0, opacity: 1, rotate: 0 }}
-              exit={{ y: 300, opacity: 0, rotate: 5 }}
+              initial={{ x: -400, opacity: 0, rotate: 5 }}
+              animate={{ x: 0, opacity: 1, rotate: 0 }}
+              exit={{ x: -400, opacity: 0, rotate: -5 }}
               transition={{ duration: 0.6, ease: "easeOut" }}
-              className="absolute right-8 bottom-40 z-30 pointer-events-none"
+              className="absolute left-8 top-1/2 -translate-y-1/2 z-30 pointer-events-none"
             >
               <img 
                 src={imgMemo} 
-                className="w-64 h-auto drop-shadow-[0_0_30px_rgba(0,0,0,0.8)]"
+                className="w-[420px] h-auto drop-shadow-[0_0_40px_rgba(0,0,0,0.9)]"
               />
             </motion.div>
           )}
         </AnimatePresence>
 
-        {/* Click Hint Effect */}
+        {/* Click Hint Effect - Larger, More Visible, Clickable */}
         {currentDialogue.clickHint && (
           <motion.div
-            initial={{ opacity: 0 }}
-            animate={{ opacity: [0.3, 0.8, 0.3] }}
-            transition={{ duration: 1.5, repeat: Infinity }}
-            className="absolute right-12 top-1/2 -translate-y-1/2 z-30 flex flex-col items-center gap-2"
+            initial={{ opacity: 0, scale: 0.8 }}
+            animate={{ opacity: 1, scale: [1, 1.1, 1] }}
+            transition={{ duration: 1.2, repeat: Infinity }}
+            className="absolute right-16 top-1/2 -translate-y-1/2 z-40 flex flex-col items-center gap-3 cursor-pointer"
+            onClick={handleNext}
           >
-            <div className="w-12 h-12 rounded-full border-2 border-red-600/50 flex items-center justify-center">
-              <ChevronRight className="w-6 h-6 text-red-600" />
+            <div className="w-20 h-20 rounded-full border-4 border-red-600 bg-red-600/30 flex items-center justify-center shadow-[0_0_30px_rgba(220,38,38,0.6)]">
+              <ChevronRight className="w-10 h-10 text-white" />
             </div>
-            <span className="text-red-600/70 text-xs font-mono tracking-wider">클릭</span>
+            <span className="text-red-500 text-sm font-bold tracking-wider uppercase">클릭</span>
           </motion.div>
         )}
 
         <motion.div 
           initial={{ y: 20, opacity: 0 }}
           animate={{ y: 0, opacity: 1 }}
-          className={`relative z-20 w-[85%] max-w-3xl cursor-pointer group ${currentDialogue.centeredMonologue ? 'mb-0 self-center' : 'mb-16'}`}
+          className={`relative z-20 cursor-pointer group ${currentDialogue.centeredMonologue ? 'w-full max-w-2xl' : 'w-[85%] max-w-3xl mb-16'}`}
           style={currentDialogue.centeredMonologue ? { position: 'absolute', top: '50%', left: '50%', transform: 'translate(-50%, -50%)' } : undefined}
           onClick={handleNext}
         >
           {currentDialogue.isProgress && !currentDialogue.choices && !currentDialogue.isPuzzle ? (
-            <div className={`bg-black/20 p-5 rounded-lg text-center ${currentDialogue.centeredMonologue ? 'bg-transparent' : ''}`}>
-              <p className={`text-base font-light tracking-widest italic ${currentDialogue.redText ? 'text-red-600 uppercase font-bold' : 'text-white/50 uppercase'}`}>
+            <div className={`p-5 rounded-lg text-center ${currentDialogue.centeredMonologue ? 'bg-transparent' : 'bg-black/20'}`}>
+              <p className={`font-light tracking-widest italic ${currentDialogue.centeredMonologue ? 'text-xl leading-relaxed' : 'text-base'} ${currentDialogue.redText ? 'text-red-600 uppercase font-bold' : 'text-white/70'}`}>
                 {currentDialogue.text}
               </p>
             </div>
