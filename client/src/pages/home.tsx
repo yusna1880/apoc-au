@@ -1379,12 +1379,12 @@ export default function Home() {
     { id: 1, title: "1장: 프롤로그", marker: "BEGIN", index: 0, locked: false },
     { id: 2, title: "2장: 별장 도착", marker: "#C3", index: 62, locked: maxReachedIndex < 62 },
     { id: 3, title: "3장: 탐색과 조우", marker: "#C9", index: 175, locked: maxReachedIndex < 175 },
-    { id: 4, title: "4장: 병원 잠입", marker: "#C13", index: 240, locked: maxReachedIndex < 240 },
-    { id: 5, title: "5장: 데일의 생환", marker: "#C20", index: 565, locked: maxReachedIndex < 565 },
-    { id: 6, title: "6장: 긴박한 탈출", marker: "#D8", index: 493, locked: maxReachedIndex < 493 },
-    { id: 7, title: "7장: 산길", marker: "#2_Mountain", index: 800, locked: maxReachedIndex < 800 },
-    { id: 8, title: "8장: 의문의 소년", marker: "#7_Return", index: 920, locked: maxReachedIndex < 920 },
-    { id: 9, title: "9장: 평화로운 낮", marker: "#8_Day6", index: 960, locked: maxReachedIndex < 960 }
+    { id: 4, title: maxReachedIndex >= 240 ? "4장: 병원 잠입" : "4장: ???", marker: "#C13", index: 240, locked: maxReachedIndex < 240 },
+    { id: 5, title: maxReachedIndex >= 565 ? "5장: 데일의 생환" : "5장: ???", marker: "#C20", index: 565, locked: maxReachedIndex < 565 },
+    { id: 6, title: maxReachedIndex >= 493 ? "6장: 긴박한 탈출" : "6장: ???", marker: "#D8", index: 493, locked: maxReachedIndex < 493 },
+    { id: 7, title: maxReachedIndex >= 800 ? "7장: 산길" : "7장: ???", marker: "#2_Mountain", index: 800, locked: maxReachedIndex < 800 },
+    { id: 8, title: maxReachedIndex >= 920 ? "8장: 의문의 소년" : "8장: ???", marker: "#7_Return", index: 920, locked: maxReachedIndex < 920 },
+    { id: 9, title: maxReachedIndex >= 960 ? "9장: 평화로운 낮" : "9장: ???", marker: "#8_Day6", index: 960, locked: maxReachedIndex < 960 }
   ], [maxReachedIndex]);
 
   const currentDialogue = story[dialogueIndex];
