@@ -1173,8 +1173,8 @@ export default function Home() {
     { speaker: "란", text: "\"지금은 '말 듣는 쪽'이 맞습니다.\"", background: bg_2, character: "란" },
     { speaker: "시스템", text: "그 어조는 정중하지만, 단정적이다.", background: bg_2, isProgress: true,
       choices: [
-        { text: "1. \"소리 커지기 전에 통과하는게 낫겠어요.\"", targetIndex: 819 },
-        { text: "2. 란의 말대로 정차하고 상황을 본다.", targetIndex: 827 }
+        { text: "1. \"소리 커지기 전에 통과하는게 낫겠어요.\"", targetIndex: 822 },
+        { text: "2. 란의 말대로 정차하고 상황을 본다.", targetIndex: 830 }
       ]
     },
 
