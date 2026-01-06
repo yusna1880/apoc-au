@@ -36,6 +36,7 @@ import bgF2 from "@assets/ㄷ_1767724794638.png";
 import bgF3 from "@assets/ㅎ_1767724794636.png";
 import bgLivingRoomUpdate from "@assets/거실_1767725608813.png";
 import bgG2 from "@assets/KakaoTalk_20260107_021010473_06_1767724794625.jpg";
+import bgG2Dead from "@assets/KakaoTalk_20260107_021010473_06_1767738261773.jpg";
 import bg_2 from "@assets/KakaoTalk_20260107_021010473_07_1767724794622.png";
 import bg_4 from "@assets/KakaoTalk_20260107_021010473_08_1767724794619.png";
 import bg_5 from "@assets/KakaoTalk_20260107_021010473_09_1767724794617.png";
@@ -1182,13 +1183,13 @@ export default function Home() {
     },
 
     // #G2 선택 1 결과 — DEAD END
-    { marker: "#G2_Dead", speaker: "시스템", text: "하카가 가속한다.", background: bg_2, isProgress: true, audio: audioHorrorChase },
-    { speaker: "하카", text: "\"오케이, 한 번에—\"", background: bg_2, character: "하카" },
-    { speaker: "시스템", text: "그 순간, 낭떠러지 아래서 무언가가 도로 쪽으로 튀어 오른다.", background: bg_2, isProgress: true },
-    { speaker: "시스템", text: "너무 늦다.", background: bg_2, isProgress: true },
-    { speaker: "시스템", text: "차량이 흔들리고, 가드레일이 찢어진다.", background: bg_2, isProgress: true },
-    { speaker: "란", text: "\"렌쟈—!\"", background: bg_2, character: "란" },
-    { speaker: "시스템", text: "충격. 시야 전복.", background: bg_2, isProgress: true },
+    { marker: "#G2_Dead", speaker: "시스템", text: "하카가 가속한다.", background: bgG2Dead, isProgress: true, audio: audioHorrorChase, hideCharacter: true },
+    { speaker: "하카", text: "\"오케이, 한 번에—\"", background: bgG2Dead, hideCharacter: true },
+    { speaker: "시스템", text: "그 순간, 낭떠러지 아래서 무언가가 도로 쪽으로 튀어 오른다.", background: bgG2Dead, isProgress: true, hideCharacter: true },
+    { speaker: "시스템", text: "너무 늦다.", background: bgG2Dead, isProgress: true, hideCharacter: true },
+    { speaker: "시스템", text: "차량이 흔들리고, 가드레일이 찢어진다.", background: bgG2Dead, isProgress: true, hideCharacter: true },
+    { speaker: "란", text: "\"렌쟈—!\"", background: bgG2Dead, hideCharacter: true },
+    { speaker: "시스템", text: "충격. 시야 전복.", background: bgG2Dead, isProgress: true, hideCharacter: true },
     { speaker: "시스템", text: "", background: "black", isDeadEnd: true, deadEndTitle: "DEAD ENDING", deadEndSubtitle: "판단을 앞당긴 건 용기가 아니라 소음이었다.", onComplete: () => { setGameState("start"); setDialogueIndex(0); } },
 
     // #2 선택 2 결과 — 정상 진행
