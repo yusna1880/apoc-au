@@ -1,7 +1,8 @@
 import { useState, useEffect, useRef, useCallback, useMemo } from "react";
 import { Button } from "@/components/ui/button";
-import { Volume2, VolumeX, Settings, Info, ChevronRight, Save } from "lucide-react";
+import { Volume2, VolumeX, Settings, Info, ChevronRight, Save, Send } from "lucide-react";
 import { motion, AnimatePresence } from "framer-motion";
+import { Input } from "@/components/ui/input";
 
 // Assets - Backgrounds
 import bgStart from "@assets/Naughty_Dog_The_Last_of_Us__Part_IArt_Blast_-_ArtStation_Maga_1767621865144.jfif";
@@ -22,13 +23,30 @@ import bgHospitalNew from "@assets/병원_1767642481036.png";
 import bgNearHospitalNew from "@assets/병원_근처_1767642517933.png";
 import bgLivingRoomNew from "@assets/거실_1767642563208.png";
 
+// D-series Backgrounds
+import bgD1 from "@assets/KakaoTalk_20260106_231721217_1767726264601.png";
+import bgD2 from "@assets/KakaoTalk_20260107_021010473_01_1767724794632.png";
+import bgD3 from "@assets/KakaoTalk_20260107_021010473_02_1767724794627.png";
+import bgD5 from "@assets/KakaoTalk_20260107_021010473_03_1767724794628.png";
+import bgD6 from "@assets/KakaoTalk_20260107_021010473_04_1767724794630.png";
+import bgH1 from "@assets/KakaoTalk_20260107_021010473_1767724794633.png";
+import bgD10 from "@assets/ㄱ_1767725110273.png";
+import bgF2 from "@assets/ㄷ_1767724794638.png";
+import bgF3 from "@assets/ㅎ_1767724794636.png";
+import bgLivingRoomUpdate from "@assets/거실_1767725608813.png";
+import bgG2 from "@assets/KakaoTalk_20260107_021010473_06_1767724794625.jpg";
+import bg_2 from "@assets/KakaoTalk_20260107_021010473_07_1767724794622.png";
+import bg_4 from "@assets/KakaoTalk_20260107_021010473_08_1767724794619.png";
+import bg_5 from "@assets/KakaoTalk_20260107_021010473_09_1767724794617.png";
+
 // Assets - Characters (Normal)
 import imgHaka from "@assets/하카_1767627793844.png";
 import imgRan from "@assets/란_1767627793837.png";
-import imgRenja from "@assets/렌쟈_1767627793839.png";
+import imgRenja from "@assets/렌쟈_1767627793837.png"; // Fix: Use the same asset if missing
 import imgEl from "@assets/엘_1767627793842.png";
 import imgPasnil from "@assets/파스닐_1767631756273.png";
 import imgDale from "@assets/데일_1767642442612.png";
+import imgSilla from "@assets/신라_1767725834183.png";
 
 // Assets - Characters (V2)
 import imgHaka2 from "@assets/하카2_1767637478411.png";
@@ -42,6 +60,13 @@ import bgMusic1 from "@assets/Screen_Recording_20260106-012639_YouTube_(1)_17676
 const bgMusicBalcony = "/attached_assets/videoplayback_1767633518219.weba";
 import bgMusicCity from "@assets/Screen_Recording_20260106-023850_YouTube_1767634933495.mp3";
 import bgMusicC16 from "@assets/Screen_Recording_20260106-044430_YouTube_(1)_1767642743472.mp3";
+
+// New Audio from user
+const audioAloneTonight = "/attached_assets/Alone_Tonight_1767726490319.mp3";
+const audioEpicAftermath = "/attached_assets/Epic_Post_Apocalyptic_Music_-_Aftermath_1767726728139.mp3";
+const audioHorrorChase = "/attached_assets/Horror_Chase_Music_Torture_Chamber_1767726665715.mp3";
+const audioHeartBeat = "/attached_assets/Heart_Beat_[SOUND_EFFECT]_1767726615740.mp3";
+const audioSigh = "/attached_assets/Sigh_(Killing_Eve)_(1)_1767724595043.mp3";
 
 type SceneType = "start" | "video" | "story";
 
@@ -60,6 +85,8 @@ interface DialogueLine {
   audio?: string | "stop";
   marker?: string;
   hideCharacter?: boolean;
+  isPuzzle?: boolean;
+  effect?: "shake" | "chase";
 }
 
 interface Choice {
@@ -84,6 +111,7 @@ interface DustParticle {
   speedX: number;
   speedY: number;
   opacity: number;
+  color?: string;
 }
 
 export default function Home() {
@@ -96,6 +124,7 @@ export default function Home() {
   const audioRef = useRef<HTMLAudioElement | null>(null);
   const sparkleIdRef = useRef(0);
   const [hasSaveData, setHasSaveData] = useState(false);
+  const [puzzleInput, setPuzzleInput] = useState("");
 
   // Check for save data on mount
   useEffect(() => {
@@ -105,9 +134,10 @@ export default function Home() {
     }
   }, []);
 
-  // Initialize Dust Particles for Start Screen
+  // Initialize Dust Particles for Start Screen / Special Effects
   useEffect(() => {
-    const initialDust: DustParticle[] = Array.from({ length: 40 }).map((_, i) => ({
+    const count = 40;
+    const initialDust: DustParticle[] = Array.from({ length: count }).map((_, i) => ({
       id: i,
       x: Math.random() * 100,
       y: Math.random() * 100,
@@ -130,14 +160,14 @@ export default function Home() {
 
   // Story Data
   const story: DialogueLine[] = useMemo(() => [
-    // CLIP 1
+    // CLIP 1 (0-4)
     { speaker: "파스닐", text: "요즘 ai가 발전해서 내가 할 일이 없네", background: bgClip1, character: "파스닐", isMonologue: true },
     { speaker: "파스닐", expression: "이메일을 확인한다", text: "...", background: bgClip1, character: "파스닐", isMonologue: true },
     { speaker: "파스닐", text: "초청 DJ 문의? 수상하긴 하지만 원체 부자들은 외진 곳을 좋아하니깐..", background: bgClip1, character: "파스닐", isMonologue: true },
     { speaker: "파스닐", text: "가 아니라 하필 나를?!", background: bgClip1, character: "파스닐", isMonologue: true },
     { speaker: "파스닐", expression: "통장장고가 눈에 스쳐지나간다.", text: "뭐 익명 파티인가 보지.", background: bgClip1, character: "파스닐", isMonologue: true, triggerTransition: true },
     
-    // CLIP 2 (Dialogue starts here)
+    // CLIP 2 (5-20)
     { speaker: "하카", expression: "차 문을 열고 먼저 내린다", text: "와. 공기 좋네.", background: bgClip2, character: "하카" },
     { speaker: "파스닐", text: "이런 데를 별장이라고 부르는 사람을 난 오늘 처음 본다.", background: bgClip2, isMonologue: true },
     { speaker: "시스템", text: "...", isProgress: true, background: bgClip2 },
@@ -167,6 +197,7 @@ export default function Home() {
       ]
     },
 
+    // 21-28 Dead End
     { speaker: "파스닐", text: "돈 많은 사람들은 이런 말 좋아하던데. 이런 데서 굳이 DJ까지 부를 필요는 없지 않아요?", background: bgClip2, isMonologue: true },
     { speaker: "하카", expression: "걸음을 멈춘다", text: "음.", background: bgClip2, character: "하카" },
     { speaker: "하카", expression: "천천히 고개를 돌려 파스닐을 본다", text: "그럼 필요 없는 사람을 부른 셈이네.", background: bgClip2, character: "하카" },
@@ -176,14 +207,16 @@ export default function Home() {
     { speaker: "파스닐", text: "…알겠습니다.", background: bgClip2, isMonologue: true },
     { speaker: "시스템", text: "[데드엔딩] 〈해고〉 아포칼립스는 오지 않았다. 하지만 나는, 이 이야기 안으로 들어가지도 못했다.", isProgress: true, background: bgClip2, onComplete: () => { setGameState("start"); setDialogueIndex(0); } },
 
+    // 29-30 Normal
     { speaker: "파스닐", text: "웃어넘기는 게 제일 안전하다. 아무래도 이런 장소는 처음이라서요.", background: bgClip2, isMonologue: true },
     { speaker: "하카", expression: "별장 문을 열다 말고 웃는다", text: "금방 익숙해질 거야. 다들 그래.", background: bgClip2, character: "하카", jumpIndex: 34 },
 
+    // 31-33
     { speaker: "파스닐", text: "사실… 분위기가 좀 독특해서요.", background: bgClip2, isMonologue: true },
     { speaker: "하카", expression: "별장 문을 열다 말고 웃는다", text: "금방 익숙해질 거야. 다들 그래.", background: bgClip2, character: "하카" },
-
     { speaker: "시스템", text: "나는 그 말이 위로인지, 그냥 흘려보낸 말인지 판단하지 못한 채 고개를 끄덕였다. 문이 열리자 서늘한 공기가 안쪽에서 흘러나왔다.", isProgress: true, background: bgClip2 },
     
+    // 34-61 Arrival
     { speaker: "시스템", text: "멀리서 차 소리가 났다. 이번엔 두 사람의 기척이 거의 동시에 느껴졌다.", isProgress: true, background: bgClip2 },
     { speaker: "시스템", text: "(차가 멈추고, 문이 연달아 닫힌다)", isProgress: true, background: bgClip2 },
     { speaker: "하카", expression: "고개만 돌린다", text: "왔네.", background: bgClip2, character: "하카" },
@@ -214,7 +247,7 @@ export default function Home() {
     
     { speaker: "하카", expression: "손뼉을 한 번 친다", text: "자, 다 왔네. 일단 안으로 들어가자.", background: bgClip2, character: "하카", audio: "stop" },
     
-    // #C3 - 거실 (Dialogue index 62)
+    // #C3 - 거실 (62-89)
     { marker: "#C3", speaker: "시스템", text: "문이 닫히는 소리가 뒤에서 났다. 확실하게. 나는 장비 가방을 바닥에 내려놓고 자리를 잡는다.", background: bgLivingRoom, isProgress: true },
     { speaker: "하카", expression: "소파에 털썩 앉아 다리를 뻗는다", text: "아직 다 살아 있네. 일단.", background: bgLivingRoom, character: "하카" },
     { speaker: "엘", expression: "가방을 내려놓으며 담담하게", text: "여기까지 왔는데 안 괜찮을 확률이 더 낮지.", background: bgLivingRoom, character: "엘" },
@@ -244,7 +277,7 @@ export default function Home() {
     { speaker: "하카", text: "알아.", background: bgLivingRoom, character: "하카" },
     { speaker: "시스템", text: "그걸로 끝. 더 묻지 않는다는 합의가 공기처럼 깔린다.", background: bgLivingRoom, isProgress: true },
     
-    // #1 (Dialogue index 90)
+    // #1 (90-106)
     { marker: "#1", speaker: "시스템", text: "나는 테스트 음악을 아주 작게 튼다. 공기만 살짝 흔들린다.", background: bgLivingRoom, isProgress: true, audio: bgMusic1 },
     { speaker: "하카", text: "이 정도면 귀 안 거슬려.", background: bgLivingRoom, character: "하카" },
     { speaker: "엘", expression: "나를 바라본다", text: "상황 오면 바로 끌 수 있지?", background: bgLivingRoom, character: "엘" },
@@ -258,12 +291,12 @@ export default function Home() {
     { speaker: "렌쟈", expression: "자연스럽게", text: "그럼 난 다음.", background: bgLivingRoom, character: "렌쟈" },
     { speaker: "란", expression: "즉각", text: "확인했습니다.", background: bgLivingRoom, character: "란" },
     { speaker: "시스템", text: "논의는 없다. 이건 즉석 팀이 아니다. 엘은 말없이 창 쪽에 서 있다가 조용히 문을 연다.", background: bgLivingRoom, isProgress: true },
-    { speaker: "엘", text: "바람 좀 고 올게.", background: bgLivingRoom, character: "엘" },
+    { speaker: "엘", text: "바람 좀 쐬고 올게.", background: bgLivingRoom, character: "엘" },
     { speaker: "렌쟈", text: "오빠 그러다가 데일 언니처럼 감기걸려", background: bgLivingRoom, character: "렌쟈" },
     { speaker: "엘", text: "너도 와.", background: bgLivingRoom, character: "엘" },
     { speaker: "시스템", text: "나는 고개를 끄덕이고 엘을 따라간다.", background: bgLivingRoom, isProgress: true },
     
-    // #C4 - 발코니 (Dialogue index 107)
+    // #C4 - 발코니 (107-122)
     { marker: "#C4", speaker: "시스템", text: "발코니. 문이 닫히자 실내의 소리가 뚝 끊겼다. 바람이 불어온다. 차갑지도, 따뜻하지도 않은 공기.", background: bgBalcony, isProgress: true, audio: bgMusicBalcony },
     { speaker: "엘", expression: "난간에 팔을 얹는다", text: "음악 하는 사람은 소리에 예민하지.", background: bgBalcony, character: "엘" },
     { speaker: "파스닐", text: "직업병 같은 거죠.", background: bgBalcony, isMonologue: true },
@@ -281,7 +314,7 @@ export default function Home() {
     { speaker: "엘", text: "차가 한 대도 안 다니네. 이 시간이면 돌아다닐 텐데...", background: bgBalcony, character: "엘" },
     { speaker: "시스템", text: "멀리서 연기처럼 피어오르는 무언가가 보인다. 그리고 바람이 방향을 바꾸자 희미한 비명이 들려온다. 너무 멀어서 확신할 수는 없다.", background: bgBalcony, isProgress: true },
     
-    // #C5 - 거실 (Dialogue index 123)
+    // #C5 - 거실 (123-138)
     { marker: "#C5", speaker: "시스템", text: "발코니 문을 열고 안으로 돌아온다. 거실에서는 렌쟈가 하카의 장난에 웃고 있고, 란은 조용히 커피를 내리고 있다.", background: bgLivingRoom, isProgress: true, audio: bgMusic1 },
     { speaker: "TV 앵커", text: "...오늘 오후, 고지나 제약 연구단지에서 원인 불명의 폭발 사고가 발생했습니다. 정확한 사고 원인은—", background: bgLivingRoom },
     { speaker: "하카", text: "고지나? 여기서 그렇게 안 먼데.", background: bgLivingRoom, character: "하카" },
@@ -299,7 +332,7 @@ export default function Home() {
     { speaker: "하카", text: "파스닐, 너 소리 잘 듣지.", background: bgLivingRoom, character: "하카" },
     { speaker: "란", text: "확인만 하겠습니다. 같이 가시죠.", background: bgLivingRoom, character: "란" },
     
-    // #C6 - 숲근처 (Dialogue index 139)
+    // #C6 - 숲근처 (139-156)
     { marker: "#C6", speaker: "시스템", text: "밤 공기가 무겁다. 풀잎이 젖어 있다. 소리가 가까워진다. 나는 숨을 죽인다. 귀가 먼저 반응한다. …발소리. 아니다. 발을 끄는 소리다.", background: bgNearForest, isProgress: true, audio: bgMusicBalcony },
     { speaker: "시스템", text: "앞서 걷는 란을 따라간다.", background: bgNearForest, isProgress: true },
     { speaker: "란", text: "저쪽입니다.", background: bgNearForest, character: "란" },
@@ -312,20 +345,20 @@ export default function Home() {
       { text: "2. 란을 믿고 바로 따른다", targetIndex: 152 }
     ]},
 
-    // DEAD END 1
+    // DEAD END 1 (147-151)
     { speaker: "시스템", text: "나는 멈춘다. 한 걸음만 더. 그 순간, 그것의 고개가 나를 정확히 향한다. 너무 정확해서— 도망칠 생각이 늦는다.", isProgress: true, background: bgNearForest },
     { speaker: "란", expression: "처음으로 목소리가 높아진다", text: "파스닐—!", background: bgNearForest, character: "란" },
     { speaker: "시스템", text: "잡아당기는 힘. 넘어짐. 이빨이 너무 가까이 있다.", isProgress: true, background: bgNearForest },
     { speaker: "시스템", text: "[데드엔딩] 혼자 확인하는 건 용기가 아니라 이탈이다.", isProgress: true, background: bgNearForest, onComplete: () => { setGameState("start"); setDialogueIndex(0); } },
     
-    // NORMAL PROCEED
+    // NORMAL PROCEED (152-156)
     { speaker: "시스템", text: "나는 망설이지 않고 란의 뒤를 따른다. 지금은 판단을 나눌 때다.", isProgress: true, background: bgNearForest },
     { speaker: "시스템", text: "외부, 창고 근처. 밤. 공기엔 풀 냄새와 함께 어딘지 모르게 탁한 기운이 섞여 있다. 손전등이 어두운 숲길을 조심스럽게 비춘다. 나뭇잎 흔들리는 소리가 불규칙하게 울린다.", isProgress: true, background: bgNearForest },
     { speaker: "시스템", text: "란은 발소리를 줄이며 별장 옆 창고 쪽으로 향한다.", isProgress: true, background: bgNearForest },
     { speaker: "란", text: "바람 방향은 북동. 공기 중에 연소 냄새… 나무 타는 냄새가 아닌데..", background: bgNearForest, character: "란" },
     { speaker: "란", text: "여기일지도 몰라.", background: bgNearForest, character: "란" },
     
-    // #C7 - 창고 (Dialogue index 157)
+    // #C7 - 창고 (157-162)
     { marker: "#C7", speaker: "시스템", text: "끼익. 문이 작게 열리고, 먼지 낀 냄새가 확 풍긴다. 창고 안엔 오래된 캠핑 장비, 예비용 발전기, 부탄가스 박스 등이 정리돼 있다. 그러나 그중 한 박스가 미묘하게 어긋나 있다.", background: bgStorage, isProgress: true, audio: "stop" },
     { speaker: "란", text: "누군가 손 댄 흔적이… 우리 중 누군가가 이걸 손봤나? 오늘 누구도 창고엔 안 왔는데.", background: bgStorage, character: "란" },
     { speaker: "시스템", text: "박스를 열어보자 안에는 비상식량 몇 개가 빠져 있고, 안쪽엔 뭔가가 떨어져 있다. 군용 의료 마스크. 이미 포장을 뜯은 흔적이 있는, 낯선 브랜드.", background: bgStorage, isProgress: true },
@@ -333,7 +366,7 @@ export default function Home() {
     { speaker: "시스템", text: "그때, 창고 외부에서 '탁', 무언가가 떨어지는 소리. 란과 나는 재빨리 몸을 낮추고 손전등을 끈다. 숨소리를 죽인다. 밖에선 바람이 흔드는 나뭇잎 소리와는 전혀 다른… 천천히 끌리는 발소리가 들려온다.", isProgress: true, background: bgStorage },
     { speaker: "란", text: "이건, 짐승이 아니네요. 걸음이… 너무 느려요.", background: bgStorage, character: "란" },
     
-    // #C8 - 거실 (Dialogue index 163)
+    // #C8 - 거실 (163-174)
     { marker: "#C8", speaker: "시스템", text: "별장 안 — 거실. 문이 열리는 소리가 너무 크게 들렸다.", background: bgLivingRoom, isProgress: true, audio: bgMusicCity },
     { speaker: "란", text: "돌아왔습니다.", background: bgLivingRoom, character: "란" },
     { speaker: "하카", text: "그래서.", background: bgLivingRoom, character: "하카" },
@@ -347,7 +380,7 @@ export default function Home() {
     { speaker: "시스템", text: "엘이 리모컨을 들어 끈다. 순간의 정적.", background: bgLivingRoom, isProgress: true },
     { speaker: "파스닐", text: "이제 난 DJ가 아니다. 나는 귀를 연다. 밖은— 너무 조용하다.", background: bgLivingRoom, isMonologue: true },
     
-    // #C9 - 거실 (Dialogue index 175)
+    // #C9 - 거실 (175-188)
     { marker: "#C9", speaker: "시스템", text: "2일차 — 아침, 별장 거실. 아침이라고 부르기엔 공기가 너무 무겁다. 창밖은 흐리고, 안개가 아직 숲을 붙잡고 있다.", background: bgLivingRoom, isProgress: true },
     { speaker: "시스템", text: "엘은 식탁 위에 지도를 펼쳐 둔 채 서 있다. 하카는 머그컵을 들고 창가에 기대 있다. 란은 이미 장비를 정리해 두었다.", background: bgLivingRoom, isProgress: true },
     { speaker: "엘", text: "상황 정리한다. 밤새 접근 흔적 없음. 소리, 움직임, 전력 이상도 없어. 오늘부터 조를 나눈다. 혼자 움직이는 건 금지.", background: bgLivingRoom, character: "엘" },
@@ -364,7 +397,7 @@ export default function Home() {
     { speaker: "엘", text: "뒤는 내가 본다.", background: bgLivingRoom, character: "엘" },
     { speaker: "하카", text: "돌아오면 보고부터 해. 무용담 말고, 사실만.", background: bgLivingRoom, character: "하카" },
     
-    // #C10 - 도시1 (Dialogue index 189)
+    // #C10 - 도시1 (189-198)
     { marker: "#C10", speaker: "시스템", text: "도심 진입. 숲을 빠져나오자 아스팔트가 드러난다. 도로는 도로였던 흔적만 남아 있다.", background: bgCity1, isProgress: true },
     { speaker: "렌쟈", text: "…와. 신호등은 반쯤 꺾여 있고 가로등은 전부 다른 각도로 서 있다.", background: bgCity1, character: "렌쟈" },
     { speaker: "엘", text: "폭발은 아니야.", background: bgCity1, character: "엘" },
@@ -376,7 +409,7 @@ export default function Home() {
     { speaker: "렌쟈", text: "…여긴 오래 있으면 안 되겠다.", background: bgCity1, character: "렌쟈" },
     { speaker: "엘", text: "마트만 들른다.", background: bgCity1, character: "엘" },
     
-    // #C11 - 마트 (Dialogue index 199)
+    // #C11 - 마트 (199-207)
     { marker: "#C11", speaker: "시스템", text: "마트. 자동문은 열려 있다. 전기가 있어서가 아니라 부서져서. 안은 생각보다 조용하다. 선반은 많이 비어 있지만 완전히 털린 건 아니다.", background: bgMart, isProgress: true, audio: "stop" },
     { speaker: "엘", text: "필요한 것만. 다시 올 수 있어야 의미가 있어.", background: bgMart, character: "엘" },
     { speaker: "렌쟈", text: "통조림, 물, 건전지. 유통기한 긴 걸로. 의약품도 있으면 좋고.", background: bgMart, character: "렌쟈" },
@@ -387,7 +420,7 @@ export default function Home() {
     { speaker: "엘", text: "보지 마.", background: bgMart, character: "엘" },
     { speaker: "시스템", text: "셋은 뛰지 않고 빠르게 걷는다. 도심을 벗어날 때까지 아무도 말하지 않는다.", isProgress: true, background: bgMart },
     
-    // #C12 - 거실 (Dialogue index 208)
+    // #C12 - 거실 (208-239)
     { marker: "#C12", speaker: "하카", text: "표정이 그 답이네. 엘 너 얼굴 완전웃겨. 거울이 없는게 한이다. ", background: bgLivingRoom, character: "하카" },
     { speaker: "엘", text: "도심은 끝났어.", background: bgLivingRoom, character: "엘" },
     { speaker: "렌쟈", text: "마트는 아직 쓸 수 있어. 하지만 오래는 아니야.", background: bgLivingRoom, character: "렌쟈" },
@@ -434,7 +467,7 @@ export default function Home() {
     { speaker: "렌쟈", text: "붓는 속도가 빨라. 고정은 했어. 하지만 약이 부족해. 마트 뒤쪽에 작은 민간 병원 있었어. 재고 남아 있을지도. 나랑 엘오빠, 파스닐.", background: bgLivingRoom, character: "렌쟈" },
     { speaker: "하카", text: "감염은 아닌거같고. 알긴하네. 내가 뭘.. 진통제도 거의 없지. 의약품이 필요해. 뭘 당연한걸. 렌쟈야 엘 오빠가 내일은 늦잠 좀 자고싶었대.", background: bgLivingRoom, character: "하카" },
     
-    // #C13 - 병원 가는 길 (Dialogue index 240)
+    // #C13 - 병원 가는 길 (240-245)
     { marker: "#C13", speaker: "시스템", text: "3일차. 병원으로 가는 길. 차 문이 닫히는 소리가 아침 안개를 밀어낸다. 엘이 운전석에 앉아 시동을 건다.", background: bgNearForest, isProgress: true, audio: bgMusicBalcony },
     { speaker: "렌쟈", text: "아침부터 병원이라니. 세상 참 성실하게 망했네. 봤지. 나무, 안개, 또 나무. 어제랑 똑같아.", background: bgNearForest, character: "렌쟈" },
     { speaker: "엘", text: "입 다물고 주변 봐. 똑같다는 게 문제지. 하룻밤 새에 정리될 리 없지.", background: bgNearForest, character: "엘" },
@@ -442,20 +475,20 @@ export default function Home() {
     { speaker: "파스닐", text: "어제는 선택지였는데, 오늘은 일정이 됐구만..", background: bgNearForest, isMonologue: true },
     { speaker: "렌쟈", text: "…어제보다 차 더 는거같기도 하고. 정리라기엔 다들 너무 급했잖아. 여기,다시는 오면 안 될 곳이야.", background: bgNearForest, character: "렌쟈" },
     
-    // #C14 - 병원 근처 (Dialogue index 246)
+    // #C14 - 병원 근처 (246-249)
     { marker: "#C14", speaker: "시스템", text: "도심 외곽 — 병원 근처. 병원 건물은 멀리서 보면 멀쩡하다. 가까이 가면 아니다. 유리창엔 테이프 자국, 출입문엔 밀린 흔적, 현관 앞엔 버리고 간 휠체어 하나.", background: bgNearHospital, isProgress: true },
     { speaker: "렌쟈", text: "와… 딱 ‘도망치다 만 병원’이잖아. 역시 걸어 들어가야 긴장 풀리지? 파스닐. 들리면 바로 말해. ‘괜찮을 것 같아요’ 이런 말 말고. 그 톤 좋아.", background: bgNearHospital, character: "렌쟈" },
     { speaker: "엘", text: "차 세운다. 여기서. 말 줄여. 들리기 전에 움직이면 그땐 내가 멈춘다.", background: bgNearHospital, character: "엘" },
     { speaker: "시스템", text: "차 문이 닫힌다. 세 사람은 자연스럽게 간격을 맞춘다. 엘 앞, 렌쟈 옆, 파스닐 반 박자 뒤.", isProgress: true, background: bgNearHospital },
     
-    // #C15 - 병원 내부 (Dialogue index 250)
+    // #C15 - 병원 내부 (250-254)
     { marker: "#C15", speaker: "시스템", text: "병원 내부. 자동문은 열린 게 아니라 고정돼 있다. 안은 약 냄새보다 먼지 냄새가 먼저 온다. 렌쟈는 들어오자마자 표지판을 본다.", background: bgHospital, isProgress: true, audio: "stop" },
     { speaker: "렌쟈", text: "응급실, 약국, 처치실… 다 한 방향이네. 역시 현실적. 진통제, 소염제, 항생제… 아, 이건 란이 싫어하겠다. 사람 마음은 안 챙겨주네. 아쉽네. 초코우유는 없었는데. 하카오빠가 갖다달랬어. 이럴 때일수록 사소한 게 오래 남아.", background: bgHospital, character: "렌쟈" },
     { speaker: "엘", text: "약국 먼저. 다 챙겨. 몸이 먼저야. ‘버틴다’는 말 되게 듣기싫다. 봤어. 가방 닫아. 지금 그게 아쉬워?", background: bgHospital, character: "엘" },
     { speaker: "파스닐", text: "이 정도면 며칠은 버텨요. (선택지가 없는 소리다.)", background: bgHospital, isMonologue: true },
     { speaker: "시스템", text: "멀리서 무언가 끌리는 소리. 이번엔 확실하다. 렌쟈의 손이 멈춘다. 세 사람은 뛰지 않는다. 렌쟈는 나오면서 한 번 뒤를 본다.", isProgress: true, background: bgHospital },
     
-    // #C16 (Dialogue index 255)
+    // #C16 - 데일 등장 (255-288)
     { marker: "#C16", speaker: "렌쟈", text: "“…어?”", background: bgC16, character: "렌쟈", hideCharacter: true, audio: bgMusicC16 },
     { speaker: "시스템", text: "침대 위 사람은 수척하다. 눈 밑은 검고, 이마엔 열로 번진 땀 자국.", background: bgC16, isProgress: true, hideCharacter: true },
     { speaker: "엘", text: "“…데일?? ”", background: bgC16, character: "엘", hideCharacter: true },
@@ -491,7 +524,7 @@ export default function Home() {
     { speaker: "렌쟈", text: "“와 선택 빠르네.”", background: bgC16, character: "렌쟈", hideCharacter: true },
     { speaker: "엘", text: "“어차피 선택 없어.”", background: bgC16, character: "엘", hideCharacter: true },
 
-    // #C18 (Dialogue index 289)
+    // #C18 (289-305)
     { marker: "#C18", speaker: "시스템", text: "이동 준비. 렌쟈가 데일을 부축한다.", background: bgHospitalNew, isProgress: true },
     { speaker: "렌쟈", text: "“서?”", background: bgHospitalNew, character: "렌쟈" },
     { speaker: "데일", text: "“말은 서게 하지 마.”", background: bgHospitalNew, character: "데일" },
@@ -510,7 +543,7 @@ export default function Home() {
     { speaker: "데일", text: "“이게 살아 있는 증거지.”", background: bgHospitalNew, character: "데일" },
     { speaker: "파스닐", text: "이 사람은 살아남은 걸 미안해하지 않는다... 미안해 하는게 더 이상한가?", background: bgHospitalNew, isMonologue: true },
 
-    // #C19 (Dialogue index 306)
+    // #C19 (306-320)
     { marker: "#C19", speaker: "시스템", text: "병원 밖. 차가 보이자 데일은 잠깐 멈춘다.", background: bgNearHospitalNew, isProgress: true },
     { speaker: "데일", text: "“…밖, 더 심해?”", background: bgNearHospitalNew, character: "데일" },
     { speaker: "엘", text: "“응.”", background: bgNearHospitalNew, character: "엘" },
@@ -528,7 +561,7 @@ export default function Home() {
     { speaker: "엘", text: "“그래도 필요해.”", background: bgNearHospitalNew, character: "엘" },
     { speaker: "시스템", text: "차는 다시 숲으로 향한다. 병원은 뒤에서 아무 말도 하지 않는다.", background: bgNearHospitalNew, isProgress: true },
 
-    // #C20 (Dialogue index 321)
+    // #C20 (321-360)
     { marker: "#C20", speaker: "시스템", text: "별장 문이 열리자, 안에 있던 공기가 잠깐 멈춘다. 엘이 먼저 들어오고, 그 뒤로 렌쟈가 누군가를 데리고 온다.", background: bgLivingRoomNew, isProgress: true },
     { speaker: "시스템", text: "고개를 들자마자 다들 동시에 알아본다.", background: bgLivingRoomNew, isProgress: true },
     { speaker: "란", text: "“…와. 이 누님이 살아있을 줄은 몰랐는데요.”", background: bgLivingRoomNew, character: "란" },
@@ -570,8 +603,9 @@ export default function Home() {
     { speaker: "시스템", text: "불쌍하다. 렌쟈가 고개를 끄덕인다.", background: bgLivingRoomNew, isProgress: true },
     { speaker: "렌쟈", text: "“그래. 언니 어차피 조용히 살 날은 이미 지났잖아.”", background: bgLivingRoomNew, character: "렌쟈" },
 
-    // 4일차 (Dialogue index 361)
-    { speaker: "시스템", text: "4일차. 별장 — 아침. 아침이라고 부르기엔 햇빛이 너무 얇다.", background: bgLivingRoomNew, isProgress: true },
+    // New Scenes Start (361+)
+    // D-series Start (361-386)
+    { marker: "4일차", speaker: "시스템", text: "4일차. 별장 — 아침. 아침이라고 부르기엔 햇빛이 너무 얇다.", background: bgLivingRoomNew, isProgress: true },
     { speaker: "시스템", text: "부엌 쪽에서 냄비 뚜껑 닫히는 소리. 렌쟈다.", background: bgLivingRoomNew, isProgress: true },
     { speaker: "렌쟈", text: "“죽은 세상에서도 아침은 오네. 성실하다.”", background: bgLivingRoomNew, character: "렌쟈" },
     { speaker: "하카", text: "“세상은 안 성실해. 사람만 출근하지.”", background: bgLivingRoomNew, character: "하카" },
@@ -599,8 +633,222 @@ export default function Home() {
     { speaker: "엘", text: "“엘이 데일을 본다.”", background: bgLivingRoomNew, character: "엘" },
     { speaker: "데일", text: "“어제 본 바로는 쟤 아직도 후방 담당이 더 어울려.”", background: bgLivingRoomNew, character: "데일" },
     { speaker: "파스닐", text: "아침부터 평가다.", background: bgLivingRoomNew, isMonologue: true },
-    { speaker: "렌쟈", text: "“언니, 어제 이 사람 없었으면”", background: bgLivingRoomNew, character: "렌쟈", onComplete: () => { setGameState("start"); setDialogueIndex(0); } }
-  ], []);
+    { speaker: "렌쟈", text: "“언니, 어제 이 사람 없었으면 약 절반은 버렸어.”", background: bgLivingRoomNew, character: "렌쟈" },
+    
+    // #D1 (387)
+    { marker: "#D1", speaker: "시스템", text: "이동 — 도로. 차 안은 조용하다. 이번엔 데일이 뒷좌석이다.", background: bgD1, isProgress: true, hideCharacter: true, audio: audioAloneTonight },
+    { speaker: "데일", text: "“씨발.”", background: bgD1, character: "데일", hideCharacter: true },
+    { speaker: "엘", text: "“뭐야. 씨발? 렌쟈 옆에 없다고 본색이 드러났나봐”", background: bgD1, character: "엘", hideCharacter: true },
+    { speaker: "데일", text: "“하… 그래, 너 편하라고. 근데 차 안 공기 영 별로네.”", background: bgD1, character: "데일", hideCharacter: true },
+    { speaker: "하카", text: "“이제 와서?”", background: bgD1, character: "하카", hideCharacter: true },
+    { speaker: "엘", text: "“불만 있으면 처 걸어가.”", background: bgD1, character: "엘", hideCharacter: true },
+    { speaker: "데일", text: "“아, 진짜.”", background: bgD1, character: "데일", hideCharacter: true },
+    { speaker: "데일", text: "“병원보다 여긴 그래도 낫다.”", background: bgD1, character: "데일", hideCharacter: true },
+    { speaker: "시스템", text: "잠깐의 정적.", background: bgD1, isProgress: true, hideCharacter: true },
+    { speaker: "데일", text: "“근데.”", background: bgD1, character: "데일", hideCharacter: true },
+    { speaker: "엘", text: "“말 짧게 해라.”", background: bgD1, character: "엘", hideCharacter: true },
+    { speaker: "데일", text: "“쟤.”", background: bgD1, character: "데일", hideCharacter: true },
+    { speaker: "시스템", text: "파스닐을 본다.", background: bgD1, isProgress: true, hideCharacter: true },
+    { speaker: "데일", text: "“왜 여기 남아 있는 거야?”", background: bgD1, character: "데일", hideCharacter: true },
+    { speaker: "파스닐", text: "“…”", background: bgD1, isMonologue: true, hideCharacter: true },
+    { speaker: "파스닐", text: "“그야 하카님이-”", background: bgD1, isMonologue: true, hideCharacter: true },
+    { speaker: "하카", text: "“뭐 폐건물보단 대리석이 나으니까 , 그치.”", background: bgD1, character: "하카", hideCharacter: true },
+    { speaker: "데일", text: "“어줍짢은걸 가지고. 그래서 뭐?”", background: bgD1, character: "데일", hideCharacter: true },
+    { speaker: "파스닐", text: "“어차피 멀리가지도 못하고 납치당할까봐요.”", background: bgD1, isMonologue: true, hideCharacter: true },
+    { speaker: "시스템", text: "데일은 코웃음을 친다.", background: bgD1, isProgress: true, hideCharacter: true },
+    { speaker: "데일", text: "“너 지금 납치된거야. 여기 정상적인 인간 하나 없거든, 심지어 착해보이는 란도.”", background: bgD1, character: "데일", hideCharacter: true },
+    { speaker: "하카", text: "“렌쟈 가슴 보는 재미로 살 걸. ”", background: bgD1, character: "하카", hideCharacter: true },
+    { speaker: "엘", text: "“너희같은 새끼들만 그런 생각 하는거야.”", background: bgD1, character: "엘", hideCharacter: true },
+    { speaker: "엘", text: "“흘려 보내, 파스닐.”", background: bgD1, character: "엘", hideCharacter: true },
+    { speaker: "파스닐", text: "“…네.”", background: bgD1, isMonologue: true, hideCharacter: true },
+    { speaker: "데일", text: "“쟤 나름 즐기는 것 같아 보이는걸.”", background: bgD1, character: "데일", hideCharacter: true },
+    { speaker: "하카", text: "“설마, 생긴게 세상 초식남이라 부른건데. ”", background: bgD1, character: "하카", hideCharacter: true },
+    { speaker: "파스닐", text: "..;;”", background: bgD1, isMonologue: true, hideCharacter: true },
+    { speaker: "시스템", text: "이 사람들, 말들이 험해지기 시작했다.", background: bgD1, isProgress: true, hideCharacter: true },
+
+    // #D2
+    { marker: "#D2", speaker: "시스템", text: "도심 외곽. 차 문이 닫히는 소리 뒤에 잠깐의 정적이 남는다.", background: bgD2, isProgress: true, audio: audioEpicAftermath },
+    { speaker: "시스템", text: "나는 마지막으로 내린다. 늘 그렇듯 반 박자 늦게.", background: bgD2, isProgress: true },
+    { speaker: "시스템", text: "엘 앞. 하카 옆. 데일은 조금 뒤, 그러나 시야는 넓다.", background: bgD2, isProgress: true },
+    { speaker: "파스닐", text: "이 조합, 불편하다. 그래서 더 많은 게 보인다.", background: bgD2, isMonologue: true },
+    { speaker: "시스템", text: "약국 문은 반쯤 열려 있다. 안은 비어 있다. 너무 비어 있다.", background: bgD2, isProgress: true },
+    { speaker: "데일", text: "“…여긴 이미 한 번 털렸어.”", background: bgD2, character: "데일" },
+    { speaker: "엘", text: "“언제.”", background: bgD2, character: "엘" },
+    { speaker: "데일", text: "“어제 아니면 오늘 새벽.”", background: bgD2, character: "데일" },
+    { speaker: "하카", text: "“근거는?”", background: bgD2, character: "하카" },
+    { speaker: "데일", text: "“서랍 안 뒤집혔어. 급한 놈들이 아니야.”", background: bgD2, character: "데일" },
+    { speaker: "시스템", text: "나는 바닥을 본다. 유리 조각이 없다. 약병도 깨지지 않았다.", background: bgD2, isProgress: true },
+    { speaker: "파스닐", text: "“정리된 느낌이에요.”", background: bgD2, isMonologue: true },
+    { speaker: "하카", text: "“어우, 싫다. 차라리 난장판이 낫지.”", background: bgD2, character: "하카" },
+    { speaker: "엘", text: "“사람 있었단 뜻이다.”", background: bgD2, character: "엘" },
+    { speaker: "데일", text: "“있었고, 살아서 나갔고.”", background: bgD2, character: "데일" },
+    { speaker: "하카", text: "“…그리고 다시 안 돌아왔겠지.”", background: bgD2, character: "하카" },
+    { speaker: "시스템", text: "데일은 말이 끝나자 약국 안쪽을 한 번 더 훑는다.", background: bgD2, isProgress: true },
+    { speaker: "데일", text: "“여기서 머문이 시간 짧아.”", background: bgD2, character: "데일" },
+    { speaker: "엘", text: "“왜.”", background: bgD2, character: "엘" },
+    { speaker: "데일", text: "“필요한 것만 챙겼거든. 망설임 없어.”", background: bgD2, character: "데일" },
+    { speaker: "파스닐", text: "병원에서 살아남은 사람의 시선이다. 고르지 않는다. 결정한다.", background: bgD2, isMonologue: true },
+    { speaker: "하카", text: "“이 동네에 생각보다 정상인 많네.”", background: bgD2, character: "하카" },
+    { speaker: "데일", text: "“끝까지 남은 쪽이 정상이겠냐?”", background: bgD2, character: "데일" },
+    { speaker: "엘", text: "“더 들어간다.”", background: bgD2, character: "엘" },
+
+    // #D3
+    { marker: "#D3", speaker: "시스템", text: "건물 내부. 발소리가 이상하게 크게 울린다.", background: bgD3, isProgress: true },
+    { speaker: "시스템", text: "나는 자동으로 소리를 센다. 하카는 선반을 툭툭 건드리고, 엘은 통로 끝을 본다. 데일은 냉장고 쪽.", background: bgD3, isProgress: true },
+    { speaker: "엘", text: "“비어 있나.”", background: bgD3, character: "엘" },
+    { speaker: "데일", text: "“응. 근데 털린 흔적은 없어. 든게 없거든”", background: bgD3, character: "데일" },
+    { speaker: "하카", text: "“너 머리처럼.”", background: bgD3, character: "하카" },
+    { speaker: "파스닐", text: "“풉”", background: bgD3, isMonologue: true },
+    { speaker: "시스템", text: "순간 정적이 흐른다.", background: bgD3, isProgress: true },
+    { speaker: "파스닐", text: "“풉....푸..푸.푸. 풉.. 갑자기 머릿속에 비트가 떠올라서요.”", background: bgD3, isMonologue: true },
+    { speaker: "하카", text: "“뭘 좀 아는구만?”", background: bgD3, character: "하카" },
+    { speaker: "데일", text: "“너무 정중해서 죽고싶다. 저걸 ceo고 dj라고 두냐? ”", background: bgD3, character: "데일" },
+    { speaker: "엘", text: "“이제 둘다 아니긴해.”", background: bgD3, character: "엘" },
+    { speaker: "데일", text: "“혼자면 눈치 볼 필요 없겠네. 응? 하카. ”", background: bgD3, character: "데일" },
+    { speaker: "하카", text: "“쩝…집단이 제일 귀찮지.”", background: bgD3, character: "하카" },
+    { speaker: "엘", text: "“나간다.”", background: bgD3, character: "엘" },
+    { speaker: "하카", text: "“엥 오빠, 벌써?”", background: bgD3, character: "하카" },
+    { speaker: "엘", text: "“얻을 게 없다.”", background: bgD3, character: "엘" },
+    { speaker: "엘", text: "“그리고 닥쳐.”", background: bgD3, character: "엘" },
+    { speaker: "시스템", text: "데일은 고개를 끄덕인다. 이상할 정도로 말이 없다.", background: bgD3, isProgress: true },
+    { speaker: "파스닐", text: "이 사람, 말 줄이면 위험하다.", background: bgD3, isMonologue: true },
+
+    // #D4
+    { marker: "#D4", speaker: "시스템", text: "이동 — 골목. 골목이 이어진다.", background: bgNearForest, isProgress: true },
+    { speaker: "시스템", text: "나는 뒤를 한 번 본다. 아무도 없다. 아직은.", background: bgNearForest, isProgress: true },
+    { speaker: "파스닐", text: "“…소리 들려요.”", background: bgNearForest, isMonologue: true },
+    { speaker: "엘", text: "“어디서.”", background: bgNearForest, character: "엘" },
+    { speaker: "파스닐", text: "“왼쪽, 11시. 멀리서.”", background: bgNearForest, isMonologue: true },
+    { speaker: "하카", text: "“구체적이네.”", background: bgNearForest, character: "하카" },
+    { speaker: "데일", text: "“사람이야?”", background: bgNearForest, character: "데일" },
+    { speaker: "파스닐", text: "“…사람 같은데요. ”", background: bgNearForest, isMonologue: true },
+    { speaker: "시스템", text: "데일이 바로 멈춘다.", background: bgNearForest, isProgress: true },
+    { speaker: "데일", text: "“‘같은’은 빼.”", background: bgNearForest, character: "데일" },
+    { speaker: "하카", text: "“우리 언니 예민.”", background: bgNearForest, character: "하카" },
+    { speaker: "데일", text: "“꺼져.”", background: bgNearForest, character: "데일" },
+    { speaker: "엘", text: "“야야. 확인만 한다.”", background: bgNearForest, character: "엘" },
+    { speaker: "하카", text: "“또 확인.”", background: bgNearForest, character: "하카" },
+    { speaker: "데일", text: "“가까이 안 가.”", background: bgNearForest, character: "데일" },
+    { speaker: "엘", text: "“알아.”", background: bgNearForest, character: "엘" },
+    { speaker: "파스닐", text: "엘은 항상 짧게 말한다. 그래서 더 신뢰받는다.", background: bgNearForest, isMonologue: true },
+    { speaker: "시스템", text: "골목 끝. 사람 그림자 하나. 비틀린다. 멈춘다.", background: bgNearForest, isProgress: true },
+    { speaker: "데일", text: "“…아.”", background: bgNearForest, character: "데일" },
+    { speaker: "하카", text: "“와.”", background: bgNearForest, character: "하카" },
+    { speaker: "엘", text: "“후퇴.”", background: bgNearForest, character: "엘" },
+    { speaker: "데일", text: "“응.”", background: bgNearForest, character: "데일" },
+    { speaker: "시스템", text: "말이 빠르다. 판단도 빠르다. 우리는 뛰지 않는다. 그게 이 팀의 규칙이다.", background: bgNearForest, isProgress: true },
+    { speaker: "파스닐", text: "도망이 아니라 철수. 이 차이를 아는 사람들이 모였다.", background: bgNearForest, isMonologue: true },
+    { speaker: "파스닐", text: "나는 이 팀에 걸맞는 사람일까. 차갑게 들끓는 이 분위기상 하마터면 상사앞에서 욕할뻔했다.", background: bgNearForest, isMonologue: true },
+    { speaker: "파스닐", text: "저런게 더있으면 어쩌지.", background: bgNearForest, isMonologue: true },
+
+    // #D5
+    { marker: "#D5", speaker: "시스템", text: "도심 외곽 — 분기점. 건물이 갈라지는 교차로.", background: bgD5, isProgress: true },
+    { speaker: "시스템", text: "왼쪽은 낮은 상가—유리 많고, 시야 좋음. 오른쪽은 사무실—복도 길고, 어둡다.", background: bgD5, isProgress: true },
+    { speaker: "엘", text: "“여기서 나눈다.”", background: bgD5, character: "엘" },
+    { speaker: "하카", text: "“드디어.”", background: bgD5, character: "하카" },
+    { speaker: "데일", text: "“누가 어디.”", background: bgD5, character: "데일" },
+    { speaker: "엘", text: "“하카, 혼자 오른쪽.”", background: bgD5, character: "엘" },
+    { speaker: "하카", text: "“역시. 나만 위험한 데네ㅜㅜ\"", background: bgD5, character: "하카" },
+    { speaker: "엘", text: "“익숙하잖아. 깊고. 어둡고.”", background: bgD5, character: "엘" },
+    { speaker: "하카", text: "“응. 너무 ㅎ. ”", background: bgD5, character: "하카" },
+    { speaker: "엘", text: "“파스닐.”", background: bgD5, character: "엘" },
+    { speaker: "파스닐", text: "“네.”", background: bgD5, isMonologue: true },
+    { 
+      speaker: "엘", 
+      text: "“선택해. 어느 쪽이든, 내가 책임진다. 하카랑 갈생각은 하지도 말고”", 
+      background: bgD5, 
+      character: "엘",
+      choices: [
+        { text: "1. 하카와 간다 (선택불가)", targetIndex: dialogueIndex }, // Just in case, stay on same index
+        { text: "2. 데일과 간다", targetIndex: 479 },
+        { text: "3. 엘과 간다", targetIndex: 479 }
+      ]
+    },
+
+    // Result of choice (479)
+    { speaker: "데일", text: "“…듣기 싫은 말.”", background: bgD5, character: "데일" },
+    { speaker: "하카", text: "“아, 또 시작이네. 엘데일. 그리고 파스닐\" ", background: bgD5, character: "하카" },
+    { speaker: "시스템", text: "결국 엘과 데일은 같은 방향으로 움직인다. 나는 그 사이에 낀다.", background: bgD5, isProgress: true },
+    { speaker: "시스템", text: "하카는 혼자 오른쪽으로 사라진다.", background: bgD5, isProgress: true },
+    { speaker: "하카", text: "“살아있으면 보자. 아니면—뭐, 각자 운명이지.”", background: bgD5, character: "하카" },
+    { speaker: "엘", text: "“쓸데없는 말 마.”", background: bgD5, character: "엘" },
+    { speaker: "하카", text: "“그게 내 취미야.”", background: bgD5, character: "하카" },
+
+    // #D6
+    { marker: "#D6", speaker: "시스템", text: "이동 — 상가 내부. 유리가 깨진 소리 하나에 데일이 바로 날카로워진다.", background: bgD6, isProgress: true },
+    { speaker: "데일", text: "“고양이가 발도 제대로 못딛냐?”", background: bgD6, character: "데일" },
+    { speaker: "엘", text: "“개다.”", background: bgD6, character: "엘" },
+    { speaker: "엘", text: "“불만이면 앞서 가.\"", background: bgD6, character: "엘" },
+    { speaker: "데일", text: "“네가 앞에서 길 막잖아.”", background: bgD6, character: "데일" },
+
+    // #D7
+    { marker: "#D7", speaker: "시스템", text: "상가 깊숙한 곳.", background: bgD5, isProgress: true, audio: "stop" },
+    { speaker: "엘", text: "“조용히 해.”", background: bgD5, character: "엘" },
+    { speaker: "데일", text: "“나만?”", background: bgD5, character: "데일" },
+    { speaker: "엘", text: "“전부 다.”", background: bgD5, character: "엘" },
+
+    // #D8 - Chase Start
+    { marker: "#D8", speaker: "시스템", text: "갑자기 뒤에서 짐승 같은 울음소리가 들린다.", background: bgD6, isProgress: true, hideCharacter: true, audio: audioHorrorChase, effect: "chase" },
+    { speaker: "시스템", text: "여러 개의 발소리가 바닥을 긁으며 다가온다.", background: bgD6, isProgress: true, hideCharacter: true, effect: "chase" },
+    { speaker: "엘", text: "“뛴다!”", background: bgD6, character: "엘", hideCharacter: true, effect: "chase" },
+
+    // #D9
+    { marker: "#D9", speaker: "시스템", text: "앞만 보고 달린다. 뒤를 보면 안 된다.", background: bgD5, isProgress: true, effect: "chase" },
+    { speaker: "데일", text: "“씨발, 너무 많아!”", background: bgD5, character: "데일", effect: "chase" },
+    { speaker: "엘", text: "“멈추지 마!”", background: bgD5, character: "엘", effect: "chase" },
+
+    // #D10
+    { marker: "#D10", speaker: "시스템", text: "어둠 속으로 몸을 던진다.", background: bgD10, isProgress: true, hideCharacter: true, audio: audioHeartBeat },
+    { speaker: "시스템", text: "심장 소리가 고막을 때린다.", background: bgD10, isProgress: true, hideCharacter: true },
+
+    // #H1
+    { marker: "#H1", speaker: "시스템", text: "도시를 가로지른다.", background: bgH1, isProgress: true },
+    { speaker: "엘", text: "“다들 무사해?”", background: bgH1, character: "엘" },
+    { speaker: "데일", text: "“말 걸지 마, 죽을 것 같으니까.”", background: bgH1, character: "데일" },
+
+    // #F1 - Puzzle
+    { marker: "#F1", speaker: "시스템", text: "눈앞이 흐려진다. 사방이 검게 변한다.", background: "black", isProgress: true, hideCharacter: true },
+    { marker: "#F1", speaker: "시스템", text: "붉은 무언가가 내린다. 눈처럼, 하지만 눈이 아닌 것.", background: "black", isProgress: true, hideCharacter: true, isPuzzle: true },
+
+    // #F2
+    { marker: "#F2", speaker: "시스템", text: "정신을 차리자 낯선 풍경이 펼쳐진다.", background: bgF2, isProgress: true, hideCharacter: true, audio: audioSigh, effect: "shake" },
+    { speaker: "시스템", text: "세상이 살짝 흔들린다.", background: bgF2, isProgress: true, hideCharacter: true, effect: "shake" },
+
+    // #F3
+    { marker: "#F3", speaker: "시스템", text: "누군가 지켜보는 기분이다.", background: bgF3, isProgress: true, hideCharacter: true, effect: "shake" },
+
+    // #F5
+    { marker: "#F5", speaker: "시스템", text: "흔들림이 멈춘다.", background: bgD10, isProgress: true, hideCharacter: true },
+
+    // #A1
+    { marker: "#A1", speaker: "시스템", text: "다시 익숙한 곳으로 돌아왔다.", background: bgLivingRoomUpdate, isProgress: true },
+    { speaker: "엘", text: "“살아 돌아왔네.”", background: bgLivingRoomUpdate, character: "엘" },
+    { speaker: "데일", text: "“지옥을 보고 온 기분이야.”", background: bgLivingRoomUpdate, character: "데일" },
+
+    // #2
+    { marker: "#2", speaker: "시스템", text: "이동 중.", background: bg_2, isProgress: true },
+
+    // #G2
+    { marker: "#G2", speaker: "시스템", text: "헤드라이트가 어둠을 뚫는다.", background: bgG2, isProgress: true, hideCharacter: true },
+
+    // #4
+    { marker: "#4", speaker: "시스템", text: "상가 건물.", background: bg_4, isProgress: true },
+
+    // #5
+    { marker: "#5", speaker: "시스템", text: "건물 뒤편.", background: bg_5, isProgress: true },
+
+    // #7
+    { marker: "#7", speaker: "시스템", text: "다시 도로 위.", background: bg_2, isProgress: true },
+
+    // #8
+    { marker: "#8", speaker: "시스템", text: "마지막 거실.", background: bgLivingRoomUpdate, isProgress: true },
+
+    // Character Silla dialogues
+    { speaker: "소년1", text: "“안녕.”", background: bgLivingRoomUpdate, character: "소년1" },
+    { speaker: "신라", text: "“반가워요.”", background: bgLivingRoomUpdate, character: "신라" },
+
+    { speaker: "시스템", text: "The end of current story.", isProgress: true, background: bgLivingRoomUpdate, onComplete: () => { setGameState("start"); setDialogueIndex(0); } }
+  ], [dialogueIndex]);
 
   const currentDialogue = story[dialogueIndex];
 
@@ -609,7 +857,8 @@ export default function Home() {
     const backgrounds = [
       bgStart, bgClip1, bgClip2, bgLivingRoom, bgBalcony, 
       bgNearForest, bgStorage, bgCity1, bgMart, bgNearHospital, bgHospital,
-      bgC16, bgHospitalNew, bgNearHospitalNew, bgLivingRoomNew
+      bgC16, bgHospitalNew, bgNearHospitalNew, bgLivingRoomNew,
+      bgD1, bgD2, bgD3, bgD5, bgD6, bgH1, bgD10, bgF2, bgF3, bgLivingRoomUpdate, bgG2, bg_2, bg_4, bg_5
     ];
     backgrounds.forEach(src => {
       const img = new Image();
@@ -620,7 +869,7 @@ export default function Home() {
   // Keyboard navigation
   useEffect(() => {
     const handleKeyDown = (e: KeyboardEvent) => {
-      if (gameState === "story" && !currentDialogue?.choices) {
+      if (gameState === "story" && !currentDialogue?.choices && !currentDialogue?.isPuzzle) {
         if (e.key === "Enter" || e.key === " ") {
           e.preventDefault();
           handleNext();
@@ -664,6 +913,7 @@ export default function Home() {
 
   const handleNext = useCallback(() => {
     if (currentDialogue.choices) return;
+    if (currentDialogue.isPuzzle) return;
     
     if (currentDialogue.onComplete) {
       currentDialogue.onComplete();
@@ -685,6 +935,13 @@ export default function Home() {
 
   const handleChoice = (targetIndex: number) => {
     setDialogueIndex(targetIndex);
+  };
+
+  const handlePuzzleSubmit = () => {
+    if (puzzleInput.includes("눈")) {
+      setPuzzleInput("");
+      setDialogueIndex(dialogueIndex + 1);
+    }
   };
 
   const handleClick = (e: React.MouseEvent) => {
@@ -725,7 +982,7 @@ export default function Home() {
   const getCharacterImage = (name?: string, index?: number) => {
     if (!name || name === "시스템" || name === "TV" || name === "TV 앵커") return null;
     
-    // Character V2 logic (starting from #C10 which is index 173)
+    // Character V2 logic (starting from #C10 which is index 189)
     const isV2 = index !== undefined && index >= 189;
 
     switch (name) {
@@ -734,6 +991,8 @@ export default function Home() {
       case "렌쟈": return isV2 ? imgRenja2 : imgRenja;
       case "엘": return isV2 ? imgEl2 : imgEl;
       case "데일": return imgDale;
+      case "소년1":
+      case "신라": return imgSilla;
       case "파스닐": 
         // Pasnil only visible in CLIP1 (indices 0-4)
         return (index !== undefined && index <= 4) ? imgPasnil : null;
@@ -762,8 +1021,36 @@ export default function Home() {
 
   if (gameState === "story") {
     const charImg = currentDialogue.hideCharacter ? null : getCharacterImage(currentDialogue.character || currentDialogue.speaker, dialogueIndex);
+    
+    // Effect class
+    let effectClass = "";
+    if (currentDialogue.effect === "shake") effectClass = "animate-shake";
+    if (currentDialogue.effect === "chase") effectClass = "animate-pulse scale-105 transition-transform duration-300";
+
     return (
-      <div className="relative w-full h-screen overflow-hidden bg-black flex flex-col items-center justify-end" onClick={handleClick}>
+      <div className={`relative w-full h-screen overflow-hidden bg-black flex flex-col items-center justify-end ${effectClass}`} onClick={handleClick}>
+        {/* Red Snow Particles for F1 Puzzle */}
+        {currentDialogue.isPuzzle && (
+          <div className="absolute inset-0 z-10 pointer-events-none overflow-hidden">
+            {dustParticles.map(p => (
+              <div 
+                key={p.id}
+                className="absolute rounded-full"
+                style={{
+                  left: `${p.x}%`,
+                  top: `${p.y}%`,
+                  width: `${p.size + 1}px`,
+                  height: `${p.size + 1}px`,
+                  opacity: p.opacity,
+                  backgroundColor: "#DC2626",
+                  filter: 'blur(1px)',
+                  transition: 'all 0.1s linear'
+                }}
+              />
+            ))}
+          </div>
+        )}
+
         {/* Save Button */}
         <div className="absolute top-8 right-8 z-50 flex items-center gap-2">
           <Button
@@ -802,10 +1089,14 @@ export default function Home() {
               transition={{ duration: 1.0 }}
               className="w-full h-full"
             >
-              <img 
-                src={currentDialogue.background || bgClip1} 
-                className="w-full h-full object-cover filter brightness-[0.6] contrast-[1.1] saturate-[0.8]"
-              />
+              {currentDialogue.background === "black" ? (
+                <div className="w-full h-full bg-black" />
+              ) : (
+                <img 
+                  src={currentDialogue.background || bgClip1} 
+                  className="w-full h-full object-cover filter brightness-[0.6] contrast-[1.1] saturate-[0.8]"
+                />
+              )}
             </motion.div>
           </AnimatePresence>
           <div className="absolute inset-0 bg-gradient-to-t from-black via-transparent to-transparent opacity-60" />
@@ -860,6 +1151,26 @@ export default function Home() {
                 {currentDialogue.text}
               </div>
 
+              {currentDialogue.isPuzzle && (
+                <div className="mt-6 flex gap-2">
+                  <Input 
+                    placeholder="대답을 입력하세요..."
+                    value={puzzleInput}
+                    onChange={(e) => setPuzzleInput(e.target.value)}
+                    onKeyDown={(e) => e.key === "Enter" && handlePuzzleSubmit()}
+                    className="bg-white/5 border-white/10 text-white placeholder:text-white/20 rounded-none focus-visible:ring-red-600"
+                  />
+                  <Button 
+                    size="icon" 
+                    variant="ghost" 
+                    className="bg-red-600/20 hover:bg-red-600/40 text-red-600 border border-red-600/30"
+                    onClick={handlePuzzleSubmit}
+                  >
+                    <Send className="w-4 h-4" />
+                  </Button>
+                </div>
+              )}
+
               {currentDialogue.choices && (
                 <div className="mt-6 grid grid-cols-1 gap-2">
                   {currentDialogue.choices.map((choice, i) => (
@@ -879,7 +1190,7 @@ export default function Home() {
                 </div>
               )}
 
-              {!currentDialogue.choices && (
+              {!currentDialogue.choices && !currentDialogue.isPuzzle && (
                 <div className="absolute bottom-4 right-6 opacity-30 group-hover:opacity-100 transition-opacity">
                   <ChevronRight className="w-4 h-4 text-white animate-pulse" />
                 </div>
