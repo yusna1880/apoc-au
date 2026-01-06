@@ -785,9 +785,9 @@ export default function Home() {
       background: bgD5, 
       character: "엘",
       choices: [
-        { text: "1. 하카와 간다", targetIndex: 521 },
-        { text: "2. 데일과 간다", targetIndex: 521 },
-        { text: "3. 엘과 간다", targetIndex: 521 }
+        { text: "1. 하카와 간다", targetIndex: 528 },
+        { text: "2. 데일과 간다", targetIndex: 528 },
+        { text: "3. 엘과 간다", targetIndex: 528 }
       ]
     },
     // 선택 후 통합 루트
