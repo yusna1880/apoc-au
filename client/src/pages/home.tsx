@@ -87,7 +87,10 @@ interface DialogueLine {
   marker?: string;
   hideCharacter?: boolean;
   isPuzzle?: boolean;
-  effect?: "shake" | "chase";
+  puzzleAnswer?: string;
+  effect?: "shake" | "chase" | "carShake";
+  textOnly?: boolean;
+  eyeEffect?: boolean;
 }
 
 interface Choice {
@@ -915,14 +918,14 @@ export default function Home() {
     { speaker: "파스닐", text: "지금 나가면, 난 쓰레기다.", background: bgD5_New, isMonologue: true },
     { speaker: "시스템", text: "문이 닫힌다.", background: bgD5_New, isProgress: true },
 
-    // #D8
-    { marker: "#D8", speaker: "시스템", text: "혼자 남는다.", background: bgD5_New, isProgress: true, audio: audioHorrorChase },
-    { speaker: "시스템", text: "멀리서 금속 부딪히는 소리.", background: bgD5_New, isProgress: true },
-    { speaker: "시스템", text: "그리고— 사람의 비명. 짧다. 너무 짧다.", background: bgD5_New, isProgress: true, effect: "shake" },
-    { speaker: "파스닐", text: "\"엘…?\"", background: bgD5_New, isMonologue: true },
-    { speaker: "시스템", text: "그 다음은 소리들이 겹친다. 발. 숨. 부딪힘.", background: bgD5_New, isProgress: true },
-    { speaker: "시스템", text: "그리고— 엘의 신음.", background: bgD5_New, isProgress: true },
-    { speaker: "파스닐", text: "나가도될까? 나간다면..", background: bgD5_New, isMonologue: true },
+    // #D8 - 텍스트 온리 (배경/캐릭터 없음)
+    { marker: "#D8", speaker: "시스템", text: "혼자 남는다.", background: "black", isProgress: true, audio: audioHorrorChase, textOnly: true },
+    { speaker: "시스템", text: "멀리서 금속 부딪히는 소리.", background: "black", isProgress: true, textOnly: true },
+    { speaker: "시스템", text: "그리고— 사람의 비명. 짧다. 너무 짧다.", background: "black", isProgress: true, effect: "shake", textOnly: true },
+    { speaker: "파스닐", text: "\"엘…?\"", background: "black", isMonologue: true, textOnly: true },
+    { speaker: "시스템", text: "그 다음은 소리들이 겹친다. 발. 숨. 부딪힘.", background: "black", isProgress: true, textOnly: true },
+    { speaker: "시스템", text: "그리고— 엘의 신음.", background: "black", isProgress: true, textOnly: true },
+    { speaker: "파스닐", text: "나가도될까? 나간다면..", background: "black", isMonologue: true, textOnly: true },
 
     // #D9
     { marker: "#D9", speaker: "시스템", text: "문이 다시 열린 건 하카였다.", background: bgD5_New, isProgress: true },
@@ -948,25 +951,26 @@ export default function Home() {
     { speaker: "엘", text: "\"…문 닫히면 뒤돌아보지 마.\"", background: bgD5_New, character: "엘" },
     { speaker: "시스템", text: "나는 고개를 끄덕인다. 말이 안 나온다.", background: bgD5_New, isProgress: true },
 
-    // #D10 탈출
-    { marker: "#D10", speaker: "시스템", text: "탈출. 계단. 문. 밖.", background: bgD10, isProgress: true, audio: audioHeartBeat },
-    { speaker: "시스템", text: "차가 보인다.", background: bgD10, isProgress: true },
-    { speaker: "하카", text: "\"태운다!\"", background: bgD10, character: "하카" },
-    { speaker: "시스템", text: "엘의 숨이 거칠다. 색이 빠르게 변한다.", background: bgD10, isProgress: true },
-    { speaker: "파스닐", text: "이건 시간 문제다.", background: bgD10, isMonologue: true },
-    { speaker: "하카", text: "\"…젠장.\"", background: bgD10, character: "하카" },
-    { speaker: "파스닐", text: "위기는 시작됐다. 그리고 이건— 되돌릴 수 없다.", background: bgD10, isMonologue: true },
+    // #D10 탈출 - 검정 배경, 캐릭터 없음
+    { marker: "#D10", speaker: "시스템", text: "탈출. 계단. 문. 밖.", background: "black", isProgress: true, audio: audioHeartBeat, hideCharacter: true },
+    { speaker: "시스템", text: "차가 보인다.", background: "black", isProgress: true, hideCharacter: true },
+    { speaker: "하카", text: "\"태운다!\"", background: "black", hideCharacter: true },
+    { speaker: "시스템", text: "엘의 숨이 거칠다. 색이 빠르게 변한다.", background: "black", isProgress: true, hideCharacter: true },
+    { speaker: "파스닐", text: "이건 시간 문제다.", background: "black", isMonologue: true, hideCharacter: true },
+    { speaker: "하카", text: "\"…젠장.\"", background: "black", hideCharacter: true },
+    { speaker: "파스닐", text: "위기는 시작됐다. 그리고 이건— 되돌릴 수 없다.", background: "black", isMonologue: true, hideCharacter: true },
 
     // 차로 돌아오는 길
-    { speaker: "시스템", text: "차 문이 닫히자 데일이 숨을 내쉰다.", background: bgD10, isProgress: true },
-    { speaker: "데일", text: "\"…역시 집에 있을걸.\"", background: bgD10, character: "데일" },
-    { speaker: "하카", text: "\"좀 닥쳐.\"", background: bgD10, character: "하카" },
-    { speaker: "데일", text: "\"….\"", background: bgD10, character: "데일" },
-    { speaker: "엘", text: "\"뭐가 제일 이상해보이냐.\"", background: bgD10, character: "엘" },
-    { speaker: "엘", text: "\"파스닐.\"", background: bgD10, character: "엘" },
+    { speaker: "시스템", text: "차 문이 닫히자 데일이 숨을 내쉰다.", background: "black", isProgress: true, hideCharacter: true },
+    { speaker: "데일", text: "\"…역시 집에 있을걸.\"", background: "black", hideCharacter: true },
+    { speaker: "하카", text: "\"좀 닥쳐.\"", background: "black", hideCharacter: true },
+    { speaker: "데일", text: "\"….\"", background: "black", hideCharacter: true },
+    { speaker: "엘", text: "\"뭐가 제일 이상해보이냐.\"", background: "black", hideCharacter: true },
+    { speaker: "엘", text: "\"파스닐.\"", background: "black", hideCharacter: true },
 
-    // #F1
-    { marker: "#F1", speaker: "데일", text: "\"…눈.\"", background: bgD10, character: "데일" },
+    // #F1 - 붉은 눈 효과 + 퍼즐 입력
+    { marker: "#F1", speaker: "시스템", text: "무엇이 가장 이상해 보였는가?", background: "black", isProgress: true, isPuzzle: true, puzzleAnswer: "눈", eyeEffect: true, hideCharacter: true },
+    { speaker: "데일", text: "\"…눈.\"", background: "black", hideCharacter: true },
     { speaker: "하카", text: "\"아, 또 눈.\"", background: bgD10, character: "하카" },
     { speaker: "파스닐", text: "마트에서 보던 눈과 비슷했다.", background: bgD10, isMonologue: true },
     { speaker: "하카", text: "\"와, 합의 빠르네.\"", background: bgD10, character: "하카" },
@@ -979,42 +983,42 @@ export default function Home() {
     { speaker: "시스템", text: "엔진 소리는 일정한데 차 안 공기는 들쭉날쭉하다.", background: bgD10, isProgress: true },
     { speaker: "시스템", text: "엘은 뒷좌석에 눕듯 기대 있다. 숨이 고르지 않다. 눈은 뜨고 있는데, 초점이 흔들린다.", background: bgD10, isProgress: true },
 
-    // #F2~F3 차 안 대화
-    { marker: "#F2", speaker: "시스템", text: "하카가 운전대를 잡고 있고 뒷자석엔 데일. 나는 뒷자석 바닥 쪽에 쭈그려 앉아 엘의 손목을 보고 있다.", background: bgF2, isProgress: true },
-    { speaker: "데일", text: "\"…그래서.\"", background: bgF2, character: "데일" },
-    { speaker: "하카", text: "\"그래서 뭐.\"", background: bgF3, character: "하카" },
-    { speaker: "하카", text: "\"결국 엘이 물린 거잖아.\"", background: bgF3, character: "하카" },
-    { speaker: "데일", text: "\"네가 혼자 돌아다니지만 않았어도.\"", background: bgF2, character: "데일" },
-    { speaker: "하카", text: "\"아, 그걸 나한테 돌려?\"", background: bgF3, character: "하카" },
-    { speaker: "데일", text: "\"항상 그렇게 하잖아. 자기 판단, 자기 루트.\"", background: bgF2, character: "데일" },
-    { speaker: "하카", text: "\"그 말은 엘한테 해.\"", background: bgF3, character: "하카" },
-    { speaker: "데일", text: "\"지금 엘이 말할 수 있는 상태야?\"", background: bgF2, character: "데일" },
-    { speaker: "시스템", text: "하카가 브레이크를 살짝 밟는다. 차가 덜컹인다.", background: bgF3, isProgress: true },
-    { speaker: "하카", text: "\"너, 지금 말 고르지 마.\"", background: bgF3, character: "하카" },
-    { speaker: "데일", text: "\"고를 필요 없어. 이미 결과 나왔잖아.\"", background: bgF2, character: "데일" },
-    { speaker: "시스템", text: "나는 엘의 팔을 살핀다. 상처 주변이… 빨라.", background: bgF2, isProgress: true },
-    { speaker: "파스닐", text: "\"열 올라요.\"", background: bgF2, isMonologue: true },
-    { speaker: "하카", text: "\"알아.\"", background: bgF3, character: "하카" },
-    { speaker: "데일", text: "\"봤지. 시간 싸움이야.\"", background: bgF2, character: "데일" },
-    { speaker: "하카", text: "\"그래서?\"", background: bgF3, character: "하카" },
-    { speaker: "데일", text: "\"그래서— 누가 책임질 건데.\"", background: bgF2, character: "데일" },
-    { speaker: "하카", text: "\"책임 같은 소리 하네.\"", background: bgF3, character: "하카" },
-    { speaker: "데일", text: "\"항상 이렇게 끝나. 누군가는 물리고, 누군가는 '어쩔 수 없었다'고 말하고.\"", background: bgF2, character: "데일" },
-    { speaker: "하카", text: "\"그럼 너는? 너는 어디 있었는데.\"", background: bgF3, character: "하카" },
-    { speaker: "데일", text: "\"….\"", background: bgF2, character: "데일" },
-    { speaker: "하카", text: "\"몰래 빠져나가서 혼자 판단하다가 결국 엘이 쫓아간 거잖아.\"", background: bgF3, character: "하카" },
-    { speaker: "데일", text: "\"그건—\"", background: bgF2, character: "데일" },
-    { speaker: "하카", text: "\"그건 네 선택이지.\"", background: bgF3, character: "하카" },
-    { speaker: "시스템", text: "차 안이 다시 조용해진다.", background: bgF3, isProgress: true },
+    // #F2~F3 차 안 대화 - 캐릭터 없음, 미세한 차 흔들림 효과
+    { marker: "#F2", speaker: "시스템", text: "하카가 운전대를 잡고 있고 뒷자석엔 데일. 나는 뒷자석 바닥 쪽에 쭈그려 앉아 엘의 손목을 보고 있다.", background: bgF2, isProgress: true, hideCharacter: true, effect: "carShake" },
+    { speaker: "데일", text: "\"…그래서.\"", background: bgF2, hideCharacter: true, effect: "carShake" },
+    { speaker: "하카", text: "\"그래서 뭐.\"", background: bgF3, hideCharacter: true, effect: "carShake" },
+    { speaker: "하카", text: "\"결국 엘이 물린 거잖아.\"", background: bgF3, hideCharacter: true, effect: "carShake" },
+    { speaker: "데일", text: "\"네가 혼자 돌아다니지만 않았어도.\"", background: bgF2, hideCharacter: true, effect: "carShake" },
+    { speaker: "하카", text: "\"아, 그걸 나한테 돌려?\"", background: bgF3, hideCharacter: true, effect: "carShake" },
+    { speaker: "데일", text: "\"항상 그렇게 하잖아. 자기 판단, 자기 루트.\"", background: bgF2, hideCharacter: true, effect: "carShake" },
+    { speaker: "하카", text: "\"그 말은 엘한테 해.\"", background: bgF3, hideCharacter: true, effect: "carShake" },
+    { speaker: "데일", text: "\"지금 엘이 말할 수 있는 상태야?\"", background: bgF2, hideCharacter: true, effect: "carShake" },
+    { speaker: "시스템", text: "하카가 브레이크를 살짝 밟는다. 차가 덜컹인다.", background: bgF3, isProgress: true, hideCharacter: true, effect: "carShake" },
+    { speaker: "하카", text: "\"너, 지금 말 고르지 마.\"", background: bgF3, hideCharacter: true, effect: "carShake" },
+    { speaker: "데일", text: "\"고를 필요 없어. 이미 결과 나왔잖아.\"", background: bgF2, hideCharacter: true, effect: "carShake" },
+    { speaker: "시스템", text: "나는 엘의 팔을 살핀다. 상처 주변이… 빨라.", background: bgF2, isProgress: true, hideCharacter: true, effect: "carShake" },
+    { speaker: "파스닐", text: "\"열 올라요.\"", background: bgF2, isMonologue: true, hideCharacter: true, effect: "carShake" },
+    { speaker: "하카", text: "\"알아.\"", background: bgF3, hideCharacter: true, effect: "carShake" },
+    { speaker: "데일", text: "\"봤지. 시간 싸움이야.\"", background: bgF2, hideCharacter: true, effect: "carShake" },
+    { speaker: "하카", text: "\"그래서?\"", background: bgF3, hideCharacter: true, effect: "carShake" },
+    { speaker: "데일", text: "\"그래서— 누가 책임질 건데.\"", background: bgF2, hideCharacter: true, effect: "carShake" },
+    { speaker: "하카", text: "\"책임 같은 소리 하네.\"", background: bgF3, hideCharacter: true, effect: "carShake" },
+    { speaker: "데일", text: "\"항상 이렇게 끝나. 누군가는 물리고, 누군가는 '어쩔 수 없었다'고 말하고.\"", background: bgF2, hideCharacter: true, effect: "carShake" },
+    { speaker: "하카", text: "\"그럼 너는? 너는 어디 있었는데.\"", background: bgF3, hideCharacter: true, effect: "carShake" },
+    { speaker: "데일", text: "\"….\"", background: bgF2, hideCharacter: true, effect: "carShake" },
+    { speaker: "하카", text: "\"몰래 빠져나가서 혼자 판단하다가 결국 엘이 쫓아간 거잖아.\"", background: bgF3, hideCharacter: true, effect: "carShake" },
+    { speaker: "데일", text: "\"그건—\"", background: bgF2, hideCharacter: true, effect: "carShake" },
+    { speaker: "하카", text: "\"그건 네 선택이지.\"", background: bgF3, hideCharacter: true, effect: "carShake" },
+    { speaker: "시스템", text: "차 안이 다시 조용해진다.", background: bgF3, isProgress: true, hideCharacter: true, effect: "carShake" },
 
     // #F4~F5
-    { marker: "#F4", speaker: "엘", text: "\"…그만좀해라.\"", background: bgF2, character: "엘" },
-    { speaker: "시스템", text: "목소리가 낮다. 힘이 없다.", background: bgF2, isProgress: true },
-    { speaker: "데일", text: "\"…엘.\"", background: bgF2, character: "데일" },
-    { speaker: "엘", text: "\"지금 싸울 에너지 아껴.\"", background: bgF2, character: "엘" },
-    { speaker: "하카", text: "\"들었지. 이제 다들 조용.\"", background: bgF3, character: "하카" },
-    { marker: "#F5", speaker: "시스템", text: "데일은 창밖으로 시선을 돌린다.", background: bgF2, isProgress: true },
-    { speaker: "시스템", text: "차는 숲길로 들어선다. 별장이 보이기 시작한다.", background: bgF2, isProgress: true },
+    { marker: "#F4", speaker: "엘", text: "\"…그만좀해라.\"", background: bgF2, hideCharacter: true, effect: "carShake" },
+    { speaker: "시스템", text: "목소리가 낮다. 힘이 없다.", background: bgF2, isProgress: true, hideCharacter: true, effect: "carShake" },
+    { speaker: "데일", text: "\"…엘.\"", background: bgF2, hideCharacter: true, effect: "carShake" },
+    { speaker: "엘", text: "\"지금 싸울 에너지 아껴.\"", background: bgF2, hideCharacter: true, effect: "carShake" },
+    { speaker: "하카", text: "\"들었지. 이제 다들 조용.\"", background: bgF3, hideCharacter: true, effect: "carShake" },
+    { marker: "#F5", speaker: "시스템", text: "데일은 창밖으로 시선을 돌린다.", background: bgF2, isProgress: true, hideCharacter: true, effect: "carShake" },
+    { speaker: "시스템", text: "차는 숲길로 들어선다. 별장이 보이기 시작한다.", background: bgF2, isProgress: true, hideCharacter: true, effect: "carShake" },
 
     // #A1 별장 도착
     { marker: "#A1", speaker: "시스템", text: "별장 도착", background: bgLivingRoomUpdate, isProgress: true, audio: audioEpicAftermath },
@@ -1052,27 +1056,27 @@ export default function Home() {
     { speaker: "렌쟈", text: "\"아니야 오빠. 이건 확정이야.\"", background: bgLivingRoomUpdate, character: "렌쟈" },
     { speaker: "시스템", text: "렌쟈는 고개를 든다.", background: bgLivingRoomUpdate, isProgress: true },
 
-    // #G1 격리 준비
-    { marker: "#G1", speaker: "렌쟈", text: "\"격리 준비해. 엘오빠 방.\"", background: bgG2, character: "렌쟈" },
-    { speaker: "하카", text: "\"알겠어.\"", background: bgG2, character: "하카" },
-    { speaker: "데일", text: "\"…내가 할 수 있는 건.\"", background: bgG2, character: "데일" },
-    { speaker: "렌쟈", text: "\"있어.\"", background: bgG2, character: "렌쟈" },
-    { speaker: "시스템", text: "데일이 고개를 든다.", background: bgG2, isProgress: true },
-    { speaker: "렌쟈", text: "\"가만히 있어. 이번엔.\"", background: bgG2, character: "렌쟈" },
-    { speaker: "데일", text: "\"….\"", background: bgG2, character: "데일" },
-    { speaker: "시스템", text: "엘이 눈을 감았다 뜬다.", background: bgG2, isProgress: true },
-    { speaker: "엘", text: "\"파스닐.\"", background: bgG2, character: "엘" },
-    { speaker: "파스닐", text: "\"여기요.\"", background: bgG2, isMonologue: true },
-    { speaker: "엘", text: "\"…문단속. 소리 관리. 너가 제일 잘하잖아.\"", background: bgG2, character: "엘" },
-    { speaker: "시스템", text: "나는 고개를 끄덕인다.", background: bgG2, isProgress: true },
-    { speaker: "파스닐", text: "\"다 막을게요.\"", background: bgG2, isMonologue: true },
-    { speaker: "시스템", text: "렌쟈는 엘의 이마에 손을 얹은 채 조용히 말한다.", background: bgG2, isProgress: true },
-    { speaker: "렌쟈", text: "\"지금부터 우린 시간 벌기 들어간다.\"", background: bgG2, character: "렌쟈" },
-    { speaker: "시스템", text: "별장 안이 다시 분주해진다.", background: bgG2, isProgress: true },
-    { speaker: "파스닐", text: "이번엔 도망치는 분주함이 아니라 붙잡는 쪽이다.", background: bgG2, isMonologue: true },
-    { speaker: "시스템", text: "그리고 모두 안다.", background: bgG2, isProgress: true },
-    { speaker: "시스템", text: "지금 이 집엔 감염자 하나가 있다.", background: bgG2, isProgress: true },
-    { speaker: "파스닐", text: "그게 엘이라는 걸.", background: bgG2, isMonologue: true },
+    // #G1 격리 준비 - 거실 배경
+    { marker: "#G1", speaker: "렌쟈", text: "\"격리 준비해. 엘오빠 방.\"", background: bgLivingRoomUpdate, character: "렌쟈" },
+    { speaker: "하카", text: "\"알겠어.\"", background: bgLivingRoomUpdate, character: "하카" },
+    { speaker: "데일", text: "\"…내가 할 수 있는 건.\"", background: bgLivingRoomUpdate, character: "데일" },
+    { speaker: "렌쟈", text: "\"있어.\"", background: bgLivingRoomUpdate, character: "렌쟈" },
+    { speaker: "시스템", text: "데일이 고개를 든다.", background: bgLivingRoomUpdate, isProgress: true },
+    { speaker: "렌쟈", text: "\"가만히 있어. 이번엔.\"", background: bgLivingRoomUpdate, character: "렌쟈" },
+    { speaker: "데일", text: "\"….\"", background: bgLivingRoomUpdate, character: "데일" },
+    { speaker: "시스템", text: "엘이 눈을 감았다 뜬다.", background: bgLivingRoomUpdate, isProgress: true },
+    { speaker: "엘", text: "\"파스닐.\"", background: bgLivingRoomUpdate, character: "엘" },
+    { speaker: "파스닐", text: "\"여기요.\"", background: bgLivingRoomUpdate, isMonologue: true },
+    { speaker: "엘", text: "\"…문단속. 소리 관리. 너가 제일 잘하잖아.\"", background: bgLivingRoomUpdate, character: "엘" },
+    { speaker: "시스템", text: "나는 고개를 끄덕인다.", background: bgLivingRoomUpdate, isProgress: true },
+    { speaker: "파스닐", text: "\"다 막을게요.\"", background: bgLivingRoomUpdate, isMonologue: true },
+    { speaker: "시스템", text: "렌쟈는 엘의 이마에 손을 얹은 채 조용히 말한다.", background: bgLivingRoomUpdate, isProgress: true },
+    { speaker: "렌쟈", text: "\"지금부터 우린 시간 벌기 들어간다.\"", background: bgLivingRoomUpdate, character: "렌쟈" },
+    { speaker: "시스템", text: "별장 안이 다시 분주해진다.", background: bgLivingRoomUpdate, isProgress: true },
+    { speaker: "파스닐", text: "이번엔 도망치는 분주함이 아니라 붙잡는 쪽이다.", background: bgLivingRoomUpdate, isMonologue: true },
+    { speaker: "시스템", text: "그리고 모두 안다.", background: bgLivingRoomUpdate, isProgress: true },
+    { speaker: "시스템", text: "지금 이 집엔 감염자 하나가 있다.", background: bgLivingRoomUpdate, isProgress: true },
+    { speaker: "파스닐", text: "그게 엘이라는 걸.", background: bgLivingRoomUpdate, isMonologue: true },
 
     // #1 5일차 별장 — 이른 오전
     { marker: "#1_Day5", speaker: "시스템", text: "5일차 — 별장, 이른 오전", background: bgLivingRoomUpdate, isProgress: true },
@@ -1458,7 +1462,8 @@ export default function Home() {
   };
 
   const handlePuzzleSubmit = () => {
-    if (puzzleInput.includes("눈")) {
+    const answer = currentDialogue.puzzleAnswer || "눈";
+    if (puzzleInput.includes(answer)) {
       setPuzzleInput("");
       setDialogueIndex(dialogueIndex + 1);
     }
@@ -1549,10 +1554,35 @@ export default function Home() {
     let effectClass = "";
     if (currentDialogue.effect === "shake") effectClass = "animate-shake";
     if (currentDialogue.effect === "chase") effectClass = "animate-pulse scale-105 transition-transform duration-300";
+    if (currentDialogue.effect === "carShake") effectClass = "animate-car-shake";
 
     return (
       <div className={`relative w-full h-screen overflow-hidden bg-black flex flex-col items-center justify-end ${effectClass}`} onClick={handleClick}>
-        {/* Red Snow Particles for F1 Puzzle */}
+        {/* Red Eye Effect for F1 Puzzle */}
+        {currentDialogue.eyeEffect && (
+          <div className="absolute inset-0 z-10 pointer-events-none flex items-center justify-center">
+            <div className="relative">
+              <div 
+                className="w-32 h-32 rounded-full opacity-20 animate-pulse"
+                style={{
+                  background: 'radial-gradient(circle, rgba(220,38,38,0.8) 0%, rgba(220,38,38,0.3) 40%, rgba(0,0,0,0) 70%)',
+                  boxShadow: '0 0 80px 40px rgba(220,38,38,0.15), 0 0 120px 60px rgba(220,38,38,0.08)',
+                }}
+              />
+              <div 
+                className="absolute inset-0 flex items-center justify-center"
+                style={{ transform: 'scale(0.3)' }}
+              >
+                <div 
+                  className="w-16 h-16 rounded-full bg-black/80"
+                  style={{ boxShadow: '0 0 20px 10px rgba(0,0,0,0.5)' }}
+                />
+              </div>
+            </div>
+          </div>
+        )}
+        
+        {/* Red Snow Particles for Puzzle */}
         {currentDialogue.isPuzzle && (
           <div className="absolute inset-0 z-10 pointer-events-none overflow-hidden">
             {dustParticles.map(p => (
@@ -1574,19 +1604,21 @@ export default function Home() {
           </div>
         )}
 
-        {/* Save Button */}
-        <div className="absolute top-8 right-8 z-50 flex items-center gap-2">
-          <Button
-            variant="ghost"
-            size="sm"
-            className="h-8 px-2 text-[10px] text-white/30 hover:text-white hover:bg-white/5 border border-white/5 uppercase tracking-tighter"
-            onClick={saveGame}
-            data-testid="button-save"
-          >
-            <Save className="w-3 h-3 mr-1" />
-            Save Point
-          </Button>
-        </div>
+        {/* Save Button - hidden for textOnly mode */}
+        {!currentDialogue.textOnly && (
+          <div className="absolute top-8 right-8 z-50 flex items-center gap-2">
+            <Button
+              variant="ghost"
+              size="sm"
+              className="h-8 px-2 text-[10px] text-white/30 hover:text-white hover:bg-white/5 border border-white/5 uppercase tracking-tighter"
+              onClick={saveGame}
+              data-testid="button-save"
+            >
+              <Save className="w-3 h-3 mr-1" />
+              Save Point
+            </Button>
+          </div>
+        )}
 
         <AnimatePresence>
           {sparkles.map(s => (
@@ -1600,49 +1632,58 @@ export default function Home() {
           ))}
         </AnimatePresence>
 
-        <div className="absolute top-0 left-0 w-full h-[10%] bg-black z-30 pointer-events-none" />
+        {/* Top letterbox - hidden for textOnly mode */}
+        {!currentDialogue.textOnly && (
+          <div className="absolute top-0 left-0 w-full h-[10%] bg-black z-30 pointer-events-none" />
+        )}
         
-        <div className="absolute inset-0 z-0">
-          <AnimatePresence mode="wait">
-            <motion.div
-              key={currentDialogue.background}
-              initial={{ opacity: 0 }}
-              animate={{ opacity: 1 }}
-              exit={{ opacity: 0 }}
-              transition={{ duration: 1.0 }}
-              className="w-full h-full"
-            >
-              {currentDialogue.background === "black" ? (
-                <div className="w-full h-full bg-black" />
-              ) : (
-                <img 
-                  src={currentDialogue.background || bgClip1} 
-                  className="w-full h-full object-cover filter brightness-[0.6] contrast-[1.1] saturate-[0.8]"
-                />
-              )}
-            </motion.div>
-          </AnimatePresence>
-          <div className="absolute inset-0 bg-gradient-to-t from-black via-transparent to-transparent opacity-60" />
-          <div className="absolute inset-0 bg-gradient-to-br from-white/5 via-transparent to-transparent pointer-events-none" />
-        </div>
+        {/* Background - hidden for textOnly mode */}
+        {!currentDialogue.textOnly && (
+          <div className="absolute inset-0 z-0">
+            <AnimatePresence mode="wait">
+              <motion.div
+                key={currentDialogue.background}
+                initial={{ opacity: 0 }}
+                animate={{ opacity: 1 }}
+                exit={{ opacity: 0 }}
+                transition={{ duration: 1.0 }}
+                className="w-full h-full"
+              >
+                {currentDialogue.background === "black" ? (
+                  <div className="w-full h-full bg-black" />
+                ) : (
+                  <img 
+                    src={currentDialogue.background || bgClip1} 
+                    className="w-full h-full object-cover filter brightness-[0.6] contrast-[1.1] saturate-[0.8]"
+                  />
+                )}
+              </motion.div>
+            </AnimatePresence>
+            <div className="absolute inset-0 bg-gradient-to-t from-black via-transparent to-transparent opacity-60" />
+            <div className="absolute inset-0 bg-gradient-to-br from-white/5 via-transparent to-transparent pointer-events-none" />
+          </div>
+        )}
 
-        <AnimatePresence mode="wait">
-          {charImg && (
-            <motion.div
-              key={`${currentDialogue.character || currentDialogue.speaker}-${dialogueIndex}`}
-              initial={{ opacity: 0, x: 20 }}
-              animate={{ opacity: 1, x: 0 }}
-              exit={{ opacity: 0, x: -20 }}
-              transition={{ duration: 0.5 }}
-              className="absolute bottom-[-15%] h-[100%] w-auto pointer-events-none z-10"
-            >
-              <img 
-                src={charImg} 
-                className="h-full object-contain drop-shadow-[0_0_40px_rgba(0,0,0,0.9)]"
-              />
-            </motion.div>
-          )}
-        </AnimatePresence>
+        {/* Character - hidden for textOnly mode */}
+        {!currentDialogue.textOnly && (
+          <AnimatePresence mode="wait">
+            {charImg && (
+              <motion.div
+                key={`${currentDialogue.character || currentDialogue.speaker}-${dialogueIndex}`}
+                initial={{ opacity: 0, x: 20 }}
+                animate={{ opacity: 1, x: 0 }}
+                exit={{ opacity: 0, x: -20 }}
+                transition={{ duration: 0.5 }}
+                className="absolute bottom-[-15%] h-[100%] w-auto pointer-events-none z-10"
+              >
+                <img 
+                  src={charImg} 
+                  className="h-full object-contain drop-shadow-[0_0_40px_rgba(0,0,0,0.9)]"
+                />
+              </motion.div>
+            )}
+          </AnimatePresence>
+        )}
 
         <motion.div 
           initial={{ y: 20, opacity: 0 }}
@@ -1722,7 +1763,10 @@ export default function Home() {
           )}
         </motion.div>
 
-        <div className="absolute bottom-0 left-0 w-full h-[10%] bg-black z-30 pointer-events-none" />
+        {/* Bottom letterbox - hidden for textOnly mode */}
+        {!currentDialogue.textOnly && (
+          <div className="absolute bottom-0 left-0 w-full h-[10%] bg-black z-30 pointer-events-none" />
+        )}
       </div>
     );
   }
