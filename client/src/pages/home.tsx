@@ -28,6 +28,7 @@ import bgD1 from "@assets/KakaoTalk_20260106_231721217_1767726264601.png";
 import bgD2 from "@assets/KakaoTalk_20260107_021010473_01_1767724794632.png";
 import bgD3 from "@assets/KakaoTalk_20260107_021010473_02_1767724794627.png";
 import bgD5 from "@assets/KakaoTalk_20260107_021010473_03_1767724794628.png";
+import bgD5_New from "@assets/KakaoTalk_20260107_021010473_04_1767729615579.png";
 import bgD6 from "@assets/KakaoTalk_20260107_021010473_04_1767724794630.png";
 import bgH1 from "@assets/KakaoTalk_20260107_021010473_1767724794633.png";
 import bgD10 from "@assets/ㄱ_1767725110273.png";
@@ -761,116 +762,225 @@ export default function Home() {
     { speaker: "파스닐", text: "나는 이 팀에 걸맞는 사람일까. 차갑게 들끓는 이 분위기상 하마터면 상사앞에서 욕할뻔했다.", background: bgD3, isMonologue: true },
     { speaker: "파스닐", text: "저런게 더있으면 어쩌지.", background: bgD3, isMonologue: true },
 
-    // #D5
-    { marker: "#D5", speaker: "시스템", text: "도심 외곽 — 분기점. 건물이 갈라지는 교차로.", background: bgD5, isProgress: true },
+
+    // 도심 외곽 — 분기점 (텍스트파일 399~479)
+    { marker: "#D5_분기점", speaker: "시스템", text: "도심 외곽 — 분기점. 건물이 갈라지는 교차로.", background: bgD5, isProgress: true },
     { speaker: "시스템", text: "왼쪽은 낮은 상가—유리 많고, 시야 좋음. 오른쪽은 사무실—복도 길고, 어둡다.", background: bgD5, isProgress: true },
-    { speaker: "엘", text: "“여기서 나눈다.”", background: bgD5, character: "엘" },
-    { speaker: "하카", text: "“드디어.”", background: bgD5, character: "하카" },
-    { speaker: "데일", text: "“누가 어디.”", background: bgD5, character: "데일" },
-    { speaker: "엘", text: "“하카, 혼자 오른쪽.”", background: bgD5, character: "엘" },
-    { speaker: "하카", text: "“역시. 나만 위험한 데네ㅜㅜ\"", background: bgD5, character: "하카" },
-    { speaker: "엘", text: "“익숙하잖아. 깊고. 어둡고.”", background: bgD5, character: "엘" },
-    { speaker: "하카", text: "“응. 너무 ㅎ. ”", background: bgD5, character: "하카" },
-    { speaker: "엘", text: "“파스닐.”", background: bgD5, character: "엘" },
-    { speaker: "파스닐", text: "“네.”", background: bgD5, isMonologue: true },
+    { speaker: "시스템", text: "엘이 지도를 접는다.", background: bgD5, isProgress: true },
+    { speaker: "엘", text: "\"여기서 나눈다.\"", background: bgD5, character: "엘" },
+    { speaker: "하카", text: "\"드디어.\"", background: bgD5, character: "하카" },
+    { speaker: "데일", text: "\"누가 어디.\"", background: bgD5, character: "데일" },
+    { speaker: "엘", text: "\"하카, 혼자 오른쪽.\"", background: bgD5, character: "엘" },
+    { speaker: "하카", text: "\"역시. 나만 위험한 데네ㅜㅜ\"", background: bgD5, character: "하카" },
+    { speaker: "엘", text: "\"익숙하잖아. 깊고. 어둡고.\"", background: bgD5, character: "엘" },
+    { speaker: "하카", text: "\"응. 너무 ㅎ. \"", background: bgD5, character: "하카" },
+    { speaker: "시스템", text: "엘은 나를 본다.", background: bgD5, isProgress: true },
+    { speaker: "엘", text: "\"파스닐.\"", background: bgD5, character: "엘" },
+    { speaker: "시스템", text: "나는 짧게 숨을 들이킨다.", background: bgD5, isProgress: true },
+    { speaker: "파스닐", text: "\"네.\"", background: bgD5, isMonologue: true },
+    { speaker: "엘", text: "\"선택해.\"", background: bgD5, character: "엘" },
     { 
       speaker: "엘", 
-      text: "“선택해. 어느 쪽이든, 내가 책임진다. 하카랑 갈생각은 하지도 말고”", 
+      text: "\"어느 쪽이든, 내가 책임진다. 하카랑 갈생각은 하지도 말고\"", 
       background: bgD5, 
       character: "엘",
       choices: [
-        { text: "1. 하카와 간다", targetIndex: dialogueIndex + 1 }, 
-        { text: "2. 데일과 간다", targetIndex: dialogueIndex + 1 },
-        { text: "3. 엘과 간다", targetIndex: dialogueIndex + 1 }
+        { text: "1. 하카와 간다", targetIndex: 782 },
+        { text: "2. 데일과 간다", targetIndex: 782 },
+        { text: "3. 엘과 간다", targetIndex: 782 }
+      ]
+    },
+    // 선택 후 통합 루트
+    { speaker: "데일", text: "\"…듣기 싫은 말.\"", background: bgD5, character: "데일" },
+    { speaker: "하카", text: "\"아, 또 시작이네. 엘데일. 그리고 파스닐\"", background: bgD5, character: "하카" },
+    { speaker: "시스템", text: "결국 엘과 데일은 같은 방향으로 움직인다. 나는 그 사이에 낀다.", background: bgD5, isProgress: true },
+    { speaker: "시스템", text: "하카는 혼자 오른쪽으로 사라진다.", background: bgD5, isProgress: true },
+    { speaker: "하카", text: "\"살아있으면 보자. 아니면—뭐, 각자 운명이지.\"", background: bgD5, character: "하카" },
+    { speaker: "엘", text: "\"쓸데없는 말 마.\"", background: bgD5, character: "엘" },
+    { speaker: "하카", text: "\"그게 내 취미야.\"", background: bgD5, character: "하카" },
+
+    // #d5 이동 — 상가 내부 (텍스트파일 483~568)
+    { marker: "#d5", speaker: "시스템", text: "이동 — 상가 내부. 유리가 깨진 소리 하나에 데일이 바로 날카로워진다.", background: bgD5_New, isProgress: true },
+    { speaker: "데일", text: "\"고양이가 발도 제대로 못딛냐?\"", background: bgD5_New, character: "데일" },
+    { speaker: "엘", text: "\"개다.\"", background: bgD5_New, character: "엘" },
+    { speaker: "엘", text: "\"불만이면 앞서 가.\"", background: bgD5_New, character: "엘" },
+    { speaker: "데일", text: "\"네가 앞에서 길 막잖아.\"", background: bgD5_New, character: "데일" },
+    { speaker: "엘", text: "\"그럼 네가 앞서.\"", background: bgD5_New, character: "엘" },
+    { speaker: "데일", text: "\"싫어.\"", background: bgD5_New, character: "데일" },
+    { speaker: "엘", text: "\"그럼 따라와.\"", background: bgD5_New, character: "엘" },
+    { speaker: "데일", text: "\"명령하지 마.\"", background: bgD5_New, character: "데일" },
+    { speaker: "파스닐", text: "아, 이 온도. 터지기 직전이다.", background: bgD5_New, isMonologue: true },
+    { speaker: "엘", text: "\"데일, 여기선 내 판단이 기준이야.\"", background: bgD5_New, character: "엘" },
+    { speaker: "엘", text: "\"쓸데없이 에너지낭비 하지 말자고.\"", background: bgD5_New, character: "엘" },
+    { speaker: "데일", text: "\"그래서 사람들이 죽지.\"", background: bgD5_New, character: "데일" },
+    { speaker: "시스템", text: "공기가 뚝 끊긴다.", background: bgD5_New, isProgress: true },
+    { speaker: "엘", text: "\"…뭐라고.\"", background: bgD5_New, character: "엘" },
+    { speaker: "데일", text: "\"못 들었어?\"", background: bgD5_New, character: "데일" },
+    { speaker: "엘", text: "\"다시 말해.\"", background: bgD5_New, character: "엘" },
+    { speaker: "데일", text: "\"네 방식 때문에 사람들이 선택권이 없어져.\"", background: bgD5_New, character: "데일" },
+    { speaker: "데일", text: "\"왜 그니까 결국 혼자 차원에서 살아남은거잖아. 그리고 나머지 영악한 놈들만.\"", background: bgD5_New, character: "데일" },
+    { speaker: "엘", text: "\"그건 다른 상황이고. 지금 선택하다 죽는 것보단 낫다 생각해.\"", background: bgD5_New, character: "엘" },
+    { speaker: "데일", text: "\"네가 정한 선택은 늘 너한테만 안전해.\"", background: bgD5_New, character: "데일" },
+    { speaker: "시스템", text: "정적. 나는 숨을 낮춘다.", background: bgD5_New, isProgress: true },
+    { speaker: "파스닐", text: "이건 말싸움이 아니라 기억 싸움이다.", background: bgD5_New, isMonologue: true },
+    { speaker: "엘", text: "\"지금 옛날 얘기할 시간 없어. 벌써 6년 전이야.\"", background: bgD5_New, character: "엘" },
+    { speaker: "데일", text: "\"뭐 매일 매일이 기억상실증 이신가봐.\"", background: bgD5_New, character: "데일" },
+    { speaker: "엘", text: "\"그래. 덕분에 누구랑 다르게 정상으로 남아있다.\"", background: bgD5_New, character: "엘" },
+    { speaker: "시스템", text: "데일의 입꼬리가 비틀린다.", background: bgD5_New, isProgress: true },
+    { speaker: "데일", text: "\"…역시 재수 없어. 실밥.\"", background: bgD5_New, character: "데일" },
+
+    // 잠깐의 정지 — 데일 이탈 (텍스트파일 573~672)
+    { speaker: "시스템", text: "엘이 앞을 본다. 나는 뒤를 본다.", background: bgD5_New, isProgress: true },
+    { speaker: "시스템", text: "그리고— 데일이 조용히 방향을 바꾼다. 아무 말 없이. 너무 자연스럽게.", background: bgD5_New, isProgress: true },
+    { speaker: "파스닐", text: "뭘까. 엘 형이 그렇게 싫은걸까.", background: bgD5_New, isMonologue: true },
+    { speaker: "시스템", text: "걷는 속도가 미묘하게 다르다. 엘은 앞으로, 데일은 옆으로 빠질 각을 계속 본다.", background: bgD5_New, isProgress: true },
+    { speaker: "시스템", text: "나는 안경을 바로잡느라 확신하지 못했다. 다만..", background: bgD5_New, isProgress: true },
+    { speaker: "데일", text: "\"…이쪽은 비었네.\"", background: bgD5_New, character: "데일" },
+    { speaker: "엘", text: "\"확인 끝난 방향이야.\"", background: bgD5_New, character: "엘" },
+    { speaker: "데일", text: "\"확인 '당시엔'.\"", background: bgD5_New, character: "데일" },
+    { speaker: "엘", text: "\"지금도.\"", background: bgD5_New, character: "엘" },
+    { speaker: "시스템", text: "데일이 웃는다. 입꼬리만.", background: bgD5_New, isProgress: true },
+    { speaker: "데일", text: "\"너는 늘 그렇게 말해. 지금은 지금이고, 그때는 그때라고.\"", background: bgD5_New, character: "데일" },
+    { speaker: "엘", text: "\"지금 판단 흐리고 싶은 거면 집에 가.\"", background: bgD5_New, character: "엘" },
+    { speaker: "데일", text: "\"…명령은 여전하네.\"", background: bgD5_New, character: "데일" },
+    { speaker: "시스템", text: "데일이 걸음을 멈춘다.", background: bgD5_New, isProgress: true },
+    { speaker: "엘", text: "\"데일.\"", background: bgD5_New, character: "엘" },
+    { speaker: "데일", text: "\"잠깐이면 돼.\"", background: bgD5_New, character: "데일" },
+    { speaker: "엘", text: "\"혼자 움직이지 말랬지.\"", background: bgD5_New, character: "엘" },
+    { speaker: "데일", text: "\"그래서 몰래 가는 거야.\"", background: bgD5_New, character: "데일" },
+    { speaker: "시스템", text: "그 말과 동시에 데일은 골목 쪽으로 방향을 튼다.", background: bgD5_New, isProgress: true },
+    { speaker: "엘", text: "\"데일!\"", background: bgD5_New, character: "엘" },
+    { speaker: "데일", text: "\"금방 돌아올게. 이번엔 진짜로.\"", background: bgD5_New, character: "데일" },
+    { speaker: "시스템", text: "엘은 이를 악문다. 그리고 나를 본다.", background: bgD5_New, isProgress: true },
+    { speaker: "엘", text: "\"파스닐.\"", background: bgD5_New, character: "엘" },
+    { speaker: "파스닐", text: "\"…네?\"", background: bgD5_New, isMonologue: true },
+    { speaker: "파스닐", text: "시야가 흐릿하다.", background: bgD5_New, isMonologue: true },
+    { speaker: "엘", text: "\"너는—\"", background: bgD5_New, character: "엘" },
+    { speaker: "시스템", text: "그 순간, 데일의 발소리가 건물 안으로 사라진다.", background: bgD5_New, isProgress: true },
+    { speaker: "엘", text: "\"씨발.\"", background: bgD5_New, character: "엘" },
+    { speaker: "시스템", text: "엘은 바로 따라가려다 걸음을 멈춘다.", background: bgD5_New, isProgress: true },
+    { speaker: "엘", text: "\"….\"", background: bgD5_New, character: "엘" },
+    { speaker: "시스템", text: "엘의 시선이 나에게 온다.", background: bgD5_New, isProgress: true },
+    { speaker: "엘", text: "\"너는 정말 저런 여자를 믿을 수 있어?\"", background: bgD5_New, character: "엘" },
+
+    // 선택지 — 데일 이탈
+    { speaker: "파스닐", text: "지금 선택은 '누구 편이냐'가 아니라 '누구를 믿느냐'다.", background: bgD5_New, isMonologue: true },
+    { 
+      speaker: "시스템", 
+      text: "선택하라.", 
+      background: bgD5_New, 
+      isProgress: true,
+      choices: [
+        { text: "1. 데일을 따라간다", targetIndex: 836 },
+        { text: "2. 엘의 말을 따른다", targetIndex: 855 }
       ]
     },
 
-    // Result of choice (Unified Path)
-    { marker: "#D5_CHOICE", speaker: "엘", text: "“어느 쪽이든, 내가 책임진다. 하카랑 갈생각은 하지도 말고”", background: bgD5, character: "엘" },
-    { speaker: "데일", text: "“…듣기 싫은 말.”", background: bgD5, character: "데일" },
-    { speaker: "하카", text: "“아, 또 시작이네. 엘데일. 그리고 파스닐\" ", background: bgD5, character: "하카" },
-    { speaker: "시스템", text: "결국 엘과 데일은 같은 방향으로 움직인다. 나는 그 사이에 낀다.", background: bgD5, isProgress: true },
-    { speaker: "시스템", text: "하카는 혼자 오른쪽으로 사라진다.", background: bgD5, isProgress: true },
-    { speaker: "하카", text: "“살아있으면 보자. 아니면—뭐, 각자 운명이지.”", background: bgD5, character: "하카" },
-    { speaker: "엘", text: "“쓸데없는 말 마.”", background: bgD5, character: "엘" },
-    { speaker: "하카", text: "“그게 내 취미야.”", background: bgD5, character: "하카" },
+    // 선택지 1 — 데일을 따라간다 (Dead Ending) #D6
+    { marker: "#D6_Dead", speaker: "파스닐", text: "\"제가 따라갈게요.\"", background: bgD5_New, isMonologue: true },
+    { speaker: "엘", text: "\"안 돼.\"", background: bgD5_New, character: "엘" },
+    { speaker: "시스템", text: "나는 이미 방향을 틀고 있다.", background: bgD5_New, isProgress: true },
+    { speaker: "파스닐", text: "\"혼자 두는 게 더 위험해 보여서요.\"", background: bgD5_New, isMonologue: true },
+    { speaker: "엘", text: "\"…돌아와.\"", background: bgD5_New, character: "엘" },
+    { speaker: "시스템", text: "하지만 데일이 사라진 쪽은 이미 나를 끌고 간다.", background: bgD5_New, isProgress: true },
+    { speaker: "시스템", text: "나는 엘의 시야에서 벗어난다.", background: bgD5_New, isProgress: true },
+    { speaker: "시스템", text: "건물 안은 생각보다 깊다. 소리가 흡수된다. 발소리조차.", background: bgD6, isProgress: true },
+    { speaker: "파스닐", text: "\"데일 씨?\"", background: bgD6, isMonologue: true },
+    { speaker: "시스템", text: "대답이 없다.", background: bgD6, isProgress: true },
+    { speaker: "시스템", text: "대신— 뒤에서 숨소리. 사람 같다. 사람처럼 늦다.", background: bgD6, isProgress: true },
+    { speaker: "시스템", text: "돌아보는 순간 너무 가깝다.", background: bgD6, isProgress: true },
+    { speaker: "시스템", text: "손이 닿는다. 아니, 손 모양의 무언가가.", background: bgD6, isProgress: true },
+    { speaker: "파스닐", text: "아, 이건—", background: bgD6, isMonologue: true },
+    { speaker: "시스템", text: "소리가 터진다. 비명인지, 뼈 부러지는 소린지 구분이 안 된다.", background: bgD6, isProgress: true, effect: "shake" },
+    { marker: "DEAD_END", speaker: "시스템", text: "[데드엔딩] 〈이탈〉", background: "black", isProgress: true },
+    { speaker: "시스템", text: "엘은 선택을 통제하려 했다. 데일은 선택을 버렸다.", background: "black", isProgress: true },
+    { speaker: "시스템", text: "나는 그 사이에서 혼자 판단했다.", background: "black", isProgress: true },
+    { speaker: "시스템", text: "그리고 이 세계는 혼자 판단하는 사람에게 아무것도 남겨주지 않는다.", background: "black", isProgress: true, onComplete: () => { setGameState("start"); setDialogueIndex(0); } },
 
-    // #D6
-    { marker: "#D6", speaker: "시스템", text: "이동 — 상가 내부. 유리가 깨진 소리 하나에 데일이 바로 날카로워진다.", background: bgD6, isProgress: true },
-    { speaker: "데일", text: "“고양이가 발도 제대로 못딛냐?”", background: bgD6, character: "데일" },
-    { speaker: "엘", text: "“개다.”", background: bgD6, character: "엘" },
-    { speaker: "엘", text: "“불만이면 앞서 가.\"", background: bgD6, character: "엘" },
-    { speaker: "데일", text: "“네가 앞에서 길 막잖아.”", background: bgD6, character: "데일" },
+    // 선택지 2 — 엘의 말을 따른다 (정상 진행) #D7
+    { marker: "#D7", speaker: "파스닐", text: "\"…여기 있을게요.\"", background: bgD5_New, isMonologue: true },
+    { speaker: "시스템", text: "엘은 짧게 고개를 끄덕인다.", background: bgD5_New, isProgress: true },
+    { speaker: "파스닐", text: "이 세계에선 둘 다 정답이 아닐 수 있다.", background: bgD5_New, isMonologue: true },
+    { speaker: "엘", text: "\"파스닐.\"", background: bgD5_New, character: "엘" },
+    { speaker: "파스닐", text: "\"네?\"", background: bgD5_New, isMonologue: true },
+    { speaker: "엘", text: "\"젠장.\"", background: bgD5_New, character: "엘" },
+    { speaker: "시스템", text: "엘이 나를 밀어 넣듯 세운다.", background: bgD5_New, isProgress: true },
+    { speaker: "엘", text: "\"여기서 기다려.\"", background: bgD5_New, character: "엘" },
+    { speaker: "파스닐", text: "\"같이—\"", background: bgD5_New, isMonologue: true },
+    { speaker: "엘", text: "\"아니.\"", background: bgD5_New, character: "엘" },
+    { speaker: "시스템", text: "짧고 단호하다.", background: bgD5_New, isProgress: true },
+    { speaker: "엘", text: "\"문 잠그고, 소리 내지 마.\"", background: bgD5_New, character: "엘" },
+    { speaker: "파스닐", text: "\"…알겠어요.\"", background: bgD5_New, isMonologue: true },
+    { speaker: "시스템", text: "엘은 이미 돌아서 있다.", background: bgD5_New, isProgress: true },
+    { speaker: "파스닐", text: "지금 나가면, 난 쓰레기다.", background: bgD5_New, isMonologue: true },
+    { speaker: "시스템", text: "문이 닫힌다.", background: bgD5_New, isProgress: true },
 
-    // #D7
-    { marker: "#D7", speaker: "시스템", text: "상가 깊숙한 곳.", background: bgD5, isProgress: true, audio: "stop" },
-    { speaker: "엘", text: "“조용히 해.”", background: bgD5, character: "엘" },
-    { speaker: "데일", text: "“나만?”", background: bgD5, character: "데일" },
-    { speaker: "엘", text: "“전부 다.”", background: bgD5, character: "엘" },
-
-    // #D8 - Chase Start
-    { marker: "#D8", speaker: "시스템", text: "갑자기 뒤에서 짐승 같은 울음소리가 들린다.", background: bgD6, isProgress: true, hideCharacter: true, audio: audioHorrorChase, effect: "chase" },
-    { speaker: "시스템", text: "여러 개의 발소리가 바닥을 긁으며 다가온다.", background: bgD6, isProgress: true, hideCharacter: true, effect: "chase" },
-    { speaker: "엘", text: "“뛴다!”", background: bgD6, character: "엘", hideCharacter: true, effect: "chase" },
+    // #D8
+    { marker: "#D8", speaker: "시스템", text: "혼자 남는다.", background: bgD5_New, isProgress: true },
+    { speaker: "시스템", text: "멀리서 금속 부딪히는 소리.", background: bgD5_New, isProgress: true },
+    { speaker: "시스템", text: "그리고— 사람의 비명. 짧다. 너무 짧다.", background: bgD5_New, isProgress: true, effect: "shake" },
+    { speaker: "파스닐", text: "\"엘…?\"", background: bgD5_New, isMonologue: true },
+    { speaker: "시스템", text: "그 다음은 소리들이 겹친다. 발. 숨. 부딪힘.", background: bgD5_New, isProgress: true },
+    { speaker: "시스템", text: "그리고— 엘의 신음.", background: bgD5_New, isProgress: true },
+    { speaker: "파스닐", text: "나가도될까? 나간다면..", background: bgD5_New, isMonologue: true },
 
     // #D9
-    { marker: "#D9", speaker: "시스템", text: "앞만 보고 달린다. 뒤를 보면 안 된다.", background: bgD5, isProgress: true, effect: "chase" },
-    { speaker: "데일", text: "“씨발, 너무 많아!”", background: bgD5, character: "데일", effect: "chase" },
-    { speaker: "엘", text: "“멈추지 마!”", background: bgD5, character: "엘", effect: "chase" },
+    { marker: "#D9", speaker: "시스템", text: "문이 다시 열린 건 하카였다.", background: bgD5_New, isProgress: true },
+    { speaker: "하카", text: "\"야.\"", background: bgD5_New, character: "하카" },
+    { speaker: "파스닐", text: "\"엘이—\"", background: bgD5_New, isMonologue: true },
+    { speaker: "하카", text: "\"알아.\"", background: bgD5_New, character: "하카" },
+    { speaker: "시스템", text: "그는 이미 총을 들고 있다.", background: bgD5_New, isProgress: true },
+    { speaker: "하카", text: "\"소리 컸어.\"", background: bgD5_New, character: "하카" },
+    { speaker: "시스템", text: "우린 달린다. 복도 끝.", background: bgD5_New, isProgress: true, effect: "chase" },
+    { speaker: "시스템", text: "엘이 벽에 기대 있다. 팔— 물려 있다. 피가 번진다.", background: bgD5_New, isProgress: true },
+    { speaker: "엘", text: "\"…괜찮아.\"", background: bgD5_New, character: "엘" },
+    { speaker: "하카", text: "\"개소리.\"", background: bgD5_New, character: "하카" },
+    { speaker: "시스템", text: "감염자는 이미 쓰러져 있다.", background: bgD5_New, isProgress: true },
+    { speaker: "하카", text: "\"언제.\"", background: bgD5_New, character: "하카" },
+    { speaker: "엘", text: "\"…방금.\"", background: bgD5_New, character: "엘" },
+    { speaker: "파스닐", text: "방금은— 너무 빠르다.", background: bgD5_New, isMonologue: true },
+    { speaker: "하카", text: "\"나간다. 지금.\"", background: bgD5_New, character: "하카" },
+    { speaker: "엘", text: "\"데일은—\"", background: bgD5_New, character: "엘" },
+    { speaker: "하카", text: "\"지금은 너야.\"", background: bgD5_New, character: "하카" },
+    { speaker: "시스템", text: "하카가 엘을 끌어당긴다.", background: bgD5_New, isProgress: true },
+    { speaker: "엘", text: "\"파스닐.\"", background: bgD5_New, character: "엘" },
+    { speaker: "파스닐", text: "\"네.\"", background: bgD5_New, isMonologue: true },
+    { speaker: "엘", text: "\"…문 닫히면 뒤돌아보지 마.\"", background: bgD5_New, character: "엘" },
+    { speaker: "시스템", text: "나는 고개를 끄덕인다. 말이 안 나온다.", background: bgD5_New, isProgress: true },
 
-    // #D10
-    { marker: "#D10", speaker: "시스템", text: "어둠 속으로 몸을 던진다.", background: bgD10, isProgress: true, hideCharacter: true, audio: audioHeartBeat },
-    { speaker: "시스템", text: "심장 소리가 고막을 때린다.", background: bgD10, isProgress: true, hideCharacter: true },
+    // #D10 탈출
+    { marker: "#D10", speaker: "시스템", text: "탈출. 계단. 문. 밖.", background: bgD10, isProgress: true, audio: audioHeartBeat },
+    { speaker: "시스템", text: "차가 보인다.", background: bgD10, isProgress: true },
+    { speaker: "하카", text: "\"태운다!\"", background: bgD10, character: "하카" },
+    { speaker: "시스템", text: "엘의 숨이 거칠다. 색이 빠르게 변한다.", background: bgD10, isProgress: true },
+    { speaker: "파스닐", text: "이건 시간 문제다.", background: bgD10, isMonologue: true },
+    { speaker: "하카", text: "\"…젠장.\"", background: bgD10, character: "하카" },
+    { speaker: "파스닐", text: "위기는 시작됐다. 그리고 이건— 되돌릴 수 없다.", background: bgD10, isMonologue: true },
 
-    // #H1
-    { marker: "#H1", speaker: "시스템", text: "도시를 가로지른다.", background: bgH1, isProgress: true },
-    { speaker: "엘", text: "“다들 무사해?”", background: bgH1, character: "엘" },
-    { speaker: "데일", text: "“말 걸지 마, 죽을 것 같으니까.”", background: bgH1, character: "데일" },
+    // 차로 돌아오는 길
+    { speaker: "시스템", text: "차 문이 닫히자 데일이 숨을 내쉰다.", background: bgD10, isProgress: true },
+    { speaker: "데일", text: "\"…역시 집에 있을걸.\"", background: bgD10, character: "데일" },
+    { speaker: "하카", text: "\"좀 닥쳐.\"", background: bgD10, character: "하카" },
+    { speaker: "데일", text: "\"….\"", background: bgD10, character: "데일" },
+    { speaker: "엘", text: "\"뭐가 제일 이상해보이냐.\"", background: bgD10, character: "엘" },
+    { speaker: "엘", text: "\"파스닐.\"", background: bgD10, character: "엘" },
 
-    // #F1 - Puzzle
-    { marker: "#F1", speaker: "시스템", text: "눈앞이 흐려진다. 사방이 검게 변한다.", background: "black", isProgress: true, hideCharacter: true },
-    { speaker: "시스템", text: "붉은 무언가가 내린다. 눈처럼, 하지만 눈이 아닌 것.", background: "black", isProgress: true, hideCharacter: true, isPuzzle: true },
+    // #F1
+    { marker: "#F1", speaker: "데일", text: "\"…눈.\"", background: bgD10, character: "데일" },
+    { speaker: "하카", text: "\"아, 또 눈.\"", background: bgD10, character: "하카" },
+    { speaker: "파스닐", text: "마트에서 보던 눈과 비슷했다.", background: bgD10, isMonologue: true },
+    { speaker: "하카", text: "\"와, 합의 빠르네.\"", background: bgD10, character: "하카" },
+    { speaker: "데일", text: "\"이 상황에 고집 부릴 생각 없어.\"", background: bgD10, character: "데일" },
+    { speaker: "하카", text: "\"…그건 좀 멋없다.\"", background: bgD10, character: "하카" },
+    { speaker: "데일", text: "\"살아남는 게 원래 멋없어.\"", background: bgD10, character: "데일" },
+    { speaker: "시스템", text: "차가 움직인다.", background: bgD10, isProgress: true },
+    { speaker: "시스템", text: "나는 뒷좌석에서 손을 풀었다 쥔다.", background: bgD10, isProgress: true },
+    { speaker: "파스닐", text: "오늘 얻은 건 약이 아니다.", background: bgD10, isMonologue: true },
 
-    // #F2
-    { marker: "#F2", speaker: "시스템", text: "정신을 차리자 낯선 풍경이 펼쳐진다.", background: bgF2, isProgress: true, hideCharacter: true, audio: audioSigh, effect: "shake" },
-    { speaker: "시스템", text: "세상이 살짝 흔들린다.", background: bgF2, isProgress: true, hideCharacter: true, effect: "shake" },
-
-    // #F3
-    { marker: "#F3", speaker: "시스템", text: "누군가 지켜보는 기분이다.", background: bgF3, isProgress: true, hideCharacter: true, effect: "shake" },
-
-    // #F5
-    { marker: "#F5", speaker: "시스템", text: "흔들림이 멈춘다.", background: bgD10, isProgress: true, hideCharacter: true },
-
-    // #A1
-    { marker: "#A1", speaker: "시스템", text: "다시 익숙한 곳으로 돌아왔다.", background: bgLivingRoomUpdate, isProgress: true },
-    { speaker: "엘", text: "“살아 돌아왔네.”", background: bgLivingRoomUpdate, character: "엘" },
-    { speaker: "데일", text: "“지옥을 보고 온 기분이야.”", background: bgLivingRoomUpdate, character: "데일" },
-
-    // #2
-    { marker: "#2", speaker: "시스템", text: "이동 중.", background: bg_2, isProgress: true },
-
-    // #G2
-    { marker: "#G2", speaker: "시스템", text: "헤드라이트가 어둠을 뚫는다.", background: bgG2, isProgress: true, hideCharacter: true },
-
-    // #4
-    { marker: "#4", speaker: "시스템", text: "상가 건물.", background: bg_4, isProgress: true },
-
-    // #5
-    { marker: "#5", speaker: "시스템", text: "건물 뒤편.", background: bg_5, isProgress: true },
-
-    // #7
-    { marker: "#7", speaker: "시스템", text: "다시 도로 위.", background: bg_2, isProgress: true },
-
-    // #8
-    { marker: "#8", speaker: "시스템", text: "마지막 거실.", background: bgLivingRoomUpdate, isProgress: true },
-
-    // Character Silla dialogues
-    { speaker: "소년1", text: "“안녕.”", background: bgLivingRoomUpdate, character: "소년1" },
-    { marker: "END", speaker: "신라", text: "“반가워요.”", background: bgLivingRoomUpdate, character: "신라" },
-
-    { speaker: "시스템", text: "The end of current story.", isProgress: true, background: bgLivingRoomUpdate, onComplete: () => { setGameState("start"); setDialogueIndex(0); } }
+    // 엔딩
+    { speaker: "시스템", text: "엔진 소리는 일정한데, 안은 조용하다.", background: bgD10, isProgress: true },
+    { marker: "END", speaker: "시스템", text: "현재 스토리의 끝입니다.", isProgress: true, background: bgLivingRoomUpdate, onComplete: () => { setGameState("start"); setDialogueIndex(0); } }
   ], [dialogueIndex]);
-
   const chapters: Chapter[] = useMemo(() => [
     { id: 1, title: "프롤로그", marker: "BEGIN", index: 0, locked: false },
     { id: 2, title: "별장 도착", marker: "#C3", index: 62, locked: maxReachedIndex < 62 },
@@ -888,7 +998,7 @@ export default function Home() {
       bgStart, bgClip1, bgClip2, bgLivingRoom, bgBalcony, 
       bgNearForest, bgStorage, bgCity1, bgMart, bgNearHospital, bgHospital,
       bgC16, bgHospitalNew, bgNearHospitalNew, bgLivingRoomNew,
-      bgD1, bgD2, bgD3, bgD5, bgD6, bgH1, bgD10, bgF2, bgF3, bgLivingRoomUpdate, bgG2, bg_2, bg_4, bg_5
+      bgD1, bgD2, bgD3, bgD5, bgD5_New, bgD6, bgH1, bgD10, bgF2, bgF3, bgLivingRoomUpdate, bgG2, bg_2, bg_4, bg_5
     ];
     backgrounds.forEach(src => {
       const img = new Image();
