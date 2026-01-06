@@ -47,7 +47,7 @@ import imgRenja from "@assets/렌쟈_1767627793839.png"; // Fix: Use the same as
 import imgEl from "@assets/엘_1767627793842.png";
 import imgPasnil from "@assets/파스닐_1767631756273.png";
 import imgDale from "@assets/데일_1767642442612.png";
-import imgSilla from "@assets/신라_1767725834183.png";
+import imgSilla from "@assets/신라_1767737204993.png";
 
 // Assets - Characters (V2)
 import imgHaka2 from "@assets/하카2_1767637478411.png";
@@ -1256,7 +1256,7 @@ export default function Home() {
 
     // 의문의 소년
     { speaker: "시스템", text: "창고 반대편, 그림자에서 누군가 나온다. 소년이다. 너무 어리다.", background: bg_5, isProgress: true },
-    { speaker: "소년", text: "\"지금 안 빠지면 다 죽어.\"", background: bg_5 },
+    { speaker: "소년", text: "\"지금 안 빠지면 다 죽어.\"", background: bg_5, character: "소년" },
     { speaker: "시스템", text: "말투는 건조하고 빠르다. 감정이 없다기보다, 감정을 쓸 여유가 없는 얼굴.", background: bg_5, isProgress: true },
     { speaker: "시스템", text: "하카가 웃지도 않은 채 말한다.", background: bg_5, isProgress: true },
     { speaker: "하카", text: "\"구세주 취미야?\"", background: bg_5, character: "하카" },
@@ -1266,7 +1266,7 @@ export default function Home() {
     { speaker: "렌쟈", text: "\"조용히해.\"", background: bg_5, character: "렌쟈" },
     { speaker: "시스템", text: "그 한마디에 란은 입을 다문다. 고개를 끄덕이는 걸로만 답한다. 그녀의 판단을 의심하지 않는다.", background: bg_5, isProgress: true },
     { speaker: "시스템", text: "소년이 문을 열어준다.", background: bg_5, isProgress: true },
-    { speaker: "소년", text: "\"차, 밖에 있지?\"", background: bg_5 },
+    { speaker: "소년", text: "\"차, 밖에 있지?\"", background: bg_5, character: "소년" },
     { speaker: "하카", text: "\"응. 네 덕에 오늘은 안 죽네.\"", background: bg_5, character: "하카" },
 
     // #7 돌아가는 길
@@ -1376,12 +1376,15 @@ export default function Home() {
     { marker: "END", speaker: "시스템", text: "현재 스토리의 끝입니다.", isProgress: true, background: bgLivingRoomUpdate, onComplete: () => { setGameState("start"); setDialogueIndex(0); } }
   ], [dialogueIndex]);
   const chapters: Chapter[] = useMemo(() => [
-    { id: 1, title: "프롤로그", marker: "BEGIN", index: 0, locked: false },
-    { id: 2, title: "별장 도착", marker: "#C3", index: 62, locked: maxReachedIndex < 62 },
-    { id: 3, title: "2일차 탐색", marker: "#C9", index: 175, locked: maxReachedIndex < 175 },
-    { id: 4, title: "병원 잠입", marker: "#C13", index: 240, locked: maxReachedIndex < 240 },
-    { id: 5, title: "데일의 생환", marker: "#C20", index: 565, locked: maxReachedIndex < 565 },
-    { id: 6, title: "긴박한 탈출", marker: "#D8", index: 493, locked: maxReachedIndex < 493 }
+    { id: 1, title: "1장: 프롤로그", marker: "BEGIN", index: 0, locked: false },
+    { id: 2, title: "2장: 별장 도착", marker: "#C3", index: 62, locked: maxReachedIndex < 62 },
+    { id: 3, title: "3장: 탐색과 조우", marker: "#C9", index: 175, locked: maxReachedIndex < 175 },
+    { id: 4, title: "4장: 병원 잠입", marker: "#C13", index: 240, locked: maxReachedIndex < 240 },
+    { id: 5, title: "5장: 데일의 생환", marker: "#C20", index: 565, locked: maxReachedIndex < 565 },
+    { id: 6, title: "6장: 긴박한 탈출", marker: "#D8", index: 493, locked: maxReachedIndex < 493 },
+    { id: 7, title: "7장: 산길", marker: "#2_Mountain", index: 800, locked: maxReachedIndex < 800 },
+    { id: 8, title: "8장: 의문의 소년", marker: "#7_Return", index: 920, locked: maxReachedIndex < 920 },
+    { id: 9, title: "9장: 평화로운 낮", marker: "#8_Day6", index: 960, locked: maxReachedIndex < 960 }
   ], [maxReachedIndex]);
 
   const currentDialogue = story[dialogueIndex];
@@ -1575,6 +1578,7 @@ export default function Home() {
       case "렌쟈": return isV2 ? imgRenja2 : imgRenja;
       case "엘": return isV2 ? imgEl2 : imgEl;
       case "데일": return imgDale;
+      case "소년": return { src: imgSilla, silhouette: true };
       case "소년1":
       case "신라": return imgSilla;
       case "파스닐": 
@@ -1607,7 +1611,9 @@ export default function Home() {
     if (!currentDialogue) {
       return <div className="w-full h-screen bg-black flex items-center justify-center text-white">Loading...</div>;
     }
-    const charImg = currentDialogue.hideCharacter ? null : getCharacterImage(currentDialogue.character || currentDialogue.speaker, dialogueIndex);
+    const charImgResult = currentDialogue.hideCharacter ? null : getCharacterImage(currentDialogue.character || currentDialogue.speaker, dialogueIndex);
+    const charImg = charImgResult && typeof charImgResult === 'object' && 'src' in charImgResult ? charImgResult.src : charImgResult;
+    const isSilhouette = charImgResult && typeof charImgResult === 'object' && 'silhouette' in charImgResult ? charImgResult.silhouette : false;
     
     // Effect class
     let effectClass = "";
@@ -1738,6 +1744,7 @@ export default function Home() {
                 <img 
                   src={charImg} 
                   className="h-full object-contain drop-shadow-[0_0_40px_rgba(0,0,0,0.9)]"
+                  style={isSilhouette ? { filter: 'brightness(0) saturate(100%)' } : undefined}
                 />
               </motion.div>
             )}
@@ -1937,25 +1944,27 @@ export default function Home() {
               <LayoutGrid className="w-4 h-4" />
               <span className="text-[10px] font-mono tracking-widest uppercase italic">Chapter Selection Protocol</span>
             </div>
-            <div className="grid grid-cols-2 gap-3 w-[450px]">
-              {chapters.map(chapter => (
-                <Button
-                  key={chapter.id}
-                  variant="ghost"
-                  disabled={chapter.locked}
-                  onClick={() => jumpToChapter(chapter.index)}
-                  className={`h-12 justify-between px-4 border border-white/5 rounded-none font-mono text-[10px] tracking-widest uppercase transition-all
-                    ${chapter.locked 
-                      ? "bg-white/5 text-white/10 cursor-not-allowed" 
-                      : "bg-red-600/5 text-white/60 hover:bg-red-600/20 hover:text-white hover:border-red-600/30"}`}
-                >
-                  <div className="flex items-center gap-3">
-                    <span className="text-red-600/40">0{chapter.id}</span>
-                    {chapter.title}
-                  </div>
-                  {chapter.locked ? <Lock className="w-3 h-3" /> : <Unlock className="w-3 h-3 text-red-600/40" />}
-                </Button>
-              ))}
+            <div className="h-[200px] overflow-y-auto overflow-x-hidden scrollbar-thin scrollbar-thumb-red-600/30 scrollbar-track-transparent pr-2">
+              <div className="grid grid-cols-2 gap-3 w-[450px]">
+                {chapters.map(chapter => (
+                  <Button
+                    key={chapter.id}
+                    variant="ghost"
+                    disabled={chapter.locked}
+                    onClick={() => jumpToChapter(chapter.index)}
+                    className={`h-12 justify-between px-4 border border-white/5 rounded-none font-mono text-[10px] tracking-widest uppercase transition-all
+                      ${chapter.locked 
+                        ? "bg-white/5 text-white/10 cursor-not-allowed" 
+                        : "bg-red-600/5 text-white/60 hover:bg-red-600/20 hover:text-white hover:border-red-600/30"}`}
+                  >
+                    <div className="flex items-center gap-3">
+                      <span className="text-red-600/40">0{chapter.id}</span>
+                      {chapter.title}
+                    </div>
+                    {chapter.locked ? <Lock className="w-3 h-3" /> : <Unlock className="w-3 h-3 text-red-600/40" />}
+                  </Button>
+                ))}
+              </div>
             </div>
           </div>
         </div>
