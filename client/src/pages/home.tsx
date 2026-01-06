@@ -63,11 +63,11 @@ import bgMusicCity from "@assets/Screen_Recording_20260106-023850_YouTube_176763
 import bgMusicC16 from "@assets/Screen_Recording_20260106-044430_YouTube_(1)_1767642743472.mp3";
 
 // New Audio from user
-const audioAloneTonight = "/attached_assets/Alone_Tonight_1767726490319.mp3";
-const audioEpicAftermath = "/attached_assets/Epic_Post_Apocalyptic_Music_-_Aftermath_1767726728139.mp3";
-const audioHorrorChase = "/attached_assets/Horror_Chase_Music_Torture_Chamber_1767726665715.mp3";
-const audioHeartBeat = "/attached_assets/Heart_Beat_[SOUND_EFFECT]_1767726615740.mp3";
-const audioSigh = "/attached_assets/Sigh_(Killing_Eve)_(1)_1767724595043.mp3";
+const audioAloneTonight = "/attached_assets/Alone_Tonight_1767729669950.mp3";
+const audioEpicAftermath = "/attached_assets/Epic_Post_Apocalyptic_Music_-_Aftermath_1767729669949.mp3";
+const audioHorrorChase = "/attached_assets/Horror_Chase_Music_Torture_Chamber___Royalty_Free_Action_And_P_1767729669947.mp3";
+const audioHeartBeat = "/attached_assets/Heart_Beat_[SOUND_EFFECT]_1767729669945.mp3";
+const audioSigh = "/attached_assets/Sigh_(Killing_Eve)_(1)_1767729669952.mp3";
 
 type SceneType = "start" | "video" | "story";
 
@@ -785,9 +785,9 @@ export default function Home() {
       background: bgD5, 
       character: "엘",
       choices: [
-        { text: "1. 하카와 간다", targetIndex: 782 },
-        { text: "2. 데일과 간다", targetIndex: 782 },
-        { text: "3. 엘과 간다", targetIndex: 782 }
+        { text: "1. 하카와 간다", targetIndex: 502 },
+        { text: "2. 데일과 간다", targetIndex: 502 },
+        { text: "3. 엘과 간다", targetIndex: 502 }
       ]
     },
     // 선택 후 통합 루트
@@ -871,8 +871,8 @@ export default function Home() {
       background: bgD5_New, 
       isProgress: true,
       choices: [
-        { text: "1. 데일을 따라간다", targetIndex: 836 },
-        { text: "2. 엘의 말을 따른다", targetIndex: 855 }
+        { text: "1. 데일을 따라간다", targetIndex: 570 },
+        { text: "2. 엘의 말을 따른다", targetIndex: 589 }
       ]
     },
 
@@ -898,7 +898,7 @@ export default function Home() {
     { speaker: "시스템", text: "그리고 이 세계는 혼자 판단하는 사람에게 아무것도 남겨주지 않는다.", background: "black", isProgress: true, onComplete: () => { setGameState("start"); setDialogueIndex(0); } },
 
     // 선택지 2 — 엘의 말을 따른다 (정상 진행) #D7
-    { marker: "#D7", speaker: "파스닐", text: "\"…여기 있을게요.\"", background: bgD5_New, isMonologue: true },
+    { marker: "#D7", speaker: "파스닐", text: "\"…여기 있을게요.\"", background: bgD5_New, isMonologue: true, audio: "stop" },
     { speaker: "시스템", text: "엘은 짧게 고개를 끄덕인다.", background: bgD5_New, isProgress: true },
     { speaker: "파스닐", text: "이 세계에선 둘 다 정답이 아닐 수 있다.", background: bgD5_New, isMonologue: true },
     { speaker: "엘", text: "\"파스닐.\"", background: bgD5_New, character: "엘" },
@@ -916,7 +916,7 @@ export default function Home() {
     { speaker: "시스템", text: "문이 닫힌다.", background: bgD5_New, isProgress: true },
 
     // #D8
-    { marker: "#D8", speaker: "시스템", text: "혼자 남는다.", background: bgD5_New, isProgress: true },
+    { marker: "#D8", speaker: "시스템", text: "혼자 남는다.", background: bgD5_New, isProgress: true, audio: audioHorrorChase },
     { speaker: "시스템", text: "멀리서 금속 부딪히는 소리.", background: bgD5_New, isProgress: true },
     { speaker: "시스템", text: "그리고— 사람의 비명. 짧다. 너무 짧다.", background: bgD5_New, isProgress: true, effect: "shake" },
     { speaker: "파스닐", text: "\"엘…?\"", background: bgD5_New, isMonologue: true },
@@ -1160,6 +1160,9 @@ export default function Home() {
   }
 
   if (gameState === "story") {
+    if (!currentDialogue) {
+      return <div className="w-full h-screen bg-black flex items-center justify-center text-white">Loading...</div>;
+    }
     const charImg = currentDialogue.hideCharacter ? null : getCharacterImage(currentDialogue.character || currentDialogue.speaker, dialogueIndex);
     
     // Effect class
