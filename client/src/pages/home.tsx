@@ -164,6 +164,7 @@ export default function Home() {
   const sparkleIdRef = useRef(0);
   const [hasSaveData, setHasSaveData] = useState(false);
   const [puzzleInput, setPuzzleInput] = useState("");
+  const [showMemo, setShowMemo] = useState(false);
   const [maxReachedIndex, setMaxReachedIndex] = useState(0);
 
   // Check for save data and max reached index on mount
@@ -1549,6 +1550,24 @@ export default function Home() {
     }
   }, [gameState, dialogueIndex, currentDialogue?.sfx]);
 
+  // Sync memo state with dialogue index (for chapter select / save load)
+  useEffect(() => {
+    if (gameState === "story") {
+      // Check if we're in a memo section by looking at surrounding dialogue
+      const inMemoSection = story.slice(0, dialogueIndex + 1).some((d, i) => {
+        if (d.showMemo) {
+          // Check if there's a hideMemo after this showMemo and before current index
+          const hideAfter = story.slice(i + 1, dialogueIndex + 1).some(d2 => d2.hideMemo);
+          return !hideAfter;
+        }
+        return false;
+      });
+      setShowMemo(inMemoSection);
+    } else {
+      setShowMemo(false);
+    }
+  }, [dialogueIndex, gameState, story]);
+
   const handleNext = useCallback(() => {
     if (currentDialogue.choices) return;
     if (currentDialogue.isPuzzle) return;
@@ -1888,15 +1907,49 @@ export default function Home() {
           </AnimatePresence>
         )}
 
+        {/* Memo Display */}
+        <AnimatePresence>
+          {showMemo && (
+            <motion.div
+              initial={{ y: 300, opacity: 0, rotate: -5 }}
+              animate={{ y: 0, opacity: 1, rotate: 0 }}
+              exit={{ y: 300, opacity: 0, rotate: 5 }}
+              transition={{ duration: 0.6, ease: "easeOut" }}
+              className="absolute right-8 bottom-40 z-30 pointer-events-none"
+            >
+              <img 
+                src={imgMemo} 
+                className="w-64 h-auto drop-shadow-[0_0_30px_rgba(0,0,0,0.8)]"
+              />
+            </motion.div>
+          )}
+        </AnimatePresence>
+
+        {/* Click Hint Effect */}
+        {currentDialogue.clickHint && (
+          <motion.div
+            initial={{ opacity: 0 }}
+            animate={{ opacity: [0.3, 0.8, 0.3] }}
+            transition={{ duration: 1.5, repeat: Infinity }}
+            className="absolute right-12 top-1/2 -translate-y-1/2 z-30 flex flex-col items-center gap-2"
+          >
+            <div className="w-12 h-12 rounded-full border-2 border-red-600/50 flex items-center justify-center">
+              <ChevronRight className="w-6 h-6 text-red-600" />
+            </div>
+            <span className="text-red-600/70 text-xs font-mono tracking-wider">클릭</span>
+          </motion.div>
+        )}
+
         <motion.div 
           initial={{ y: 20, opacity: 0 }}
           animate={{ y: 0, opacity: 1 }}
-          className="relative z-20 w-[85%] max-w-3xl mb-16 cursor-pointer group"
+          className={`relative z-20 w-[85%] max-w-3xl cursor-pointer group ${currentDialogue.centeredMonologue ? 'mb-0 self-center' : 'mb-16'}`}
+          style={currentDialogue.centeredMonologue ? { position: 'absolute', top: '50%', left: '50%', transform: 'translate(-50%, -50%)' } : undefined}
           onClick={handleNext}
         >
           {currentDialogue.isProgress && !currentDialogue.choices && !currentDialogue.isPuzzle ? (
-            <div className="bg-black/20 p-5 rounded-lg text-center">
-              <p className="text-white/50 text-base font-light tracking-widest italic uppercase">
+            <div className={`bg-black/20 p-5 rounded-lg text-center ${currentDialogue.centeredMonologue ? 'bg-transparent' : ''}`}>
+              <p className={`text-base font-light tracking-widest italic ${currentDialogue.redText ? 'text-red-600 uppercase font-bold' : 'text-white/50 uppercase'}`}>
                 {currentDialogue.text}
               </p>
             </div>
