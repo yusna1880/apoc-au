@@ -100,6 +100,9 @@ interface DialogueLine {
   effect?: "shake" | "chase" | "carShake";
   textOnly?: boolean;
   eyeEffect?: boolean;
+  isDeadEnd?: boolean;
+  deadEndTitle?: string;
+  deadEndSubtitle?: string;
 }
 
 interface Choice {
@@ -1186,7 +1189,7 @@ export default function Home() {
     { speaker: "시스템", text: "차량이 흔들리고, 가드레일이 찢어진다.", background: bg_2, isProgress: true },
     { speaker: "란", text: "\"렌쟈—!\"", background: bg_2, character: "란" },
     { speaker: "시스템", text: "충격. 시야 전복.", background: bg_2, isProgress: true },
-    { speaker: "시스템", text: "DEAD END — 판단을 앞당긴 건 용기가 아니라 소음이었다.", background: bg_2, isProgress: true, onComplete: () => { setGameState("start"); setDialogueIndex(0); } },
+    { speaker: "시스템", text: "", background: "black", isDeadEnd: true, deadEndTitle: "DEAD ENDING", deadEndSubtitle: "판단을 앞당긴 건 용기가 아니라 소음이었다.", onComplete: () => { setGameState("start"); setDialogueIndex(0); } },
 
     // #2 선택 2 결과 — 정상 진행
     { marker: "#2_Continue", speaker: "시스템", text: "하카가 브레이크를 밟는다. 엔진 소리가 줄어든다.", background: bg_2, isProgress: true },
@@ -1232,15 +1235,15 @@ export default function Home() {
     { speaker: "란", text: "\"누님.\"", background: bg_5, character: "란" },
     { speaker: "시스템", text: "아주 낮게, 하지만 분명히 부른다. 자연스럽게 그녀 앞을 반 보폭 가로막는다. 과하지 않다. 본능에 가까운 움직임이다.", background: bg_5, isProgress: true,
       choices: [
-        { text: "1. 란을 밀치고 앞으로 나간다", targetIndex: 892 },
-        { text: "2. 그대로 멈춘다", targetIndex: 895 }
+        { text: "1. 란을 밀치고 앞으로 나간다", targetIndex: 868 },
+        { text: "2. 그대로 멈춘다", targetIndex: 871 }
       ]
     },
 
     // 선택지 ① DEAD END — 란 사망
     { marker: "#5_Dead", speaker: "시스템", text: "란은 균형을 잃고 넘어지고", background: bg_5, isProgress: true },
     { speaker: "시스템", text: "그 순간 날아온 총탄이 그대로 머리를 관통한다.", background: bg_5, isProgress: true },
-    { speaker: "시스템", text: "DEAD END — 란은 즉사한다. 그는 끝까지 아무 말도 하지 않는다. 렌쟈의 이름조차 부르지 못한 채.", background: bg_5, isProgress: true, onComplete: () => { setGameState("start"); setDialogueIndex(0); } },
+    { speaker: "시스템", text: "", background: "black", isDeadEnd: true, deadEndTitle: "DEAD ENDING", deadEndSubtitle: "나는 살아남지 못했다.", onComplete: () => { setGameState("start"); setDialogueIndex(0); } },
 
     // 선택지 ② 정상 진행
     { marker: "#5_Continue", speaker: "시스템", text: "렌쟈가 멈춘다. 그 판단 1초 뒤—", background: bg_5, isProgress: true },
@@ -1611,6 +1614,53 @@ export default function Home() {
     if (!currentDialogue) {
       return <div className="w-full h-screen bg-black flex items-center justify-center text-white">Loading...</div>;
     }
+
+    // DEAD ENDING Screen
+    if (currentDialogue.isDeadEnd) {
+      return (
+        <div 
+          className="fixed inset-0 bg-black z-50 flex flex-col items-center justify-center cursor-pointer"
+          onClick={handleNext}
+        >
+          <motion.div
+            initial={{ opacity: 0, scale: 0.9 }}
+            animate={{ opacity: 1, scale: 1 }}
+            transition={{ duration: 0.8, ease: "easeOut" }}
+            className="text-center"
+          >
+            <motion.h1 
+              initial={{ opacity: 0, y: -20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ delay: 0.3, duration: 0.6 }}
+              className="text-6xl font-black text-red-600 tracking-widest mb-8"
+              style={{ 
+                fontFamily: "'Oxanium', sans-serif",
+                textShadow: '0 0 60px rgba(220, 38, 38, 0.6), 0 0 120px rgba(220, 38, 38, 0.3)'
+              }}
+            >
+              {currentDialogue.deadEndTitle || "DEAD ENDING"}
+            </motion.h1>
+            <motion.p
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              transition={{ delay: 0.8, duration: 0.6 }}
+              className="text-white/50 text-lg font-light tracking-wider italic"
+            >
+              {currentDialogue.deadEndSubtitle}
+            </motion.p>
+            <motion.div
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 0.3 }}
+              transition={{ delay: 1.5, duration: 0.5 }}
+              className="mt-12 text-white/20 text-sm font-mono tracking-widest"
+            >
+              클릭하여 계속
+            </motion.div>
+          </motion.div>
+        </div>
+      );
+    }
+
     const charImgResult = currentDialogue.hideCharacter ? null : getCharacterImage(currentDialogue.character || currentDialogue.speaker, dialogueIndex);
     const charImg = charImgResult && typeof charImgResult === 'object' && 'src' in charImgResult ? charImgResult.src : charImgResult;
     const isSilhouette = charImgResult && typeof charImgResult === 'object' && 'silhouette' in charImgResult ? charImgResult.silhouette : false;
