@@ -1,6 +1,6 @@
 import { useState, useEffect, useRef, useCallback, useMemo } from "react";
 import { Button } from "@/components/ui/button";
-import { Volume2, VolumeX, Settings, Info, ChevronRight, Save, Send } from "lucide-react";
+import { Volume2, VolumeX, Settings, Info, ChevronRight, Save, Send, Lock, Unlock, Zap, Activity, Shield, Cpu, LayoutGrid } from "lucide-react";
 import { motion, AnimatePresence } from "framer-motion";
 import { Input } from "@/components/ui/input";
 
@@ -114,6 +114,14 @@ interface DustParticle {
   color?: string;
 }
 
+interface Chapter {
+  id: number;
+  title: string;
+  marker: string;
+  index: number;
+  locked: boolean;
+}
+
 export default function Home() {
   const [gameState, setGameState] = useState<SceneType>("start");
   const [dialogueIndex, setDialogueIndex] = useState(0);
@@ -125,26 +133,39 @@ export default function Home() {
   const sparkleIdRef = useRef(0);
   const [hasSaveData, setHasSaveData] = useState(false);
   const [puzzleInput, setPuzzleInput] = useState("");
+  const [maxReachedIndex, setMaxReachedIndex] = useState(0);
 
-  // Check for save data on mount
+  // Check for save data and max reached index on mount
   useEffect(() => {
     const savedIndex = localStorage.getItem("game_save_index");
     if (savedIndex !== null) {
       setHasSaveData(true);
     }
+    const maxIndex = localStorage.getItem("game_max_index");
+    if (maxIndex !== null) {
+      setMaxReachedIndex(parseInt(maxIndex));
+    }
   }, []);
+
+  // Update max reached index
+  useEffect(() => {
+    if (gameState === "story" && dialogueIndex > maxReachedIndex) {
+      setMaxReachedIndex(dialogueIndex);
+      localStorage.setItem("game_max_index", dialogueIndex.toString());
+    }
+  }, [dialogueIndex, gameState, maxReachedIndex]);
 
   // Initialize Dust Particles for Start Screen / Special Effects
   useEffect(() => {
-    const count = 40;
+    const count = 100; // Increased count for start screen
     const initialDust: DustParticle[] = Array.from({ length: count }).map((_, i) => ({
       id: i,
       x: Math.random() * 100,
       y: Math.random() * 100,
-      size: Math.random() * 3 + 1,
-      speedX: (Math.random() - 0.5) * 0.05,
-      speedY: (Math.random() - 0.5) * 0.05 + 0.02,
-      opacity: Math.random() * 0.5 + 0.1,
+      size: Math.random() * 4 + 1, // Larger size
+      speedX: (Math.random() - 0.5) * 0.1,
+      speedY: (Math.random() - 0.5) * 0.1 + 0.05,
+      opacity: Math.random() * 0.7 + 0.2, // More visible
     }));
     setDustParticles(initialDust);
 
@@ -161,7 +182,7 @@ export default function Home() {
   // Story Data
   const story: DialogueLine[] = useMemo(() => [
     // CLIP 1 (0-4)
-    { speaker: "파스닐", text: "요즘 ai가 발전해서 내가 할 일이 없네", background: bgClip1, character: "파스닐", isMonologue: true },
+    { marker: "BEGIN", speaker: "파스닐", text: "요즘 ai가 발전해서 내가 할 일이 없네", background: bgClip1, character: "파스닐", isMonologue: true },
     { speaker: "파스닐", expression: "이메일을 확인한다", text: "...", background: bgClip1, character: "파스닐", isMonologue: true },
     { speaker: "파스닐", text: "초청 DJ 문의? 수상하긴 하지만 원체 부자들은 외진 곳을 좋아하니깐..", background: bgClip1, character: "파스닐", isMonologue: true },
     { speaker: "파스닐", text: "가 아니라 하필 나를?!", background: bgClip1, character: "파스닐", isMonologue: true },
@@ -221,7 +242,7 @@ export default function Home() {
     { speaker: "시스템", text: "(차가 멈추고, 문이 연달아 닫힌다)", isProgress: true, background: bgClip2 },
     { speaker: "하카", expression: "고개만 돌린다", text: "왔네.", background: bgClip2, character: "하카" },
     { speaker: "시스템", text: "차에서 먼저 내린 건 붉은 머리의 여자였다. 차분한 동작, 주변을 빠르게 훑는 시선.", isProgress: true, background: bgClip2 },
-    { speaker: "렌쟈", text: "여기 맞지?", background: bgClip2, character: "렌쟈" },
+    { marker: "#C3_PRE", speaker: "렌쟈", text: "여기 맞지?", background: bgClip2, character: "렌쟈" },
     { speaker: "하카", expression: "손을 들어 가볍게 흔든다", text: "응.", background: bgClip2, character: "하카" },
     { speaker: "시스템", text: "그 뒤를 따라 내린 다른 남자는 가볍게 숨을 고르며 주변을 살폈다.", isProgress: true, background: bgClip2 },
     { speaker: "란", expression: "남자가 허리를 숙인다", text: "누님, 길은 괜찮으셨어요?", background: bgClip2, character: "란" },
@@ -256,7 +277,7 @@ export default function Home() {
     { speaker: "하카", expression: "입꼬리 올리며", text: "봐라. 이래서 란이 있지.", background: bgLivingRoom, character: "란" },
     { speaker: "란", expression: "조금 난처하게", text: "…습관입니다.", background: bgLivingRoom, character: "란" },
     { speaker: "하카", text: "하카는 더 말하지 않고 웃는다. 의미 없는 웃음은 아니다.", background: bgLivingRoom, character: "하카" },
-    { speaker: "시스템", text: "나는 콘센트 위치를 다시 확인한다. 손이 바쁘면, 시선이 덜 튄다. 이 사람들, 말보다 표정이 더 빠르다.", background: bgLivingRoom, isProgress: true },
+    { speaker: "시스템", text: "나는 콘센트 위치를 다시 확인한다. 손이 바쁘면, 시선이 덜 튊다. 이 사람들, 말보다 표정이 더 빠르다.", background: bgLivingRoom, isProgress: true },
     { speaker: "렌쟈", expression: "하카 쪽 보며", text: "이번엔 얼마나 머무를 생각이야?", background: bgLivingRoom, character: "렌쟈" },
     { speaker: "하카", text: "상황 봐서.", background: bgLivingRoom, character: "하카" },
     { speaker: "엘", expression: "즉답", text: "그 말은 오래 있다는 거네.", background: bgLivingRoom, character: "엘" },
@@ -367,8 +388,7 @@ export default function Home() {
     { speaker: "란", text: "이건, 짐승이 아니네요. 걸음이… 너무 느려요.", background: bgStorage, character: "란" },
     
     // #C8 - 거실 (163-174)
-    { marker: "#C8", speaker: "시스템", text: "별장 안 — 거실. 문이 열리는 소리가 너무 크게 들렸다.", background: bgLivingRoom, isProgress: true, audio: bgMusicCity },
-    { speaker: "란", text: "돌아왔습니다.", background: bgLivingRoom, character: "란" },
+    { marker: "#C8", speaker: "란", text: "돌아왔습니다.", background: bgLivingRoom, isProgress: true, audio: bgMusicCity },
     { speaker: "하카", text: "그래서.", background: bgLivingRoom, character: "하카" },
     { speaker: "엘", text: "봤어?", background: bgLivingRoom, character: "엘" },
     { speaker: "시스템", text: "란은 잠깐 말을 고른다. 평소보다 아주 조금 느리다.", background: bgLivingRoom, isProgress: true },
@@ -684,7 +704,7 @@ export default function Home() {
     { speaker: "데일", text: "“있었고, 살아서 나갔고.”", background: bgD2, character: "데일" },
     { speaker: "하카", text: "“…그리고 다시 안 돌아왔겠지.”", background: bgD2, character: "하카" },
     { speaker: "시스템", text: "데일은 말이 끝나자 약국 안쪽을 한 번 더 훑는다.", background: bgD2, isProgress: true },
-    { speaker: "데일", text: "“여기서 머문이 시간 짧아.”", background: bgD2, character: "데일" },
+    { speaker: "데일", text: "“여기서 머문 시간 짧아.”", background: bgD2, character: "데일" },
     { speaker: "엘", text: "“왜.”", background: bgD2, character: "엘" },
     { speaker: "데일", text: "“필요한 것만 챙겼거든. 망설임 없어.”", background: bgD2, character: "데일" },
     { speaker: "파스닐", text: "병원에서 살아남은 사람의 시선이다. 고르지 않는다. 결정한다.", background: bgD2, isMonologue: true },
@@ -759,14 +779,14 @@ export default function Home() {
       background: bgD5, 
       character: "엘",
       choices: [
-        { text: "1. 하카와 간다 (선택불가)", targetIndex: dialogueIndex }, // Just in case, stay on same index
+        { text: "1. 하카와 간다 (선택불가)", targetIndex: 478 }, // Updated target index
         { text: "2. 데일과 간다", targetIndex: 479 },
         { text: "3. 엘과 간다", targetIndex: 479 }
       ]
     },
 
     // Result of choice (479)
-    { speaker: "데일", text: "“…듣기 싫은 말.”", background: bgD5, character: "데일" },
+    { marker: "#D5_CHOICE", speaker: "데일", text: "“…듣기 싫은 말.”", background: bgD5, character: "데일" },
     { speaker: "하카", text: "“아, 또 시작이네. 엘데일. 그리고 파스닐\" ", background: bgD5, character: "하카" },
     { speaker: "시스템", text: "결국 엘과 데일은 같은 방향으로 움직인다. 나는 그 사이에 낀다.", background: bgD5, isProgress: true },
     { speaker: "시스템", text: "하카는 혼자 오른쪽으로 사라진다.", background: bgD5, isProgress: true },
@@ -808,7 +828,7 @@ export default function Home() {
 
     // #F1 - Puzzle
     { marker: "#F1", speaker: "시스템", text: "눈앞이 흐려진다. 사방이 검게 변한다.", background: "black", isProgress: true, hideCharacter: true },
-    { marker: "#F1", speaker: "시스템", text: "붉은 무언가가 내린다. 눈처럼, 하지만 눈이 아닌 것.", background: "black", isProgress: true, hideCharacter: true, isPuzzle: true },
+    { speaker: "시스템", text: "붉은 무언가가 내린다. 눈처럼, 하지만 눈이 아닌 것.", background: "black", isProgress: true, hideCharacter: true, isPuzzle: true },
 
     // #F2
     { marker: "#F2", speaker: "시스템", text: "정신을 차리자 낯선 풍경이 펼쳐진다.", background: bgF2, isProgress: true, hideCharacter: true, audio: audioSigh, effect: "shake" },
@@ -845,10 +865,19 @@ export default function Home() {
 
     // Character Silla dialogues
     { speaker: "소년1", text: "“안녕.”", background: bgLivingRoomUpdate, character: "소년1" },
-    { speaker: "신라", text: "“반가워요.”", background: bgLivingRoomUpdate, character: "신라" },
+    { marker: "END", speaker: "신라", text: "“반가워요.”", background: bgLivingRoomUpdate, character: "신라" },
 
     { speaker: "시스템", text: "The end of current story.", isProgress: true, background: bgLivingRoomUpdate, onComplete: () => { setGameState("start"); setDialogueIndex(0); } }
   ], [dialogueIndex]);
+
+  const chapters: Chapter[] = useMemo(() => [
+    { id: 1, title: "프롤로그", marker: "BEGIN", index: 0, locked: false },
+    { id: 2, title: "별장 도착", marker: "#C3", index: 62, locked: maxReachedIndex < 62 },
+    { id: 3, title: "2일차 탐색", marker: "#C9", index: 175, locked: maxReachedIndex < 175 },
+    { id: 4, title: "병원 잠입", marker: "#C13", index: 240, locked: maxReachedIndex < 240 },
+    { id: 5, title: "데일의 생환", marker: "#C20", index: 565, locked: maxReachedIndex < 565 },
+    { id: 6, title: "긴박한 탈출", marker: "#D8", index: 493, locked: maxReachedIndex < 493 }
+  ], [maxReachedIndex]);
 
   const currentDialogue = story[dialogueIndex];
 
@@ -1206,22 +1235,47 @@ export default function Home() {
 
   return (
     <div
-      className="relative w-full h-screen overflow-hidden bg-black flex items-center p-16"
+      className="relative w-full h-screen overflow-hidden bg-black flex flex-col p-16"
       onMouseMove={(e) => {
-        const x = (e.clientX - window.innerWidth / 2) / 120;
-        const y = (e.clientY - window.innerHeight / 2) / 120;
+        const x = (e.clientX - window.innerWidth / 2) / 150;
+        const y = (e.clientY - window.innerHeight / 2) / 150;
         setMousePosition({ x, y });
       }}
       onClick={handleClick}
     >
-      <div className="absolute top-0 left-0 w-full h-[8%] bg-black z-30" />
-      <div className="absolute bottom-0 left-0 w-full h-[8%] bg-black z-30" />
+      {/* SF UI Overlays */}
+      <div className="absolute inset-0 pointer-events-none border-[20px] border-white/5 z-40" />
+      <div className="absolute top-0 left-0 w-full h-[12%] bg-black z-30 flex items-center px-16 justify-between border-b border-white/5">
+        <div className="flex items-center gap-8 text-[10px] text-white/20 font-mono tracking-widest">
+          <div className="flex items-center gap-2"><Zap className="w-3 h-3" /> CORE_STABLE</div>
+          <div className="flex items-center gap-2"><Activity className="w-3 h-3" /> SYNC_98.4%</div>
+          <div className="flex items-center gap-2"><Shield className="w-3 h-3" /> ENCRYPT_ON</div>
+        </div>
+        <div className="text-white/40 text-[10px] font-mono">2026.01.06 // APO_AU_SYSTEM</div>
+      </div>
+      <div className="absolute bottom-0 left-0 w-full h-[12%] bg-black z-30 flex items-center px-16 justify-between border-t border-white/5">
+        <div className="flex items-center gap-4 text-white/20 text-[8px] font-mono uppercase">
+          <span>Boot Sequence Complete</span>
+          <div className="w-32 h-[1px] bg-white/10" />
+          <span>Sector 04 Verified</span>
+        </div>
+        <div className="flex gap-4">
+          <div className="w-2 h-2 bg-red-600/50 rounded-full animate-pulse" />
+          <div className="w-2 h-2 bg-red-600/30 rounded-full animate-pulse delay-75" />
+          <div className="w-2 h-2 bg-red-600/10 rounded-full animate-pulse delay-150" />
+        </div>
+      </div>
 
+      {/* Decorative SF UI Corners */}
+      <div className="absolute top-[15%] left-16 w-32 h-32 border-l border-t border-red-600/20 z-30 pointer-events-none" />
+      <div className="absolute bottom-[15%] right-16 w-32 h-32 border-r border-b border-red-600/20 z-30 pointer-events-none" />
+
+      {/* Dust Particles */}
       <div className="absolute inset-0 z-20 pointer-events-none overflow-hidden">
         {dustParticles.map(p => (
           <div 
             key={p.id}
-            className="absolute rounded-full bg-white/40"
+            className="absolute rounded-full bg-white/60"
             style={{
               left: `${p.x}%`,
               top: `${p.y}%`,
@@ -1249,21 +1303,25 @@ export default function Home() {
 
       <div
         className="absolute inset-0 transition-transform duration-700 ease-out"
-        style={{ transform: `translate(${mousePosition.x}px, ${mousePosition.y}px) scale(1.03)` }}
+        style={{ transform: `translate(${mousePosition.x}px, ${mousePosition.y}px) scale(1.05)` }}
       >
-        <img src={bgStart} className="w-full h-full object-cover opacity-40 filter saturate-[0.5] contrast-[1.2]" />
-        <div className="absolute inset-0 bg-gradient-to-r from-black via-black/30 to-transparent" />
+        <img src={bgStart} className="w-full h-full object-cover opacity-30 filter saturate-[0.3] contrast-[1.3] brightness-[0.8]" />
+        <div className="absolute inset-0 bg-gradient-to-r from-black via-black/40 to-transparent" />
       </div>
 
-      <div className="relative z-10 flex w-full max-w-7xl mx-auto items-center justify-between">
+      <div className="relative z-10 flex flex-1 w-full max-w-7xl mx-auto items-center justify-between mt-12 mb-12">
         <div className="flex flex-col">
+          <div className="flex items-center gap-4 mb-2">
+            <div className="w-12 h-[1px] bg-red-600" />
+            <span className="text-red-600/60 font-mono text-xs tracking-[0.5em] uppercase">Post-Apocalyptic Era</span>
+          </div>
           <motion.h1 
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            className="text-7xl font-black text-red-600/90 tracking-tighter leading-none" 
+            initial={{ opacity: 0, x: -30 }}
+            animate={{ opacity: 1, x: 0 }}
+            className="text-8xl font-black text-red-600/90 tracking-tighter leading-none" 
             style={{ 
               fontFamily: "'Oxanium', sans-serif",
-              filter: 'drop-shadow(0 0 20px rgba(220, 38, 38, 0.3))' 
+              filter: 'drop-shadow(0 0 30px rgba(220, 38, 38, 0.4))' 
             }}
           >
             아포AU
@@ -1272,36 +1330,83 @@ export default function Home() {
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             transition={{ delay: 0.3 }}
-            className="text-3xl font-light text-red-600/60 tracking-[0.8rem] mt-2 ml-2"
+            className="text-4xl font-light text-red-600/40 tracking-[1.2rem] mt-4 ml-3"
           >
             2026
           </motion.h2>
+          
+          <div className="mt-16 flex flex-col gap-2">
+            <div className="flex items-center gap-3 text-white/20 mb-4">
+              <LayoutGrid className="w-4 h-4" />
+              <span className="text-[10px] font-mono tracking-widest uppercase italic">Chapter Selection Protocol</span>
+            </div>
+            <div className="grid grid-cols-2 gap-3 w-[450px]">
+              {chapters.map(chapter => (
+                <Button
+                  key={chapter.id}
+                  variant="ghost"
+                  disabled={chapter.locked}
+                  onClick={() => {
+                    setDialogueIndex(chapter.index);
+                    setGameState("story");
+                  }}
+                  className={`h-12 justify-between px-4 border border-white/5 rounded-none font-mono text-[10px] tracking-widest uppercase transition-all
+                    ${chapter.locked 
+                      ? "bg-white/5 text-white/10 cursor-not-allowed" 
+                      : "bg-red-600/5 text-white/60 hover:bg-red-600/20 hover:text-white hover:border-red-600/30"}`}
+                >
+                  <div className="flex items-center gap-3">
+                    <span className="text-red-600/40">0{chapter.id}</span>
+                    {chapter.title}
+                  </div>
+                  {chapter.locked ? <Lock className="w-3 h-3" /> : <Unlock className="w-3 h-3 text-red-600/40" />}
+                </Button>
+              ))}
+            </div>
+          </div>
         </div>
 
         <div className="flex flex-col gap-4">
+          <div className="flex flex-col mb-8 text-right font-mono">
+            <span className="text-white/10 text-[8px] uppercase mb-1">System Load Sequence</span>
+            <div className="flex gap-1 justify-end">
+              {[...Array(8)].map((_, i) => (
+                <div key={i} className="w-4 h-1 bg-red-600/20" />
+              ))}
+            </div>
+          </div>
+          
           <Button
             size="lg"
-            className="w-52 h-12 text-lg font-bold bg-red-700/80 hover:bg-red-600 text-white rounded-none border border-red-500/30 transition-all hover:translate-x-2"
-            onClick={() => setGameState("video")}
+            className="w-64 h-14 text-lg font-bold bg-red-700/80 hover:bg-red-600 text-white rounded-none border border-red-500/30 transition-all hover:translate-x-2 group relative overflow-hidden"
+            onClick={() => {
+              setDialogueIndex(0);
+              setGameState("video");
+            }}
             data-testid="button-start"
           >
+            <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/10 to-transparent -translate-x-full group-hover:translate-x-full transition-transform duration-1000" />
             시작하기
           </Button>
+          
           <Button 
             variant="ghost" 
-            className={`w-52 h-10 text-base rounded-none border border-white/5 transition-all ${
+            className={`w-64 h-12 text-base rounded-none border border-white/5 transition-all flex justify-between px-6 group ${
               hasSaveData 
-                ? "text-white hover:text-white hover:bg-white/10 border-white/20" 
+                ? "text-white/80 hover:text-white hover:bg-white/10 border-white/20" 
                 : "text-white/10 cursor-not-allowed opacity-50"
             }`}
             onClick={hasSaveData ? loadGame : undefined}
             disabled={!hasSaveData}
             data-testid="button-continue"
           >
-            이어하기
+            <span>이어하기</span>
+            <Cpu className={`w-4 h-4 transition-transform group-hover:rotate-90 ${hasSaveData ? 'text-red-600/40' : ''}`} />
           </Button>
-          <Button variant="ghost" className="w-52 h-10 text-base text-white/40 hover:text-white hover:bg-white/5 rounded-none border border-white/5" data-testid="button-settings">
-            설정
+          
+          <Button variant="ghost" className="w-64 h-12 text-base text-white/40 hover:text-white hover:bg-white/5 rounded-none border border-white/5 flex justify-between px-6" data-testid="button-settings">
+            <span>설정</span>
+            <Settings className="w-4 h-4" />
           </Button>
         </div>
       </div>
