@@ -1148,8 +1148,8 @@ export default function Home() {
     // 선택지 A (대화) - 결과 영향 없음, 다음 줄로 진행
     { speaker: "시스템", text: "차가 급커브를 돌며 흔들린다. 잠깐의 정적.", background: bg_2, isProgress: true,
       choices: [
-        { text: "1. \"란은 원래 이런 위험한 일 자주 했어요?\"", targetIndex: 801 },
-        { text: "2. \"렌쟈가 있어서 란이 버티는 것 같네요.\"", targetIndex: 801 }
+        { text: "1. \"란은 원래 이런 위험한 일 자주 했어요?\"", targetIndex: 804 },
+        { text: "2. \"렌쟈가 있어서 란이 버티는 것 같네요.\"", targetIndex: 804 }
       ]
     },
     { speaker: "란", text: "\"…그렇습니다.\"", background: bg_2, character: "란" },
