@@ -2181,63 +2181,152 @@ export default function Home() {
           </div>
         )}
 
-        {/* Minigame Interrogation Background Effects */}
+        {/* Minigame Interrogation Background Effects - SF Style */}
         {(currentDialogue.isMinigameChoice || currentDialogue.centerCharacter || (currentDialogue.isMinigameRules && !currentDialogue.isMinigameTitle)) && (
           <div className="absolute inset-0 z-5 pointer-events-none overflow-hidden">
             {/* Dark red gradient overlay */}
-            <div className="absolute inset-0 bg-gradient-to-b from-red-950/30 via-black to-black" />
+            <div className="absolute inset-0 bg-gradient-to-b from-red-950/40 via-black to-red-950/20" />
+            
+            {/* Grid pattern overlay */}
+            <div className="absolute inset-0 opacity-10" style={{
+              backgroundImage: 'linear-gradient(rgba(220,38,38,0.3) 1px, transparent 1px), linear-gradient(90deg, rgba(220,38,38,0.3) 1px, transparent 1px)',
+              backgroundSize: '50px 50px'
+            }} />
             
             {/* Animated vertical red lines */}
             <motion.div
-              className="absolute left-[10%] top-0 w-[1px] h-full bg-gradient-to-b from-transparent via-red-600/40 to-transparent"
-              animate={{ opacity: [0.3, 0.7, 0.3] }}
+              className="absolute left-[5%] top-0 w-[1px] h-full bg-gradient-to-b from-transparent via-red-600/60 to-transparent"
+              animate={{ opacity: [0.2, 0.8, 0.2] }}
               transition={{ duration: 2, repeat: Infinity }}
             />
             <motion.div
-              className="absolute left-[90%] top-0 w-[1px] h-full bg-gradient-to-b from-transparent via-red-600/40 to-transparent"
-              animate={{ opacity: [0.3, 0.7, 0.3] }}
+              className="absolute left-[15%] top-0 w-[1px] h-full bg-gradient-to-b from-transparent via-red-500/30 to-transparent"
+              animate={{ opacity: [0.1, 0.5, 0.1] }}
+              transition={{ duration: 3, repeat: Infinity, delay: 0.3 }}
+            />
+            <motion.div
+              className="absolute left-[85%] top-0 w-[1px] h-full bg-gradient-to-b from-transparent via-red-500/30 to-transparent"
+              animate={{ opacity: [0.1, 0.5, 0.1] }}
+              transition={{ duration: 3, repeat: Infinity, delay: 0.6 }}
+            />
+            <motion.div
+              className="absolute left-[95%] top-0 w-[1px] h-full bg-gradient-to-b from-transparent via-red-600/60 to-transparent"
+              animate={{ opacity: [0.2, 0.8, 0.2] }}
               transition={{ duration: 2, repeat: Infinity, delay: 0.5 }}
             />
             
-            {/* Animated horizontal scan line */}
+            {/* Multiple horizontal scan lines */}
             <motion.div
-              className="absolute left-0 w-full h-[2px] bg-gradient-to-r from-transparent via-red-600/60 to-transparent"
+              className="absolute left-0 w-full h-[2px] bg-gradient-to-r from-transparent via-red-600/80 to-transparent"
               initial={{ top: "-2px" }}
               animate={{ top: ["0%", "100%"] }}
-              transition={{ duration: 4, repeat: Infinity, ease: "linear" }}
+              transition={{ duration: 3, repeat: Infinity, ease: "linear" }}
+            />
+            <motion.div
+              className="absolute left-0 w-full h-[1px] bg-gradient-to-r from-transparent via-red-400/40 to-transparent"
+              initial={{ top: "100%" }}
+              animate={{ top: ["100%", "0%"] }}
+              transition={{ duration: 5, repeat: Infinity, ease: "linear", delay: 1 }}
             />
             
-            {/* Corner accents */}
-            <div className="absolute top-8 left-8 w-16 h-16 border-l-2 border-t-2 border-red-600/50" />
-            <div className="absolute top-8 right-8 w-16 h-16 border-r-2 border-t-2 border-red-600/50" />
-            <div className="absolute bottom-8 left-8 w-16 h-16 border-l-2 border-b-2 border-red-600/50" />
-            <div className="absolute bottom-8 right-8 w-16 h-16 border-r-2 border-b-2 border-red-600/50" />
+            {/* Animated corner brackets */}
+            <motion.div 
+              className="absolute top-12 left-12 w-20 h-20 border-l-2 border-t-2 border-red-600"
+              animate={{ opacity: [0.5, 1, 0.5] }}
+              transition={{ duration: 2, repeat: Infinity }}
+            />
+            <motion.div 
+              className="absolute top-12 right-12 w-20 h-20 border-r-2 border-t-2 border-red-600"
+              animate={{ opacity: [0.5, 1, 0.5] }}
+              transition={{ duration: 2, repeat: Infinity, delay: 0.5 }}
+            />
+            <motion.div 
+              className="absolute bottom-32 left-12 w-20 h-20 border-l-2 border-b-2 border-red-600"
+              animate={{ opacity: [0.5, 1, 0.5] }}
+              transition={{ duration: 2, repeat: Infinity, delay: 1 }}
+            />
+            <motion.div 
+              className="absolute bottom-32 right-12 w-20 h-20 border-r-2 border-b-2 border-red-600"
+              animate={{ opacity: [0.5, 1, 0.5] }}
+              transition={{ duration: 2, repeat: Infinity, delay: 1.5 }}
+            />
             
-            {/* Floating red particles */}
-            {[...Array(15)].map((_, i) => (
+            {/* Glowing circle elements */}
+            <motion.div
+              className="absolute top-1/4 left-[8%] w-3 h-3 rounded-full bg-red-600"
+              animate={{ opacity: [0.3, 1, 0.3], scale: [1, 1.2, 1] }}
+              transition={{ duration: 1.5, repeat: Infinity }}
+              style={{ boxShadow: '0 0 20px rgba(220,38,38,0.8)' }}
+            />
+            <motion.div
+              className="absolute top-1/3 right-[8%] w-2 h-2 rounded-full bg-red-500"
+              animate={{ opacity: [0.2, 0.8, 0.2], scale: [1, 1.3, 1] }}
+              transition={{ duration: 2, repeat: Infinity, delay: 0.5 }}
+              style={{ boxShadow: '0 0 15px rgba(220,38,38,0.6)' }}
+            />
+            <motion.div
+              className="absolute bottom-1/3 left-[12%] w-2 h-2 rounded-full bg-red-400"
+              animate={{ opacity: [0.3, 0.9, 0.3], scale: [1, 1.2, 1] }}
+              transition={{ duration: 1.8, repeat: Infinity, delay: 1 }}
+              style={{ boxShadow: '0 0 12px rgba(220,38,38,0.5)' }}
+            />
+            
+            {/* Floating particles - more and varied sizes */}
+            {[...Array(25)].map((_, i) => (
               <motion.div
                 key={`minigame-particle-${i}`}
-                className="absolute w-1 h-1 rounded-full bg-red-600"
-                initial={{ 
-                  x: Math.random() * (typeof window !== 'undefined' ? window.innerWidth : 1920),
-                  y: Math.random() * (typeof window !== 'undefined' ? window.innerHeight : 1080),
-                  opacity: 0 
+                className="absolute rounded-full"
+                style={{
+                  width: `${1 + Math.random() * 3}px`,
+                  height: `${1 + Math.random() * 3}px`,
+                  backgroundColor: i % 3 === 0 ? '#DC2626' : i % 3 === 1 ? '#EF4444' : '#F87171',
+                  left: `${Math.random() * 100}%`,
+                  top: `${Math.random() * 100}%`,
                 }}
                 animate={{ 
-                  y: [null, Math.random() * -200],
-                  opacity: [0, 0.6, 0]
+                  y: [0, -100 - Math.random() * 100],
+                  x: [0, (Math.random() - 0.5) * 50],
+                  opacity: [0, 0.8, 0]
                 }}
                 transition={{ 
-                  duration: 3 + Math.random() * 2,
+                  duration: 4 + Math.random() * 3,
                   repeat: Infinity,
-                  delay: Math.random() * 2
+                  delay: Math.random() * 3
                 }}
               />
             ))}
             
-            {/* Red vignette */}
+            {/* Hexagon pattern elements */}
+            <div className="absolute top-20 right-20 w-16 h-16 border border-red-600/30 rotate-45 opacity-30" />
+            <div className="absolute bottom-40 left-20 w-12 h-12 border border-red-500/20 rotate-12 opacity-20" />
+            
+            {/* Data stream effect on sides */}
+            <div className="absolute left-4 top-1/4 h-1/2 w-1 flex flex-col gap-1 opacity-40">
+              {[...Array(20)].map((_, i) => (
+                <motion.div
+                  key={`data-left-${i}`}
+                  className="w-full bg-red-600"
+                  style={{ height: `${2 + Math.random() * 8}px` }}
+                  animate={{ opacity: [0.2, 1, 0.2] }}
+                  transition={{ duration: 0.5 + Math.random(), repeat: Infinity, delay: i * 0.1 }}
+                />
+              ))}
+            </div>
+            <div className="absolute right-4 top-1/4 h-1/2 w-1 flex flex-col gap-1 opacity-40">
+              {[...Array(20)].map((_, i) => (
+                <motion.div
+                  key={`data-right-${i}`}
+                  className="w-full bg-red-600"
+                  style={{ height: `${2 + Math.random() * 8}px` }}
+                  animate={{ opacity: [0.2, 1, 0.2] }}
+                  transition={{ duration: 0.5 + Math.random(), repeat: Infinity, delay: i * 0.15 }}
+                />
+              ))}
+            </div>
+            
+            {/* Red vignette - stronger */}
             <div className="absolute inset-0" style={{
-              background: 'radial-gradient(ellipse at center, transparent 40%, rgba(139, 0, 0, 0.15) 100%)'
+              background: 'radial-gradient(ellipse at center, transparent 30%, rgba(139, 0, 0, 0.25) 100%)'
             }} />
           </div>
         )}
@@ -2252,11 +2341,19 @@ export default function Home() {
                 animate={{ opacity: 1, x: 0, scale: 1 }}
                 exit={{ opacity: 0, x: currentDialogue.centerCharacter ? 0 : -20, scale: currentDialogue.centerCharacter ? 0.9 : 1 }}
                 transition={{ duration: 0.5 }}
-                className={`absolute h-[100%] w-auto pointer-events-none z-10 ${currentDialogue.centerCharacter ? 'bottom-[-15%] left-1/2 -translate-x-1/2' : 'bottom-[-15%]'}`}
+                className={`absolute w-auto pointer-events-none z-10 ${
+                  currentDialogue.centerCharacter 
+                    ? 'h-[65%] bottom-[20%] left-1/2 -translate-x-1/2' 
+                    : 'h-[100%] bottom-[-15%]'
+                }`}
               >
                 <img 
                   src={charImg} 
-                  className="h-full object-contain drop-shadow-[0_0_40px_rgba(0,0,0,0.9)]"
+                  className={`h-full object-contain ${
+                    currentDialogue.centerCharacter 
+                      ? 'drop-shadow-[0_0_60px_rgba(220,38,38,0.4)]' 
+                      : 'drop-shadow-[0_0_40px_rgba(0,0,0,0.9)]'
+                  }`}
                   style={isSilhouette ? { filter: 'brightness(0) saturate(100%)' } : undefined}
                 />
               </motion.div>
@@ -2305,10 +2402,15 @@ export default function Home() {
             currentDialogue.centeredMonologue 
               ? 'w-full max-w-2xl' 
               : currentDialogue.centerCharacter 
-                ? 'w-[90%] max-w-4xl absolute bottom-8 left-1/2 -translate-x-1/2'
+                ? 'w-[90%] max-w-3xl'
                 : 'w-[85%] max-w-3xl mb-16'
           }`}
-          style={currentDialogue.centeredMonologue ? { position: 'absolute', top: '50%', left: '50%', transform: 'translate(-50%, -50%)' } : undefined}
+          style={currentDialogue.centeredMonologue 
+            ? { position: 'absolute', top: '50%', left: '50%', transform: 'translate(-50%, -50%)' } 
+            : currentDialogue.centerCharacter
+              ? { position: 'absolute', bottom: '3%', left: '50%', transform: 'translateX(-50%)' }
+              : undefined
+          }
           onClick={handleNext}
         >
           {currentDialogue.isProgress && !currentDialogue.choices && !currentDialogue.isPuzzle ? (
