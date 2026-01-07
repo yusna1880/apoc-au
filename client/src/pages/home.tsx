@@ -1,6 +1,6 @@
 import { useState, useEffect, useRef, useCallback, useMemo } from "react";
 import { Button } from "@/components/ui/button";
-import { Volume2, VolumeX, Settings, Info, ChevronRight, Save, Send, Lock, Unlock, Zap, Activity, Shield, Cpu, LayoutGrid } from "lucide-react";
+import { Volume2, VolumeX, Settings, Info, ChevronRight, Save, Send, Lock, Unlock, Zap, Activity, Shield, Cpu, LayoutGrid, Home as HomeIcon } from "lucide-react";
 import { motion, AnimatePresence } from "framer-motion";
 import { Input } from "@/components/ui/input";
 
@@ -2105,20 +2105,36 @@ export default function Home() {
           </div>
         )}
 
-        {/* Save Button - hidden for textOnly mode */}
+        {/* Home & Save Buttons - hidden for textOnly mode */}
         {!currentDialogue.textOnly && (
-          <div className="absolute top-8 right-8 z-50 flex items-center gap-2">
-            <Button
-              variant="ghost"
-              size="sm"
-              className="h-8 px-2 text-[10px] text-white/30 hover:text-white hover:bg-white/5 border border-white/5 uppercase tracking-tighter"
-              onClick={saveGame}
-              data-testid="button-save"
-            >
-              <Save className="w-3 h-3 mr-1" />
-              Save Point
-            </Button>
-          </div>
+          <>
+            <div className="absolute top-8 left-8 z-50">
+              <Button
+                variant="ghost"
+                size="icon"
+                className="h-7 w-7 text-white/20 hover:text-white/50 hover:bg-white/5 border border-white/5"
+                onClick={() => {
+                  setGameStarted(false);
+                  setDialogueIndex(0);
+                }}
+                data-testid="button-home"
+              >
+                <HomeIcon className="w-3 h-3" />
+              </Button>
+            </div>
+            <div className="absolute top-8 right-8 z-50 flex items-center gap-2">
+              <Button
+                variant="ghost"
+                size="sm"
+                className="h-8 px-2 text-[10px] text-white/30 hover:text-white hover:bg-white/5 border border-white/5 uppercase tracking-tighter"
+                onClick={saveGame}
+                data-testid="button-save"
+              >
+                <Save className="w-3 h-3 mr-1" />
+                Save Point
+              </Button>
+            </div>
+          </>
         )}
 
         <AnimatePresence>
