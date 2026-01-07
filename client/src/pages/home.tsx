@@ -82,6 +82,7 @@ import audioSigh from "@assets/Sigh_(Killing_Eve)_1767734880443.mp3";
 import audioItsNotYou from "@assets/Its_Not_You,_Its_Me_(Killing_Eve)_1767736641609.mp3";
 import audioRemember from "@assets/KaizanBlu_-_Remember_1767736641607.mp3";
 import audioMinigame from "@assets/DANGANRONPA_OST_1-01_DANGANRONPA_1767747082682.mp3";
+import audioSorryBaby from "@assets/Unloved_-_Sorry,_Baby_(Killing_Eve)_1767749633060.mp3";
 
 // Audio imports - Sound Effects
 import sfxHeartBeat from "@assets/Heart_Beat_[SOUND_EFFECT]_1767734880437.mp3";
@@ -1594,7 +1595,7 @@ export default function Home() {
     { speaker: "", text: "", isDeadEnd: true, deadEndTitle: "BAD END", deadEndSubtitle: "추방", background: "black", onComplete: () => { setGameState("start"); setDialogueIndex(0); } },
 
     // #완료 - 미니게임 성공 후
-    { marker: "#완료", speaker: "시스템", text: "다시, 중심으로", background: bgLivingRoom2, isProgress: true, audio: "/assets/Unloved_-_Sorry,_Baby_(Killing_Eve)_1767749633060.mp3", audioVolume: 0.3 },
+    { marker: "#완료", speaker: "시스템", text: "다시, 중심으로", background: bgLivingRoom2, isProgress: true, audio: audioSorryBaby, audioVolume: 0.3 },
     { speaker: "시스템", text: "렌쟈가 자리에서 일어난다.", background: bgLivingRoom2, isProgress: true },
     { speaker: "렌쟈", text: "\"신라.\"", background: bgLivingRoom2, character: "렌쟈" },
     { speaker: "시스템", text: "신라는 고개를 든다.", background: bgLivingRoom2, isProgress: true },
