@@ -1582,15 +1582,15 @@ export default function Home() {
     { speaker: "하카", text: "\"…그 말, 되게 싫은데. 내가 놓친거 같잖아\"", background: "black", character: "하카", isMinigameDialogue: true, jumpIndex: 1115 },
 
     // 미니게임 실패 - 배드엔딩
-    { marker: "#미니게임실패", speaker: "엘", text: "\"... 난 그게 무슨 연관인지 모르겠는데, 나만 그런건가?\"", background: bgLivingRoom2, character: "엘", audio: "stop" },
-    { speaker: "시스템", text: "신라가 입을 연다.", background: bgLivingRoom2, isProgress: true },
-    { speaker: "신라", text: "\"이 사람, 나 처음부터 싫어했던거죠?\"", background: bgLivingRoom2, character: "신라" },
-    { speaker: "시스템", text: "작은 말들이 겹친다. 불신이 번진다.", background: bgLivingRoom2, isProgress: true },
-    { speaker: "하카", text: "\"이상하네. 증거 하나없이 몰아가는거야? 너도 외부인이란걸 잊고있던거야?\"", background: bgLivingRoom2, character: "하카" },
-    { speaker: "데일", text: "\"오만하네\"", background: bgLivingRoom2, character: "데일" },
-    { speaker: "란", text: "\"...\"", background: bgLivingRoom2, character: "란" },
-    { speaker: "렌쟈", text: "\"…파스닐, 나가 있어.\"", background: bgLivingRoom2, character: "렌쟈" },
-    { speaker: "시스템", text: "문이 닫힌다. 밖은 어둡고, 혼자다.", background: bgLivingRoom2, isProgress: true },
+    { marker: "#미니게임실패", speaker: "엘", text: "\"... 난 그게 무슨 연관인지 모르겠는데, 나만 그런건가?\"", background: "black", character: "엘", audio: "stop" },
+    { speaker: "시스템", text: "신라가 입을 연다.", background: "black", isProgress: true, centeredMonologue: true },
+    { speaker: "신라", text: "\"이 사람, 나 처음부터 싫어했던거죠?\"", background: "black", character: "신라" },
+    { speaker: "시스템", text: "작은 말들이 겹친다. 불신이 번진다.", background: "black", isProgress: true, centeredMonologue: true },
+    { speaker: "하카", text: "\"이상하네. 증거 하나없이 몰아가는거야? 너도 외부인이란걸 잊고있던거야?\"", background: "black", character: "하카" },
+    { speaker: "데일", text: "\"오만하네\"", background: "black", character: "데일" },
+    { speaker: "란", text: "\"...\"", background: "black", character: "란" },
+    { speaker: "렌쟈", text: "\"…파스닐, 나가 있어.\"", background: "black", character: "렌쟈" },
+    { speaker: "시스템", text: "문이 닫힌다. 밖은 어둡고, 혼자다.", background: "black", isProgress: true, centeredMonologue: true },
     { speaker: "", text: "", isDeadEnd: true, deadEndTitle: "BAD END", deadEndSubtitle: "추방", background: "black", onComplete: () => { setGameState("start"); setDialogueIndex(0); } },
 
     // #완료 - 미니게임 성공 후
