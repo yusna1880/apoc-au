@@ -1809,6 +1809,7 @@ export default function Home() {
   }, [dialogueIndex, currentDialogue?.choices, currentDialogue?.randomChoices]);
 
   const handleNext = useCallback(() => {
+    console.log('handleNext called, dialogueIndex:', dialogueIndex, 'hasChoices:', !!currentDialogue.choices);
     if (currentDialogue.choices) return;
     if (currentDialogue.isPuzzle) return;
     
@@ -1831,6 +1832,7 @@ export default function Home() {
   }, [currentDialogue, dialogueIndex, story]);
 
   const handleChoice = (targetIndex: number) => {
+    console.log('handleChoice called with targetIndex:', targetIndex, 'current dialogueIndex:', dialogueIndex);
     setDialogueIndex(targetIndex);
   };
 
