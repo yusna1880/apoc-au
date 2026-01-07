@@ -131,6 +131,7 @@ interface DialogueLine {
   hideNormalTag?: boolean;
   shakeOnEnter?: boolean;
   centerCharacter?: boolean;
+  isMinigameDialogue?: boolean;
 }
 
 interface Choice {
@@ -1495,7 +1496,7 @@ export default function Home() {
     { speaker: "시스템", text: "틀린 선택을 하면 즉시 배드엔딩", background: "black", isMinigameRules: true, blackScreen: true, hideCharacter: true, centeredMonologue: true, redText: true },
 
     // #미니게임1시작 - 데일
-    { marker: "#미니게임1시작", speaker: "데일", text: "\"그럼 하나부터. 왜 그 생각했어?\"", background: "black", character: "데일", centerCharacter: true, isMinigameChoice: true },
+    { marker: "#미니게임1시작", speaker: "데일", text: "\"그럼 하나부터. 왜 그 생각했어?\"", background: "black", character: "데일", isMinigameChoice: true, isMinigameDialogue: true },
     { speaker: "시스템", text: "데일은 이기적이고 까칠하다. 그러나 그녀가 죄책감을 갖는 하나의 사건이 있다.", background: "black", isProgress: true, blackScreen: true, hideCharacter: true, centeredMonologue: true },
     { speaker: "선택", text: "증거를 선택하세요", background: "black", hideCharacter: true, randomChoices: true, gunEffect: true, hideNormalTag: true, choices: [
       { text: "엘의 감염과 등장 시점 (일반 진행)", targetIndex: 1055 },
@@ -1504,19 +1505,19 @@ export default function Home() {
       { text: "지나치게 똑똑함", targetIndex: 1105 }
     ]},
     // 정답 루트 - 데일
-    { speaker: "파스닐", text: "\"엘이 감염된 그날요.\"", background: "black", character: "파스닐", centerCharacter: true },
-    { speaker: "데일", text: "\"그 얘기는 왜 꺼내는건데.\"", background: "black", character: "데일", centerCharacter: true },
-    { speaker: "파스닐", text: "\"그날, 분명 있을리 없던 감염자가 정확히 우릴 기다리고 있었어요.\"", background: "black", character: "파스닐", centerCharacter: true },
-    { speaker: "데일", text: "\"…뭔 소리야.\"", background: "black", character: "데일", centerCharacter: true },
-    { speaker: "파스닐", text: "\"그리고 얼마안가 신라가 나타났죠. 물류창고에서 마치 짠듯이.\"", background: "black", character: "파스닐", centerCharacter: true },
-    { speaker: "데일", text: "\"추적당했다고 생각하는 거야?\"", background: "black", character: "데일", centerCharacter: true },
-    { speaker: "파스닐", text: "\"아니요. '유도'에 가까웠어요.\"", background: "black", character: "파스닐", centerCharacter: true },
-    { speaker: "데일", text: "\"신라가 우릴 거기로 끌었다?\"", background: "black", character: "데일", centerCharacter: true },
-    { speaker: "파스닐", text: "\"신라가 거기서 '기다리고' 있었어요.\"", background: "black", character: "파스닐", centerCharacter: true },
+    { speaker: "파스닐", text: "\"엘이 감염된 그날요.\"", background: "black", character: "파스닐", isMinigameDialogue: true },
+    { speaker: "데일", text: "\"그 얘기는 왜 꺼내는건데.\"", background: "black", character: "데일", isMinigameDialogue: true },
+    { speaker: "파스닐", text: "\"그날, 분명 있을리 없던 감염자가 정확히 우릴 기다리고 있었어요.\"", background: "black", character: "파스닐", isMinigameDialogue: true },
+    { speaker: "데일", text: "\"…뭔 소리야.\"", background: "black", character: "데일", isMinigameDialogue: true },
+    { speaker: "파스닐", text: "\"그리고 얼마안가 신라가 나타났죠. 물류창고에서 마치 짠듯이.\"", background: "black", character: "파스닐", isMinigameDialogue: true },
+    { speaker: "데일", text: "\"추적당했다고 생각하는 거야?\"", background: "black", character: "데일", isMinigameDialogue: true },
+    { speaker: "파스닐", text: "\"아니요. '유도'에 가까웠어요.\"", background: "black", character: "파스닐", isMinigameDialogue: true },
+    { speaker: "데일", text: "\"신라가 우릴 거기로 끌었다?\"", background: "black", character: "데일", isMinigameDialogue: true },
+    { speaker: "파스닐", text: "\"신라가 거기서 '기다리고' 있었어요.\"", background: "black", character: "파스닐", isMinigameDialogue: true },
     { speaker: "시스템", text: "신라는 입을 열지 않는다.", background: "black", isProgress: true, hideCharacter: true, centeredMonologue: true },
 
     // 렌쟈 선택
-    { speaker: "렌쟈", text: "\"…파스닐.\"", background: "black", character: "렌쟈", centerCharacter: true },
+    { speaker: "렌쟈", text: "\"…파스닐.\"", background: "black", character: "렌쟈", isMinigameDialogue: true },
     { speaker: "시스템", text: "그녀는 어린아이에게 관대하다. 애매한 증거로는 설득할 수 없다.", background: "black", isProgress: true, hideCharacter: true, centeredMonologue: true },
     { speaker: "선택", text: "증거를 선택하세요", background: "black", hideCharacter: true, randomChoices: true, gunEffect: true, hideNormalTag: true, choices: [
       { text: "엘의 감염과 등장 시점", targetIndex: 1105 },
@@ -1525,18 +1526,18 @@ export default function Home() {
       { text: "지나치게 똑똑함", targetIndex: 1105 }
     ]},
     // 정답 루트 - 렌쟈
-    { speaker: "렌쟈", text: "\"표식? 다시 얘기 해줘.\"", background: "black", character: "렌쟈", centerCharacter: true },
+    { speaker: "렌쟈", text: "\"표식? 다시 얘기 해줘.\"", background: "black", character: "렌쟈", isMinigameDialogue: true },
     { speaker: "시스템", text: "파스닐은 주머니에서 종이를 꺼낸다.", background: "black", isProgress: true, hideCharacter: true, centeredMonologue: true },
     { speaker: "시스템", text: "관측소 표식 메모.", background: "black", isProgress: true, hideCharacter: true, centeredMonologue: true },
-    { speaker: "파스닐", text: "\"신라 가방에 있던 거예요.\"", background: "black", character: "파스닐", centerCharacter: true },
-    { speaker: "렌쟈", text: "\"…이건\"", background: "black", character: "렌쟈", centerCharacter: true },
-    { speaker: "파스닐", text: "\"고지나 연구소 지도에서 같은 표식 써요\"", background: "black", character: "파스닐", centerCharacter: true },
-    { speaker: "렌쟈", text: "\"넌 누가 알려줬는데?\"", background: "black", character: "렌쟈", centerCharacter: true },
-    { speaker: "파스닐", text: "\"뉴스죠. 함께 봤잖아요? 신라는 엘의 감염과 연관된 고지나 연구소의 위치를 알고있어요.\"", background: "black", character: "파스닐", centerCharacter: true },
+    { speaker: "파스닐", text: "\"신라 가방에 있던 거예요.\"", background: "black", character: "파스닐", isMinigameDialogue: true },
+    { speaker: "렌쟈", text: "\"…이건\"", background: "black", character: "렌쟈", isMinigameDialogue: true },
+    { speaker: "파스닐", text: "\"고지나 연구소 지도에서 같은 표식 써요\"", background: "black", character: "파스닐", isMinigameDialogue: true },
+    { speaker: "렌쟈", text: "\"넌 누가 알려줬는데?\"", background: "black", character: "렌쟈", isMinigameDialogue: true },
+    { speaker: "파스닐", text: "\"뉴스죠. 함께 봤잖아요? 신라는 엘의 감염과 연관된 고지나 연구소의 위치를 알고있어요.\"", background: "black", character: "파스닐", isMinigameDialogue: true },
     { speaker: "시스템", text: "렌쟈의 눈이 흔들린다.", background: "black", isProgress: true, hideCharacter: true, centeredMonologue: true },
 
     // 란 선택
-    { speaker: "란", text: "\"…파스닐.\"", background: "black", character: "란", centerCharacter: true },
+    { speaker: "란", text: "\"…파스닐.\"", background: "black", character: "란", isMinigameDialogue: true },
     { speaker: "시스템", text: "목소리는 여전히 부드럽다.", background: "black", isProgress: true, hideCharacter: true, centeredMonologue: true },
     { speaker: "시스템", text: "그는 렌쟈의 안전에 방해되는거에 극심한 강박이 있어보여. 불확실한 것에도 마찬가지겠지?", background: "black", isProgress: true, hideCharacter: true, centeredMonologue: true },
     { speaker: "선택", text: "증거를 선택하세요", background: "black", hideCharacter: true, randomChoices: true, gunEffect: true, hideNormalTag: true, choices: [
@@ -1546,20 +1547,20 @@ export default function Home() {
       { text: "지나치게 똑똑함", targetIndex: 1105 }
     ]},
     // 정답 루트 - 란
-    { speaker: "란", text: "\"신라가 준 정보들. 어떤 게 문제였습니까?\"", background: "black", character: "란", centerCharacter: true },
-    { speaker: "파스닐", text: "\"출처요.\"", background: "black", character: "파스닐", centerCharacter: true },
-    { speaker: "파스닐", text: "\"도로 봉쇄 위치, 감염 밀도, 보급 실패 지역.\"", background: "black", character: "파스닐", centerCharacter: true },
-    { speaker: "란", text: "\"…정확했죠.\"", background: "black", character: "란", centerCharacter: true },
-    { speaker: "파스닐", text: "\"너무요.\"", background: "black", character: "파스닐", centerCharacter: true },
+    { speaker: "란", text: "\"신라가 준 정보들. 어떤 게 문제였습니까?\"", background: "black", character: "란", isMinigameDialogue: true },
+    { speaker: "파스닐", text: "\"출처요.\"", background: "black", character: "파스닐", isMinigameDialogue: true },
+    { speaker: "파스닐", text: "\"도로 봉쇄 위치, 감염 밀도, 보급 실패 지역.\"", background: "black", character: "파스닐", isMinigameDialogue: true },
+    { speaker: "란", text: "\"…정확했죠.\"", background: "black", character: "란", isMinigameDialogue: true },
+    { speaker: "파스닐", text: "\"너무요.\"", background: "black", character: "파스닐", isMinigameDialogue: true },
     { speaker: "시스템", text: "란은 고개를 끄덕인다.", background: "black", isProgress: true, hideCharacter: true, centeredMonologue: true },
-    { speaker: "란", text: "\"정보는 항상 누군가의 시점에서 옵니다.\"", background: "black", character: "란", centerCharacter: true },
+    { speaker: "란", text: "\"정보는 항상 누군가의 시점에서 옵니다.\"", background: "black", character: "란", isMinigameDialogue: true },
     { speaker: "시스템", text: "잠깐의 침묵.", background: "black", isProgress: true, hideCharacter: true, centeredMonologue: true },
-    { speaker: "란", text: "\"신라씨의 정보는 시점이 없는듯 하네요.\"", background: "black", character: "란", centerCharacter: true },
-    { speaker: "신라", text: "\"…그냥 들은 거예요.\"", background: "black", character: "신라", centerCharacter: true },
-    { speaker: "란", text: "\"... 저에겐 그게 가장 위험한 말로 들리네요.\"", background: "black", character: "란", centerCharacter: true },
+    { speaker: "란", text: "\"신라씨의 정보는 시점이 없는듯 하네요.\"", background: "black", character: "란", isMinigameDialogue: true },
+    { speaker: "신라", text: "\"…그냥 들은 거예요.\"", background: "black", character: "신라", isMinigameDialogue: true },
+    { speaker: "란", text: "\"... 저에겐 그게 가장 위험한 말로 들리네요.\"", background: "black", character: "란", isMinigameDialogue: true },
 
     // 하카 선택
-    { speaker: "하카", text: "\"내 차례지?\"", background: "black", character: "하카", centerCharacter: true },
+    { speaker: "하카", text: "\"내 차례지?\"", background: "black", character: "하카", isMinigameDialogue: true },
     { speaker: "시스템", text: "그는 직감에 의지하고 자신이 놓친것에 더 강하게 반응할 것이다.", background: "black", isProgress: true, hideCharacter: true, centeredMonologue: true },
     { speaker: "선택", text: "증거를 선택하세요", background: "black", hideCharacter: true, randomChoices: true, gunEffect: true, hideNormalTag: true, choices: [
       { text: "엘의 감염과 등장 시점", targetIndex: 1105 },
@@ -1568,16 +1569,16 @@ export default function Home() {
       { text: "지나치게 똑똑함 (일반 진행)", targetIndex: 1095 }
     ]},
     // 정답 루트 - 하카
-    { speaker: "하카", text: "\"신라가 똑똑하다고 느낀 거야? 난 모르겠는데.\"", background: "black", character: "하카", centerCharacter: true },
-    { speaker: "파스닐", text: "\"네.\"", background: "black", character: "파스닐", centerCharacter: true },
-    { speaker: "하카", text: "\"얼마나?\"", background: "black", character: "하카", centerCharacter: true },
-    { speaker: "파스닐", text: "\"지형, 속도, 사람 반응까지. 모두요.\"", background: "black", character: "파스닐", centerCharacter: true },
-    { speaker: "하카", text: "\"…애매하네.\"", background: "black", character: "하카", centerCharacter: true },
-    { speaker: "파스닐", text: "\"아니요. 애매하지 않아요.\"", background: "black", character: "파스닐", centerCharacter: true },
+    { speaker: "하카", text: "\"신라가 똑똑하다고 느낀 거야? 난 모르겠는데.\"", background: "black", character: "하카", isMinigameDialogue: true },
+    { speaker: "파스닐", text: "\"네.\"", background: "black", character: "파스닐", isMinigameDialogue: true },
+    { speaker: "하카", text: "\"얼마나?\"", background: "black", character: "하카", isMinigameDialogue: true },
+    { speaker: "파스닐", text: "\"지형, 속도, 사람 반응까지. 모두요.\"", background: "black", character: "파스닐", isMinigameDialogue: true },
+    { speaker: "하카", text: "\"…애매하네.\"", background: "black", character: "하카", isMinigameDialogue: true },
+    { speaker: "파스닐", text: "\"아니요. 애매하지 않아요.\"", background: "black", character: "파스닐", isMinigameDialogue: true },
     { speaker: "시스템", text: "파스닐은 하카를 본다.", background: "black", isProgress: true, hideCharacter: true, centeredMonologue: true },
-    { speaker: "파스닐", text: "\"살아남은 사람의 계산이 아니라, 설계한 사람의 계산이었어요.\"", background: "black", character: "파스닐", centerCharacter: true },
+    { speaker: "파스닐", text: "\"살아남은 사람의 계산이 아니라, 설계한 사람의 계산이었어요.\"", background: "black", character: "파스닐", isMinigameDialogue: true },
     { speaker: "시스템", text: "하카는 웃지 않는다.", background: "black", isProgress: true, hideCharacter: true, centeredMonologue: true },
-    { speaker: "하카", text: "\"…그 말, 되게 싫은데. 내가 놓친거 같잖아\"", background: "black", character: "하카", centerCharacter: true, jumpIndex: 1115 },
+    { speaker: "하카", text: "\"…그 말, 되게 싫은데. 내가 놓친거 같잖아\"", background: "black", character: "하카", isMinigameDialogue: true, jumpIndex: 1115 },
 
     // 미니게임 실패 - 배드엔딩
     { marker: "#미니게임실패", speaker: "엘", text: "\"... 난 그게 무슨 연관인지 모르겠는데, 나만 그런건가?\"", background: bgLivingRoom2, character: "엘" },
@@ -2181,11 +2182,53 @@ export default function Home() {
           </div>
         )}
 
-        {/* Minigame Interrogation Background Effects - SF Style */}
-        {(currentDialogue.isMinigameChoice || currentDialogue.centerCharacter || (currentDialogue.isMinigameRules && !currentDialogue.isMinigameTitle)) && (
+        {/* Minigame Interrogation Background Effects - Smart Glasses HUD Style */}
+        {(currentDialogue.isMinigameChoice || currentDialogue.isMinigameDialogue || currentDialogue.centerCharacter || (currentDialogue.isMinigameRules && !currentDialogue.isMinigameTitle)) && (
           <div className="absolute inset-0 z-5 pointer-events-none overflow-hidden">
+            {/* Smart Glasses One-Eye Vignette - Right side overlay */}
+            <div className="absolute inset-0" style={{
+              background: 'linear-gradient(90deg, rgba(0,0,0,0.7) 0%, rgba(0,0,0,0.3) 15%, transparent 40%, transparent 100%)'
+            }} />
+            
+            {/* Smart Glasses Frame Edge - Left side */}
+            <div className="absolute left-0 top-0 bottom-0 w-8 bg-gradient-to-r from-black via-neutral-900/80 to-transparent" />
+            <div className="absolute left-6 top-[10%] bottom-[10%] w-[2px] bg-gradient-to-b from-transparent via-red-600/60 to-transparent" />
+            
+            {/* Curved lens edge effect */}
+            <div className="absolute left-0 top-0 h-full w-[15%]" style={{
+              background: 'radial-gradient(ellipse at left center, rgba(0,0,0,0.8) 0%, transparent 70%)'
+            }} />
+            
+            {/* HUD Frame corners - asymmetric (more on left) */}
+            <div className="absolute top-8 left-10 w-24 h-24 border-l-2 border-t-2 border-red-600/70 rounded-tl-lg" />
+            <div className="absolute bottom-24 left-10 w-24 h-24 border-l-2 border-b-2 border-red-600/70 rounded-bl-lg" />
+            <div className="absolute top-8 right-8 w-16 h-16 border-r border-t border-red-600/40" />
+            <div className="absolute bottom-24 right-8 w-16 h-16 border-r border-b border-red-600/40" />
+            
+            {/* HUD Status indicators on left side */}
+            <div className="absolute left-12 top-[15%] flex flex-col gap-2">
+              <motion.div 
+                className="flex items-center gap-2"
+                animate={{ opacity: [0.5, 1, 0.5] }}
+                transition={{ duration: 2, repeat: Infinity }}
+              >
+                <div className="w-2 h-2 rounded-full bg-red-600" style={{ boxShadow: '0 0 8px rgba(220,38,38,0.8)' }} />
+                <span className="text-red-600/80 text-xs font-mono tracking-wider">REC</span>
+              </motion.div>
+              <div className="text-red-600/50 text-[10px] font-mono">ANALYSIS MODE</div>
+            </div>
+            
+            {/* Target lock indicator - small, top right */}
+            <motion.div 
+              className="absolute top-12 right-16 w-8 h-8 border border-red-600/50 rounded-full"
+              animate={{ scale: [1, 1.1, 1], opacity: [0.4, 0.8, 0.4] }}
+              transition={{ duration: 1.5, repeat: Infinity }}
+            >
+              <div className="absolute inset-2 border border-red-600/30 rounded-full" />
+            </motion.div>
+            
             {/* Dark red gradient overlay */}
-            <div className="absolute inset-0 bg-gradient-to-b from-red-950/40 via-black to-red-950/20" />
+            <div className="absolute inset-0 bg-gradient-to-b from-red-950/30 via-transparent to-red-950/20" />
             
             {/* Grid pattern overlay */}
             <div className="absolute inset-0 opacity-10" style={{
@@ -2421,15 +2464,27 @@ export default function Home() {
             </div>
           ) : (
             <div className={`backdrop-blur-md p-6 shadow-2xl relative overflow-hidden ${
-              currentDialogue.centerCharacter 
+              (currentDialogue.centerCharacter || currentDialogue.isMinigameDialogue)
                 ? 'bg-black/95 border border-red-600/30 rounded-md'
                 : 'bg-neutral-950/90 border border-white/5 rounded-sm'
             }`}>
               {/* Left accent bar - red for minigame, subtle otherwise */}
-              <div className={`absolute top-0 left-0 w-1 h-full ${currentDialogue.centerCharacter ? 'bg-red-600' : 'bg-red-600/50'}`} />
+              <div className={`absolute top-0 left-0 w-1 h-full ${(currentDialogue.centerCharacter || currentDialogue.isMinigameDialogue) ? 'bg-red-600' : 'bg-red-600/50'}`} />
               
-              <div className={`flex items-center mb-2 ${currentDialogue.centerCharacter ? 'justify-center' : 'gap-3'}`}>
-                <span className={`font-bold tracking-tight uppercase ${currentDialogue.centerCharacter ? 'text-red-500 text-lg' : 'text-red-600 text-base'}`}>
+              {/* HUD-style indicator for minigame */}
+              {currentDialogue.isMinigameDialogue && (
+                <div className="absolute top-2 right-2 flex items-center gap-1">
+                  <motion.div 
+                    className="w-1.5 h-1.5 rounded-full bg-red-600"
+                    animate={{ opacity: [0.5, 1, 0.5] }}
+                    transition={{ duration: 1, repeat: Infinity }}
+                  />
+                  <span className="text-red-600/60 text-[8px] font-mono">ACTIVE</span>
+                </div>
+              )}
+              
+              <div className="flex items-center mb-2 gap-3">
+                <span className={`font-bold tracking-tight uppercase ${(currentDialogue.centerCharacter || currentDialogue.isMinigameDialogue) ? 'text-red-500 text-base' : 'text-red-600 text-base'}`}>
                   {currentDialogue.speaker}
                 </span>
                 {currentDialogue.expression && (
@@ -2441,7 +2496,7 @@ export default function Home() {
               
               <div className={`text-white/90 font-normal leading-relaxed ${
                 currentDialogue.isMonologue ? 'text-white/60 italic' : ''
-              } ${currentDialogue.centerCharacter ? 'text-xl text-center' : 'text-lg'}`}>
+              } text-lg`}>
                 {currentDialogue.text}
               </div>
 
