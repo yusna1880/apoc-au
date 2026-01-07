@@ -1591,7 +1591,7 @@ export default function Home() {
     { speaker: "란", text: "\"...\"", background: bgLivingRoom2, character: "란" },
     { speaker: "렌쟈", text: "\"…파스닐, 나가 있어.\"", background: bgLivingRoom2, character: "렌쟈" },
     { speaker: "시스템", text: "문이 닫힌다. 밖은 어둡고, 혼자다.", background: bgLivingRoom2, isProgress: true },
-    { speaker: "", text: "", isDeadEnd: true, deadEndTitle: "BAD END", deadEndSubtitle: "추방", background: "black" },
+    { speaker: "", text: "", isDeadEnd: true, deadEndTitle: "BAD END", deadEndSubtitle: "추방", background: "black", onComplete: () => { setGameState("start"); setDialogueIndex(0); } },
 
     // #완료 - 미니게임 성공 후
     { marker: "#완료", speaker: "시스템", text: "다시, 중심으로", background: bgLivingRoom2, isProgress: true, audio: "stop" },
