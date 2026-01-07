@@ -1500,10 +1500,10 @@ export default function Home() {
     { marker: "#미니게임1시작", speaker: "데일", text: "\"그럼 하나부터. 왜 그 생각했어?\"", background: "black", character: "데일", isMinigameChoice: true, isMinigameDialogue: true },
     { speaker: "시스템", text: "데일은 이기적이고 까칠하다. 그러나 그녀가 죄책감을 갖는 하나의 사건이 있다.", background: "black", isProgress: true, blackScreen: true, hideCharacter: true, centeredMonologue: true },
     { speaker: "선택", text: "증거를 선택하세요", background: "black", hideCharacter: true, randomChoices: true, gunEffect: true, hideNormalTag: true, choices: [
-      { text: "엘의 감염과 등장 시점 (일반 진행)", targetIndex: 1055 },
-      { text: "고지나 표식", targetIndex: 1105 },
-      { text: "출처 없는 정보", targetIndex: 1105 },
-      { text: "지나치게 똑똑함", targetIndex: 1105 }
+      { text: "엘의 감염과 등장 시점 (일반 진행)", targetIndex: 1058 },
+      { text: "고지나 표식", targetIndex: 1108 },
+      { text: "출처 없는 정보", targetIndex: 1108 },
+      { text: "지나치게 똑똑함", targetIndex: 1108 }
     ]},
     // 정답 루트 - 데일
     { speaker: "파스닐", text: "\"엘이 감염된 그날요.\"", background: "black", character: "파스닐", isMinigameDialogue: true },
@@ -1521,10 +1521,10 @@ export default function Home() {
     { speaker: "렌쟈", text: "\"…파스닐.\"", background: "black", character: "렌쟈", isMinigameDialogue: true },
     { speaker: "시스템", text: "그녀는 어린아이에게 관대하다. 애매한 증거로는 설득할 수 없다.", background: "black", isProgress: true, hideCharacter: true, centeredMonologue: true },
     { speaker: "선택", text: "증거를 선택하세요", background: "black", hideCharacter: true, randomChoices: true, gunEffect: true, hideNormalTag: true, choices: [
-      { text: "엘의 감염과 등장 시점", targetIndex: 1105 },
-      { text: "고지나 표식 (일반 진행)", targetIndex: 1068 },
-      { text: "출처 없는 정보", targetIndex: 1105 },
-      { text: "지나치게 똑똑함", targetIndex: 1105 }
+      { text: "엘의 감염과 등장 시점", targetIndex: 1108 },
+      { text: "고지나 표식 (일반 진행)", targetIndex: 1071 },
+      { text: "출처 없는 정보", targetIndex: 1108 },
+      { text: "지나치게 똑똑함", targetIndex: 1108 }
     ]},
     // 정답 루트 - 렌쟈
     { speaker: "렌쟈", text: "\"표식? 다시 얘기 해줘.\"", background: "black", character: "렌쟈", isMinigameDialogue: true },
@@ -1542,10 +1542,10 @@ export default function Home() {
     { speaker: "시스템", text: "목소리는 여전히 부드럽다.", background: "black", isProgress: true, hideCharacter: true, centeredMonologue: true },
     { speaker: "시스템", text: "그는 렌쟈의 안전에 방해되는거에 극심한 강박이 있어보여. 불확실한 것에도 마찬가지겠지?", background: "black", isProgress: true, hideCharacter: true, centeredMonologue: true },
     { speaker: "선택", text: "증거를 선택하세요", background: "black", hideCharacter: true, randomChoices: true, gunEffect: true, hideNormalTag: true, choices: [
-      { text: "엘의 감염과 등장 시점", targetIndex: 1105 },
-      { text: "고지나 표식", targetIndex: 1105 },
-      { text: "신라가 준 정보 (일반 진행)", targetIndex: 1081 },
-      { text: "지나치게 똑똑함", targetIndex: 1105 }
+      { text: "엘의 감염과 등장 시점", targetIndex: 1108 },
+      { text: "고지나 표식", targetIndex: 1108 },
+      { text: "신라가 준 정보 (일반 진행)", targetIndex: 1084 },
+      { text: "지나치게 똑똑함", targetIndex: 1108 }
     ]},
     // 정답 루트 - 란
     { speaker: "란", text: "\"신라가 준 정보들. 어떤 게 문제였습니까?\"", background: "black", character: "란", isMinigameDialogue: true },
@@ -1564,10 +1564,10 @@ export default function Home() {
     { speaker: "하카", text: "\"내 차례지?\"", background: "black", character: "하카", isMinigameDialogue: true },
     { speaker: "시스템", text: "그는 직감에 의지하고 자신이 놓친것에 더 강하게 반응할 것이다.", background: "black", isProgress: true, hideCharacter: true, centeredMonologue: true },
     { speaker: "선택", text: "증거를 선택하세요", background: "black", hideCharacter: true, randomChoices: true, gunEffect: true, hideNormalTag: true, choices: [
-      { text: "엘의 감염과 등장 시점", targetIndex: 1105 },
-      { text: "고지나 표식", targetIndex: 1105 },
-      { text: "출처 없는 정보", targetIndex: 1105 },
-      { text: "지나치게 똑똑함 (일반 진행)", targetIndex: 1095 }
+      { text: "엘의 감염과 등장 시점", targetIndex: 1108 },
+      { text: "고지나 표식", targetIndex: 1108 },
+      { text: "출처 없는 정보", targetIndex: 1108 },
+      { text: "지나치게 똑똑함 (일반 진행)", targetIndex: 1098 }
     ]},
     // 정답 루트 - 하카
     { speaker: "하카", text: "\"신라가 똑똑하다고 느낀 거야? 난 모르겠는데.\"", background: "black", character: "하카", isMinigameDialogue: true },
@@ -1579,7 +1579,7 @@ export default function Home() {
     { speaker: "시스템", text: "파스닐은 하카를 본다.", background: "black", isProgress: true, hideCharacter: true, centeredMonologue: true },
     { speaker: "파스닐", text: "\"살아남은 사람의 계산이 아니라, 설계한 사람의 계산이었어요.\"", background: "black", character: "파스닐", isMinigameDialogue: true },
     { speaker: "시스템", text: "하카는 웃지 않는다.", background: "black", isProgress: true, hideCharacter: true, centeredMonologue: true },
-    { speaker: "하카", text: "\"…그 말, 되게 싫은데. 내가 놓친거 같잖아\"", background: "black", character: "하카", isMinigameDialogue: true, jumpIndex: 1115 },
+    { speaker: "하카", text: "\"…그 말, 되게 싫은데. 내가 놓친거 같잖아\"", background: "black", character: "하카", isMinigameDialogue: true, jumpIndex: 1118 },
 
     // 미니게임 실패 - 배드엔딩
     { marker: "#미니게임실패", speaker: "엘", text: "\"... 난 그게 무슨 연관인지 모르겠는데, 나만 그런건가?\"", background: "black", character: "엘", audio: "stop" },
@@ -1810,7 +1810,6 @@ export default function Home() {
 
   const handleNext = useCallback(() => {
     const current = story[dialogueIndex];
-    console.log('handleNext called, dialogueIndex:', dialogueIndex, 'hasChoices:', !!current?.choices, 'speaker:', current?.speaker);
     if (!current) return;
     if (current.choices) return;
     if (current.isPuzzle) return;
@@ -1834,7 +1833,6 @@ export default function Home() {
   }, [dialogueIndex, story]);
 
   const handleChoice = (targetIndex: number) => {
-    console.log('handleChoice called with targetIndex:', targetIndex, 'current dialogueIndex:', dialogueIndex);
     setDialogueIndex(targetIndex);
   };
 
