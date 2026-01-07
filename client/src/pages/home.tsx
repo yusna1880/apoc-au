@@ -2165,6 +2165,67 @@ export default function Home() {
           </div>
         )}
 
+        {/* Minigame Interrogation Background Effects */}
+        {(currentDialogue.isMinigameChoice || currentDialogue.centerCharacter || (currentDialogue.isMinigameRules && !currentDialogue.isMinigameTitle)) && (
+          <div className="absolute inset-0 z-5 pointer-events-none overflow-hidden">
+            {/* Dark red gradient overlay */}
+            <div className="absolute inset-0 bg-gradient-to-b from-red-950/30 via-black to-black" />
+            
+            {/* Animated vertical red lines */}
+            <motion.div
+              className="absolute left-[10%] top-0 w-[1px] h-full bg-gradient-to-b from-transparent via-red-600/40 to-transparent"
+              animate={{ opacity: [0.3, 0.7, 0.3] }}
+              transition={{ duration: 2, repeat: Infinity }}
+            />
+            <motion.div
+              className="absolute left-[90%] top-0 w-[1px] h-full bg-gradient-to-b from-transparent via-red-600/40 to-transparent"
+              animate={{ opacity: [0.3, 0.7, 0.3] }}
+              transition={{ duration: 2, repeat: Infinity, delay: 0.5 }}
+            />
+            
+            {/* Animated horizontal scan line */}
+            <motion.div
+              className="absolute left-0 w-full h-[2px] bg-gradient-to-r from-transparent via-red-600/60 to-transparent"
+              initial={{ top: "-2px" }}
+              animate={{ top: ["0%", "100%"] }}
+              transition={{ duration: 4, repeat: Infinity, ease: "linear" }}
+            />
+            
+            {/* Corner accents */}
+            <div className="absolute top-8 left-8 w-16 h-16 border-l-2 border-t-2 border-red-600/50" />
+            <div className="absolute top-8 right-8 w-16 h-16 border-r-2 border-t-2 border-red-600/50" />
+            <div className="absolute bottom-8 left-8 w-16 h-16 border-l-2 border-b-2 border-red-600/50" />
+            <div className="absolute bottom-8 right-8 w-16 h-16 border-r-2 border-b-2 border-red-600/50" />
+            
+            {/* Floating red particles */}
+            {[...Array(15)].map((_, i) => (
+              <motion.div
+                key={`minigame-particle-${i}`}
+                className="absolute w-1 h-1 rounded-full bg-red-600"
+                initial={{ 
+                  x: Math.random() * (typeof window !== 'undefined' ? window.innerWidth : 1920),
+                  y: Math.random() * (typeof window !== 'undefined' ? window.innerHeight : 1080),
+                  opacity: 0 
+                }}
+                animate={{ 
+                  y: [null, Math.random() * -200],
+                  opacity: [0, 0.6, 0]
+                }}
+                transition={{ 
+                  duration: 3 + Math.random() * 2,
+                  repeat: Infinity,
+                  delay: Math.random() * 2
+                }}
+              />
+            ))}
+            
+            {/* Red vignette */}
+            <div className="absolute inset-0" style={{
+              background: 'radial-gradient(ellipse at center, transparent 40%, rgba(139, 0, 0, 0.15) 100%)'
+            }} />
+          </div>
+        )}
+
         {/* Character - hidden for textOnly mode */}
         {!currentDialogue.textOnly && (
           <AnimatePresence mode="wait">
@@ -2224,7 +2285,13 @@ export default function Home() {
         <motion.div 
           initial={{ y: 20, opacity: 0 }}
           animate={{ y: 0, opacity: 1 }}
-          className={`relative z-20 cursor-pointer group ${currentDialogue.centeredMonologue ? 'w-full max-w-2xl' : 'w-[85%] max-w-3xl mb-16'}`}
+          className={`relative z-20 cursor-pointer group ${
+            currentDialogue.centeredMonologue 
+              ? 'w-full max-w-2xl' 
+              : currentDialogue.centerCharacter 
+                ? 'w-[90%] max-w-4xl absolute bottom-8 left-1/2 -translate-x-1/2'
+                : 'w-[85%] max-w-3xl mb-16'
+          }`}
           style={currentDialogue.centeredMonologue ? { position: 'absolute', top: '50%', left: '50%', transform: 'translate(-50%, -50%)' } : undefined}
           onClick={handleNext}
         >
@@ -2235,20 +2302,28 @@ export default function Home() {
               </p>
             </div>
           ) : (
-            <div className="bg-neutral-950/90 backdrop-blur-md p-6 rounded-sm border border-white/5 shadow-2xl relative overflow-hidden">
-              <div className="absolute top-0 left-0 w-1 h-full bg-red-600/50" />
-              <div className="flex items-center gap-3 mb-2">
-                <span className="text-red-600 font-bold text-base tracking-tight uppercase">
+            <div className={`backdrop-blur-md p-6 shadow-2xl relative overflow-hidden ${
+              currentDialogue.centerCharacter 
+                ? 'bg-black/95 border border-red-600/30 rounded-md'
+                : 'bg-neutral-950/90 border border-white/5 rounded-sm'
+            }`}>
+              {/* Left accent bar - red for minigame, subtle otherwise */}
+              <div className={`absolute top-0 left-0 w-1 h-full ${currentDialogue.centerCharacter ? 'bg-red-600' : 'bg-red-600/50'}`} />
+              
+              <div className={`flex items-center mb-2 ${currentDialogue.centerCharacter ? 'justify-center' : 'gap-3'}`}>
+                <span className={`font-bold tracking-tight uppercase ${currentDialogue.centerCharacter ? 'text-red-500 text-lg' : 'text-red-600 text-base'}`}>
                   {currentDialogue.speaker}
                 </span>
                 {currentDialogue.expression && (
-                  <span className="text-white/30 text-[10px] font-normal tracking-wide bg-white/5 px-2 py-0.5 rounded border border-white/5">
+                  <span className="text-white/30 text-[10px] font-normal tracking-wide bg-white/5 px-2 py-0.5 rounded border border-white/5 ml-3">
                     {currentDialogue.expression}
                   </span>
                 )}
               </div>
               
-              <div className={`text-white/90 text-lg font-normal leading-relaxed ${currentDialogue.isMonologue ? 'text-white/60 italic' : ''}`}>
+              <div className={`text-white/90 font-normal leading-relaxed ${
+                currentDialogue.isMonologue ? 'text-white/60 italic' : ''
+              } ${currentDialogue.centerCharacter ? 'text-xl text-center' : 'text-lg'}`}>
                 {currentDialogue.text}
               </div>
 
