@@ -1806,7 +1806,7 @@ export default function Home() {
     } else {
       setShuffledChoices([]);
     }
-  }, [dialogueIndex, currentDialogue?.randomChoices]);
+  }, [dialogueIndex, currentDialogue?.choices, currentDialogue?.randomChoices]);
 
   const handleNext = useCallback(() => {
     if (currentDialogue.choices) return;
