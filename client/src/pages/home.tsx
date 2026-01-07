@@ -47,6 +47,10 @@ import imgMemo from "@assets/메모장_1767739540390.png";
 import bgForestRoad from "@assets/도로숲_1767739809224.png";
 import bgLivingRoom2 from "@assets/거실_1767739883546.png";
 
+// A2/A3 special backgrounds
+import bgA2 from "@assets/1_1767744832349.png";
+import bgA3 from "@assets/2_1767744832347.png";
+
 // Assets - Characters (Normal)
 import imgHaka from "@assets/하카_1767627793844.png";
 import imgRan from "@assets/란_1767627793837.png";
@@ -117,6 +121,15 @@ interface DialogueLine {
   hideMemo?: boolean;
   redText?: boolean;
   blackScreen?: boolean;
+  // Minigame properties
+  isMinigameTitle?: boolean;
+  isMinigameRules?: boolean;
+  isMinigameChoice?: boolean;
+  randomChoices?: boolean;
+  gunEffect?: boolean;
+  hideNormalTag?: boolean;
+  shakeOnEnter?: boolean;
+  centerCharacter?: boolean;
 }
 
 interface Choice {
@@ -1462,6 +1475,219 @@ export default function Home() {
     { speaker: "시스템", text: "그리고—", background: bgLivingRoom2, isProgress: true },
     { speaker: "시스템", text: "신라. 가운데.", background: bgLivingRoom2, isProgress: true },
     { speaker: "시스템", text: "파스닐은 한 걸음 앞으로 나온다.", background: bgLivingRoom2, isProgress: true },
+
+    // #파스닐공개의심 - 미니게임 타이틀
+    { marker: "#파스닐공개의심", speaker: "", text: "파스닐 — 공개 의심", background: "black", isMinigameTitle: true, blackScreen: true, hideCharacter: true },
+    // #파스닐공개의심END - 거실에서 시작
+    { marker: "#파스닐공개의심END", speaker: "파스닐", text: "\"신라가 고지나 연구소랑 연관돼 있을 가능성이 있어요.\"", background: bgLivingRoom2, character: "파스닐" },
+    { speaker: "시스템", text: "방 안이 조용해진다.", background: bgLivingRoom2, isProgress: true },
+    { speaker: "데일", text: "\"…뭐?\"", background: bgLivingRoom2, character: "데일" },
+    { speaker: "하카", text: "\"와. 오늘 회의 안건 세네.\"", background: bgLivingRoom2, character: "하카" },
+    { speaker: "시스템", text: "렌쟈는 고개를 들지만 바로 말하지 않는다.", background: bgLivingRoom2, isProgress: true },
+    { speaker: "란", text: "\"…파스닐. 그 말, 무겁습니다.\"", background: bgLivingRoom2, character: "란" },
+    { speaker: "파스닐", text: "\"알아요. 그래서 지금 말하는 거예요.\"", background: bgLivingRoom2, character: "파스닐" },
+
+    // #규칙 - 미니게임 규칙 설명
+    { marker: "#규칙", speaker: "시스템", text: "[ 의심 게임 ]", background: "black", isMinigameRules: true, blackScreen: true, hideCharacter: true },
+    { speaker: "시스템", text: "각 인물들에게 걸맞는 올바른 증거 1개 필요", background: "black", isMinigameRules: true, blackScreen: true, hideCharacter: true, centeredMonologue: true },
+    { speaker: "시스템", text: "틀린 선택을 하면 즉시 배드엔딩", background: "black", isMinigameRules: true, blackScreen: true, hideCharacter: true, centeredMonologue: true, redText: true },
+
+    // #미니게임1시작 - 데일
+    { marker: "#미니게임1시작", speaker: "데일", text: "\"그럼 하나부터. 왜 그 생각했어?\"", background: "black", character: "데일", centerCharacter: true, isMinigameChoice: true },
+    { speaker: "시스템", text: "데일은 이기적이고 까칠하다. 그러나 그녀가 죄책감을 갖는 하나의 사건이 있다.", background: "black", isProgress: true, blackScreen: true, hideCharacter: true, centeredMonologue: true },
+    { speaker: "선택", text: "증거를 선택하세요", background: "black", hideCharacter: true, randomChoices: true, gunEffect: true, hideNormalTag: true, choices: [
+      { text: "엘의 감염과 등장 시점 (일반 진행)", targetIndex: 1501 },
+      { text: "고지나 표식", targetIndex: 1550 },
+      { text: "출처 없는 정보", targetIndex: 1550 },
+      { text: "지나치게 똑똑함", targetIndex: 1550 }
+    ]},
+    // 정답 루트 - 데일
+    { speaker: "파스닐", text: "\"엘이 감염된 그날요.\"", background: "black", character: "파스닐", centerCharacter: true },
+    { speaker: "데일", text: "\"그 얘기는 왜 꺼내는건데.\"", background: "black", character: "데일", centerCharacter: true },
+    { speaker: "파스닐", text: "\"그날, 분명 있을리 없던 감염자가 정확히 우릴 기다리고 있었어요.\"", background: "black", character: "파스닐", centerCharacter: true },
+    { speaker: "데일", text: "\"…뭔 소리야.\"", background: "black", character: "데일", centerCharacter: true },
+    { speaker: "파스닐", text: "\"그리고 얼마안가 신라가 나타났죠. 물류창고에서 마치 짠듯이.\"", background: "black", character: "파스닐", centerCharacter: true },
+    { speaker: "데일", text: "\"추적당했다고 생각하는 거야?\"", background: "black", character: "데일", centerCharacter: true },
+    { speaker: "파스닐", text: "\"아니요. '유도'에 가까웠어요.\"", background: "black", character: "파스닐", centerCharacter: true },
+    { speaker: "데일", text: "\"신라가 우릴 거기로 끌었다?\"", background: "black", character: "데일", centerCharacter: true },
+    { speaker: "파스닐", text: "\"신라가 거기서 '기다리고' 있었어요.\"", background: "black", character: "파스닐", centerCharacter: true },
+    { speaker: "시스템", text: "신라는 입을 열지 않는다.", background: "black", isProgress: true, hideCharacter: true, centeredMonologue: true },
+
+    // 렌쟈 선택
+    { speaker: "렌쟈", text: "\"…파스닐.\"", background: "black", character: "렌쟈", centerCharacter: true },
+    { speaker: "시스템", text: "그녀는 어린아이에게 관대하다. 애매한 증거로는 설득할 수 없다.", background: "black", isProgress: true, hideCharacter: true, centeredMonologue: true },
+    { speaker: "선택", text: "증거를 선택하세요", background: "black", hideCharacter: true, randomChoices: true, gunEffect: true, hideNormalTag: true, choices: [
+      { text: "엘의 감염과 등장 시점", targetIndex: 1550 },
+      { text: "고지나 표식 (일반 진행)", targetIndex: 1516 },
+      { text: "출처 없는 정보", targetIndex: 1550 },
+      { text: "지나치게 똑똑함", targetIndex: 1550 }
+    ]},
+    // 정답 루트 - 렌쟈
+    { speaker: "렌쟈", text: "\"표식? 다시 얘기 해줘.\"", background: "black", character: "렌쟈", centerCharacter: true },
+    { speaker: "시스템", text: "파스닐은 주머니에서 종이를 꺼낸다.", background: "black", isProgress: true, hideCharacter: true, centeredMonologue: true },
+    { speaker: "시스템", text: "관측소 표식 메모.", background: "black", isProgress: true, hideCharacter: true, centeredMonologue: true },
+    { speaker: "파스닐", text: "\"신라 가방에 있던 거예요.\"", background: "black", character: "파스닐", centerCharacter: true },
+    { speaker: "렌쟈", text: "\"…이건\"", background: "black", character: "렌쟈", centerCharacter: true },
+    { speaker: "파스닐", text: "\"고지나 연구소 지도에서 같은 표식 써요\"", background: "black", character: "파스닐", centerCharacter: true },
+    { speaker: "렌쟈", text: "\"넌 누가 알려줬는데?\"", background: "black", character: "렌쟈", centerCharacter: true },
+    { speaker: "파스닐", text: "\"뉴스죠. 함께 봤잖아요? 신라는 엘의 감염과 연관된 고지나 연구소의 위치를 알고있어요.\"", background: "black", character: "파스닐", centerCharacter: true },
+    { speaker: "시스템", text: "렌쟈의 눈이 흔들린다.", background: "black", isProgress: true, hideCharacter: true, centeredMonologue: true },
+
+    // 란 선택
+    { speaker: "란", text: "\"…파스닐.\"", background: "black", character: "란", centerCharacter: true },
+    { speaker: "시스템", text: "목소리는 여전히 부드럽다.", background: "black", isProgress: true, hideCharacter: true, centeredMonologue: true },
+    { speaker: "시스템", text: "그는 렌쟈의 안전에 방해되는거에 극심한 강박이 있어보여. 불확실한 것에도 마찬가지겠지?", background: "black", isProgress: true, hideCharacter: true, centeredMonologue: true },
+    { speaker: "선택", text: "증거를 선택하세요", background: "black", hideCharacter: true, randomChoices: true, gunEffect: true, hideNormalTag: true, choices: [
+      { text: "엘의 감염과 등장 시점", targetIndex: 1550 },
+      { text: "고지나 표식", targetIndex: 1550 },
+      { text: "신라가 준 정보 (일반 진행)", targetIndex: 1532 },
+      { text: "지나치게 똑똑함", targetIndex: 1550 }
+    ]},
+    // 정답 루트 - 란
+    { speaker: "란", text: "\"신라가 준 정보들. 어떤 게 문제였습니까?\"", background: "black", character: "란", centerCharacter: true },
+    { speaker: "파스닐", text: "\"출처요.\"", background: "black", character: "파스닐", centerCharacter: true },
+    { speaker: "파스닐", text: "\"도로 봉쇄 위치, 감염 밀도, 보급 실패 지역.\"", background: "black", character: "파스닐", centerCharacter: true },
+    { speaker: "란", text: "\"…정확했죠.\"", background: "black", character: "란", centerCharacter: true },
+    { speaker: "파스닐", text: "\"너무요.\"", background: "black", character: "파스닐", centerCharacter: true },
+    { speaker: "시스템", text: "란은 고개를 끄덕인다.", background: "black", isProgress: true, hideCharacter: true, centeredMonologue: true },
+    { speaker: "란", text: "\"정보는 항상 누군가의 시점에서 옵니다.\"", background: "black", character: "란", centerCharacter: true },
+    { speaker: "시스템", text: "잠깐의 침묵.", background: "black", isProgress: true, hideCharacter: true, centeredMonologue: true },
+    { speaker: "란", text: "\"신라씨의 정보는 시점이 없는듯 하네요.\"", background: "black", character: "란", centerCharacter: true },
+    { speaker: "신라", text: "\"…그냥 들은 거예요.\"", background: "black", character: "신라", centerCharacter: true },
+    { speaker: "란", text: "\"... 저에겐 그게 가장 위험한 말로 들리네요.\"", background: "black", character: "란", centerCharacter: true },
+
+    // 하카 선택
+    { speaker: "하카", text: "\"내 차례지?\"", background: "black", character: "하카", centerCharacter: true },
+    { speaker: "시스템", text: "그는 직감에 의지하고 자신이 놓친것에 더 강하게 반응할 것이다.", background: "black", isProgress: true, hideCharacter: true, centeredMonologue: true },
+    { speaker: "선택", text: "증거를 선택하세요", background: "black", hideCharacter: true, randomChoices: true, gunEffect: true, hideNormalTag: true, choices: [
+      { text: "엘의 감염과 등장 시점", targetIndex: 1550 },
+      { text: "고지나 표식", targetIndex: 1550 },
+      { text: "출처 없는 정보", targetIndex: 1550 },
+      { text: "지나치게 똑똑함 (일반 진행)", targetIndex: 1549 }
+    ]},
+    // 정답 루트 - 하카
+    { speaker: "하카", text: "\"신라가 똑똑하다고 느낀 거야? 난 모르겠는데.\"", background: "black", character: "하카", centerCharacter: true },
+    { speaker: "파스닐", text: "\"네.\"", background: "black", character: "파스닐", centerCharacter: true },
+    { speaker: "하카", text: "\"얼마나?\"", background: "black", character: "하카", centerCharacter: true },
+    { speaker: "파스닐", text: "\"지형, 속도, 사람 반응까지. 모두요.\"", background: "black", character: "파스닐", centerCharacter: true },
+    { speaker: "하카", text: "\"…애매하네.\"", background: "black", character: "하카", centerCharacter: true },
+    { speaker: "파스닐", text: "\"아니요. 애매하지 않아요.\"", background: "black", character: "파스닐", centerCharacter: true },
+    { speaker: "시스템", text: "파스닐은 하카를 본다.", background: "black", isProgress: true, hideCharacter: true, centeredMonologue: true },
+    { speaker: "파스닐", text: "\"살아남은 사람의 계산이 아니라, 설계한 사람의 계산이었어요.\"", background: "black", character: "파스닐", centerCharacter: true },
+    { speaker: "시스템", text: "하카는 웃지 않는다.", background: "black", isProgress: true, hideCharacter: true, centeredMonologue: true },
+    { speaker: "하카", text: "\"…그 말, 되게 싫은데. 내가 놓친거 같잖아\"", background: "black", character: "하카", centerCharacter: true, jumpIndex: 1563 },
+
+    // 미니게임 실패 - 배드엔딩
+    { marker: "#미니게임실패", speaker: "엘", text: "\"... 난 그게 무슨 연관인지 모르겠는데, 나만 그런건가?\"", background: bgLivingRoom2, character: "엘" },
+    { speaker: "시스템", text: "신라가 입을 연다.", background: bgLivingRoom2, isProgress: true },
+    { speaker: "신라", text: "\"이 사람, 나 처음부터 싫어했던거죠?\"", background: bgLivingRoom2, character: "신라" },
+    { speaker: "시스템", text: "작은 말들이 겹친다. 불신이 번진다.", background: bgLivingRoom2, isProgress: true },
+    { speaker: "하카", text: "\"이상하네. 증거 하나없이 몰아가는거야? 너도 외부인이란걸 잊고있던거야?\"", background: bgLivingRoom2, character: "하카" },
+    { speaker: "데일", text: "\"오만하네\"", background: bgLivingRoom2, character: "데일" },
+    { speaker: "란", text: "\"...\"", background: bgLivingRoom2, character: "란" },
+    { speaker: "렌쟈", text: "\"…파스닐, 나가 있어.\"", background: bgLivingRoom2, character: "렌쟈" },
+    { speaker: "시스템", text: "문이 닫힌다. 밖은 어둡고, 혼자다.", background: bgLivingRoom2, isProgress: true },
+    { speaker: "", text: "", isDeadEnd: true, deadEndTitle: "BAD END", deadEndSubtitle: "추방", background: "black" },
+
+    // #완료 - 미니게임 성공 후
+    { marker: "#완료", speaker: "시스템", text: "다시, 중심으로", background: bgLivingRoom2, isProgress: true },
+    { speaker: "시스템", text: "렌쟈가 자리에서 일어난다.", background: bgLivingRoom2, isProgress: true },
+    { speaker: "렌쟈", text: "\"신라.\"", background: bgLivingRoom2, character: "렌쟈" },
+    { speaker: "시스템", text: "신라는 고개를 든다.", background: bgLivingRoom2, isProgress: true },
+    { speaker: "렌쟈", text: "\"반박할 기회를 줄게.\"", background: bgLivingRoom2, character: "렌쟈" },
+    { speaker: "신라", text: "\"…지금 이 상황에서 나 하나 몰아가면 엘은 돌아와?\"", background: bgLivingRoom2, character: "신라" },
+    { speaker: "렌쟈", text: "\"질문에 답해.\"", background: bgLivingRoom2, character: "렌쟈" },
+    { speaker: "신라", text: "\"…난 그냥 도와준 거야.\"", background: bgLivingRoom2, character: "신라" },
+    { speaker: "데일", text: "\"도와준 타이밍이 너무 정확해.\"", background: bgLivingRoom2, character: "데일" },
+    { speaker: "하카", text: "\"그리고 너무 깨끗하지.\"", background: bgLivingRoom2, character: "하카" },
+    { speaker: "란", text: "\"…그리고 너무 설명이 없습니다.\"", background: bgLivingRoom2, character: "란" },
+    { speaker: "시스템", text: "파스닐은 마지막으로 말한다.", background: bgLivingRoom2, isProgress: true },
+    { speaker: "파스닐", text: "\"확신은 없어요.\"", background: bgLivingRoom2, character: "파스닐" },
+    { speaker: "시스템", text: "잠깐의 정적.", background: bgLivingRoom2, isProgress: true },
+    { speaker: "파스닐", text: "\"그래도 이 정도면 의심은 공유해야 해요.\"", background: bgLivingRoom2, character: "파스닐" },
+    { speaker: "시스템", text: "모두가 신라를 본다.", background: bgLivingRoom2, isProgress: true },
+    { speaker: "시스템", text: "신라는 처음으로, 아무 말도 하지 않는다.", background: bgLivingRoom2, isProgress: true },
+    { speaker: "시스템", text: "불이 꺼진 거실에서 누구도 쉽게 결론을 내리지 않는다.", background: bgLivingRoom2, isProgress: true },
+    { speaker: "시스템", text: "하지만—", background: bgLivingRoom2, isProgress: true },
+    { speaker: "시스템", text: "이제 모두가 같은 질문을 안고 있다.", background: bgLivingRoom2, isProgress: true },
+    { speaker: "시스템", text: "난로는 꺼져 있다. 누군가 불을 붙이자고 말하지 않는다.", background: bgLivingRoom2, isProgress: true },
+    { speaker: "시스템", text: "신라는 한 발 물러선다. 도망치는 거리도, 공격적인 거리도 아니다.", background: bgLivingRoom2, isProgress: true },
+    { speaker: "시스템", text: "그냥 말해야 하는 거리다.", background: bgLivingRoom2, isProgress: true },
+    { speaker: "신라", text: "\"…미안합니다.\"", background: bgLivingRoom2, character: "신라" },
+    { speaker: "시스템", text: "짧다. 군더더기가 없다.", background: bgLivingRoom2, isProgress: true },
+    { speaker: "데일", text: "\"와. 진짜로 사과하네.\"", background: bgLivingRoom2, character: "데일" },
+    { speaker: "하카", text: "\"이거 처음 보는 장면인데.\"", background: bgLivingRoom2, character: "하카" },
+    { speaker: "시스템", text: "렌쟈는 말하지 않는다. 눈은 신라에게 고정돼 있다.", background: bgLivingRoom2, isProgress: true },
+    { speaker: "시스템", text: "란은 고개를 약간 숙인 채 듣고 있다.", background: bgLivingRoom2, isProgress: true },
+    { speaker: "신라", text: "\"고지나 연구소는 감염이 느린 개체를 찾고 있었습니다.\"", background: bgLivingRoom2, character: "신라" },
+    { speaker: "시스템", text: "엘의 표정이 미세하게 굳는다.", background: bgLivingRoom2, isProgress: true },
+    { speaker: "신라", text: "\"엘은 너무 느렸어요.\"", background: bgLivingRoom2, character: "신라" },
+    { speaker: "데일", text: "\"…뭐?\"", background: bgLivingRoom2, character: "데일" },
+    { speaker: "신라", text: "\"보통은 12시간 안에 행동 패턴이 바뀝니다.\"", background: bgLivingRoom2, character: "신라" },
+    { speaker: "하카", text: "\"근데 엘은?\"", background: bgLivingRoom2, character: "하카" },
+    { speaker: "신라", text: "\"이틀.\"", background: bgLivingRoom2, character: "신라" },
+    { speaker: "시스템", text: "정적.", background: bgLivingRoom2, isProgress: true },
+    { speaker: "신라", text: "\"고지나는 그걸 '지연'이라고 불렀어요.\"", background: bgLivingRoom2, character: "신라" },
+    { speaker: "신라", text: "\"전 관측 담당이었습니다.\"", background: bgLivingRoom2, character: "신라" },
+    { speaker: "파스닐", text: "\"…스파이.\"", background: bgLivingRoom2, character: "파스닐" },
+    { speaker: "신라", text: "\"네.\"", background: bgLivingRoom2, character: "신라" },
+    { speaker: "시스템", text: "말을 피하지 않는다.", background: bgLivingRoom2, isProgress: true },
+    { speaker: "신라", text: "\"엘의 동선을 확인하고, 상태를 보고하라는 명령이었어요.\"", background: bgLivingRoom2, character: "신라" },
+    { speaker: "란", text: "\"…그래서 우릴 따라온 겁니까.\"", background: bgLivingRoom2, character: "란" },
+    { speaker: "신라", text: "\"아니요.\"", background: bgLivingRoom2, character: "신라" },
+    { speaker: "시스템", text: "고개를 젓는다.", background: bgLivingRoom2, isProgress: true },
+    { speaker: "신라", text: "\"처음엔 멀리서만.\"", background: bgLivingRoom2, character: "신라" },
+    { speaker: "렌쟈", text: "\"…그럼 물류창고는?\"", background: bgLivingRoom2, character: "렌쟈" },
+    { speaker: "신라", text: "\"고지나 쪽 정보입니다.\"", background: bgLivingRoom2, character: "신라" },
+    { speaker: "하카", text: "\"와. 우리 전부 실험 재료였네.\"", background: bgLivingRoom2, character: "하카" },
+    { speaker: "신라", text: "\"란이 다칠 줄은 몰랐습니다.\"", background: bgLivingRoom2, character: "신라" },
+    { speaker: "란", text: "\"의도하지 않았다는 말은 변명이 되지 않습니다.\"", background: bgLivingRoom2, character: "란" },
+    { speaker: "신라", text: "\"…압니다.\"", background: bgLivingRoom2, character: "신라" },
+    { speaker: "신라", text: "\"고지나는 엘을 '되돌릴 수 있는지' 확인하려 했습니다.\"", background: bgLivingRoom2, character: "신라" },
+    { speaker: "파스닐", text: "\"…되돌린다고요?\"", background: bgLivingRoom2, character: "파스닐" },
+    { speaker: "신라", text: "\"완전한 치료는 아니지만, 지연을 안정화시키는 방법은 있습니다.\"", background: bgLivingRoom2, character: "신라" },
+    { speaker: "렌쟈", text: "\"…어디.\"", background: bgLivingRoom2, character: "렌쟈" },
+    { speaker: "신라", text: "\"고지나 본부.\"", background: bgLivingRoom2, character: "신라" },
+    { speaker: "데일", text: "\"거기 가면 살아 나온다고 보장돼?\"", background: bgLivingRoom2, character: "데일" },
+    { speaker: "신라", text: "\"보장은 없습니다.\"", background: bgLivingRoom2, character: "신라" },
+    { speaker: "하카", text: "\"역시.\"", background: bgLivingRoom2, character: "하카" },
+    { speaker: "시스템", text: "신라는 고개를 숙인다. 이번엔 아까보다 깊다.", background: bgLivingRoom2, isProgress: true },
+    { speaker: "신라", text: "\"이제 절 놓아주실건가요?\"", background: bgLivingRoom2, character: "신라" },
+    { speaker: "렌쟈", text: "\"왜.\"", background: bgLivingRoom2, character: "렌쟈" },
+    { speaker: "신라", text: "\"…엘이 실험 대상이 되는 건 제가 보기에도 선을 넘었던것 같습니다.\"", background: bgLivingRoom2, character: "신라" },
+    { speaker: "데일", text: "\"와. 이제 와서 양심.\"", background: bgLivingRoom2, character: "데일" },
+    { speaker: "신라", text: "\"...\"", background: bgLivingRoom2, character: "신라" },
+    { speaker: "하카", text: "\"그냥 우리한테 맞아 죽을까봐 협조하는거 같은데\"", background: bgLivingRoom2, character: "하카" },
+    { speaker: "시스템", text: "신라는 파스닐을 본다.", background: bgLivingRoom2, isProgress: true },
+
+    // #A2 - 특수 배경 1
+    { marker: "#A2", speaker: "신라", text: "\"그래도 당신 말이 맞았습니다.\"", background: bgA2, hideCharacter: true },
+    { speaker: "파스닐", text: "\"…뭘요.\"", background: bgA2, hideCharacter: true },
+    { speaker: "신라", text: "\"의심했어야 했던 건 나였습니다.\"", background: bgA2, hideCharacter: true },
+    { speaker: "신라", text: "\"조용하신 분들이 무서운 법이지요.\"", background: bgA2, hideCharacter: true },
+    { speaker: "파스닐", text: "내가 조용한 편이었나..", background: bgA2, isMonologue: true, hideCharacter: true },
+    { speaker: "신라", text: "\"보통 음침한 취미를 숨기고 다니니까요.\"", background: bgA2, hideCharacter: true },
+    { speaker: "신라", text: "\"남의 가방 열어보기 같은.\"", background: bgA2, hideCharacter: true },
+    { speaker: "파스닐", text: "\"조사도 못합니까.\"", background: bgA2, hideCharacter: true },
+    { speaker: "신라", text: "\"아아, 당연히 해도 되죠. 다만 이런식의 심문은 말이에요- 파스닐.\"", background: bgA2, hideCharacter: true },
+
+    // #A3 - 특수 배경 2 + 흔들림 효과
+    { marker: "#A3", speaker: "시스템", text: "그는 나에게만 아주 보일 정도로 표정을 찌푸렸다.", background: bgA3, isProgress: true, hideCharacter: true, shakeOnEnter: true, effect: "shake" },
+    { speaker: "신라", text: "\"제가 무기를 가지고 있었다면요?\"", background: bgA3, hideCharacter: true },
+    { speaker: "신라", text: "\"아니, 내가 고지나에 대한 정보를 수집한 평범한 꼬맹이라면?\"", background: bgA3, hideCharacter: true },
+    { speaker: "신라", text: "\"순순히 엘을 돌려둘 정보를 말해줄 계획이었다면?\"", background: bgA3, hideCharacter: true },
+    { speaker: "파스닐", text: "나는 차마 그의 얼굴을 볼 수 없었다.", background: bgA3, isMonologue: true, hideCharacter: true },
+    { speaker: "파스닐", text: "맞는 말이었다.", background: bgA3, isMonologue: true, hideCharacter: true },
+    { speaker: "파스닐", text: "확신이 섰다고 꼭 행동으로 옮길 필요는 없었다.", background: bgA3, isMonologue: true, hideCharacter: true },
+
+    // #A4 - 거실로 복귀
+    { marker: "#A4", speaker: "시스템", text: "렌쟈는 잠깐 눈을 감았다 뜬다.", background: bgLivingRoom2, isProgress: true },
+    { speaker: "렌쟈", text: "\"엘을 되돌릴 수 있는 가능성.\"", background: bgLivingRoom2, character: "렌쟈" },
+    { speaker: "신라", text: "\"있습니다.\"", background: bgLivingRoom2, character: "신라" },
+    { speaker: "렌쟈", text: "\"…얼마나.\"", background: bgLivingRoom2, character: "렌쟈" },
+    { speaker: "신라", text: "\"지금 상태면 아직.\"", background: bgLivingRoom2, character: "신라" },
+    { speaker: "시스템", text: "렌쟈는 고개를 끄덕인다. 결정은 빠르다.", background: bgLivingRoom2, isProgress: true },
+    { speaker: "란", text: "\"…누님.\"", background: bgLivingRoom2, character: "란" },
 
     // 현재 스토리 끝
     { marker: "END", speaker: "시스템", text: "현재 스토리의 끝입니다.", isProgress: true, background: bgLivingRoom2, onComplete: () => { setGameState("start"); setDialogueIndex(0); } }
