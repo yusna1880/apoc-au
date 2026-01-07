@@ -1594,7 +1594,7 @@ export default function Home() {
     { speaker: "", text: "", isDeadEnd: true, deadEndTitle: "BAD END", deadEndSubtitle: "추방", background: "black", onComplete: () => { setGameState("start"); setDialogueIndex(0); } },
 
     // #완료 - 미니게임 성공 후
-    { marker: "#완료", speaker: "시스템", text: "다시, 중심으로", background: bgLivingRoom2, isProgress: true, audio: "stop" },
+    { marker: "#완료", speaker: "시스템", text: "다시, 중심으로", background: bgLivingRoom2, isProgress: true, audio: "/assets/Unloved_-_Sorry,_Baby_(Killing_Eve)_1767749633060.mp3", audioVolume: 0.3 },
     { speaker: "시스템", text: "렌쟈가 자리에서 일어난다.", background: bgLivingRoom2, isProgress: true },
     { speaker: "렌쟈", text: "\"신라.\"", background: bgLivingRoom2, character: "렌쟈" },
     { speaker: "시스템", text: "신라는 고개를 든다.", background: bgLivingRoom2, isProgress: true },
@@ -1810,6 +1810,7 @@ export default function Home() {
 
   const handleNext = useCallback(() => {
     const current = story[dialogueIndex];
+    console.log('handleNext:', dialogueIndex, current?.speaker, 'jumpIndex:', current?.jumpIndex);
     if (!current) return;
     if (current.choices) return;
     if (current.isPuzzle) return;
@@ -1820,6 +1821,7 @@ export default function Home() {
     }
 
     if (current.jumpIndex !== undefined) {
+      console.log('Jumping to:', current.jumpIndex);
       setDialogueIndex(current.jumpIndex);
       return;
     }
