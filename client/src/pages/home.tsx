@@ -1810,7 +1810,6 @@ export default function Home() {
 
   const handleNext = useCallback(() => {
     const current = story[dialogueIndex];
-    console.log('handleNext:', dialogueIndex, current?.speaker, 'jumpIndex:', current?.jumpIndex);
     if (!current) return;
     if (current.choices) return;
     if (current.isPuzzle) return;
@@ -1821,7 +1820,6 @@ export default function Home() {
     }
 
     if (current.jumpIndex !== undefined) {
-      console.log('Jumping to:', current.jumpIndex);
       setDialogueIndex(current.jumpIndex);
       return;
     }
