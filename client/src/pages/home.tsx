@@ -81,6 +81,7 @@ import audioHorrorChase from "@assets/Horror_Chase_Music_Torture_Chamber___Royal
 import audioSigh from "@assets/Sigh_(Killing_Eve)_1767734880443.mp3";
 import audioItsNotYou from "@assets/Its_Not_You,_Its_Me_(Killing_Eve)_1767736641609.mp3";
 import audioRemember from "@assets/KaizanBlu_-_Remember_1767736641607.mp3";
+import audioMinigame from "@assets/DANGANRONPA_OST_1-01_DANGANRONPA_1767747082682.mp3";
 
 // Audio imports - Sound Effects
 import sfxHeartBeat from "@assets/Heart_Beat_[SOUND_EFFECT]_1767734880437.mp3";
@@ -1480,7 +1481,7 @@ export default function Home() {
     { speaker: "시스템", text: "파스닐은 한 걸음 앞으로 나온다.", background: bgLivingRoom2, isProgress: true },
 
     // #파스닐공개의심 - 미니게임 타이틀
-    { marker: "#파스닐공개의심", speaker: "", text: "파스닐 — 공개 의심", background: "black", isMinigameTitle: true, blackScreen: true, hideCharacter: true },
+    { marker: "#파스닐공개의심", speaker: "", text: "파스닐 — 공개 의심", background: "black", isMinigameTitle: true, blackScreen: true, hideCharacter: true, audio: audioMinigame },
     // #파스닐공개의심END - 거실에서 시작 (파스닐2 캐릭터 표시)
     { marker: "#파스닐공개의심END", speaker: "파스닐", text: "\"신라가 고지나 연구소랑 연관돼 있을 가능성이 있어요.\"", background: bgLivingRoom2, character: "파스닐2" },
     { speaker: "시스템", text: "방 안이 조용해진다.", background: bgLivingRoom2, isProgress: true, character: "파스닐2" },
@@ -1581,7 +1582,7 @@ export default function Home() {
     { speaker: "하카", text: "\"…그 말, 되게 싫은데. 내가 놓친거 같잖아\"", background: "black", character: "하카", isMinigameDialogue: true, jumpIndex: 1115 },
 
     // 미니게임 실패 - 배드엔딩
-    { marker: "#미니게임실패", speaker: "엘", text: "\"... 난 그게 무슨 연관인지 모르겠는데, 나만 그런건가?\"", background: bgLivingRoom2, character: "엘" },
+    { marker: "#미니게임실패", speaker: "엘", text: "\"... 난 그게 무슨 연관인지 모르겠는데, 나만 그런건가?\"", background: bgLivingRoom2, character: "엘", audio: "stop" },
     { speaker: "시스템", text: "신라가 입을 연다.", background: bgLivingRoom2, isProgress: true },
     { speaker: "신라", text: "\"이 사람, 나 처음부터 싫어했던거죠?\"", background: bgLivingRoom2, character: "신라" },
     { speaker: "시스템", text: "작은 말들이 겹친다. 불신이 번진다.", background: bgLivingRoom2, isProgress: true },
@@ -1593,7 +1594,7 @@ export default function Home() {
     { speaker: "", text: "", isDeadEnd: true, deadEndTitle: "BAD END", deadEndSubtitle: "추방", background: "black" },
 
     // #완료 - 미니게임 성공 후
-    { marker: "#완료", speaker: "시스템", text: "다시, 중심으로", background: bgLivingRoom2, isProgress: true },
+    { marker: "#완료", speaker: "시스템", text: "다시, 중심으로", background: bgLivingRoom2, isProgress: true, audio: "stop" },
     { speaker: "시스템", text: "렌쟈가 자리에서 일어난다.", background: bgLivingRoom2, isProgress: true },
     { speaker: "렌쟈", text: "\"신라.\"", background: bgLivingRoom2, character: "렌쟈" },
     { speaker: "시스템", text: "신라는 고개를 든다.", background: bgLivingRoom2, isProgress: true },
