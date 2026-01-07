@@ -65,7 +65,7 @@ import imgHaka2 from "@assets/하카2_1767637478411.png";
 import imgRan2 from "@assets/란수정_1767737558677.png";
 import imgRenja2 from "@assets/렌쟈2_1767637478408.png";
 import imgEl2 from "@assets/엘2_1767637478414.png";
-import imgPasnil2 from "@assets/파스닐2_1767745289498.png";
+import imgPasnil2 from "@assets/파스닐2_1767745681980.png";
 
 // Assets - Audio
 import bgMusicStart from "@assets/Screen_Recording_20260106-003832_YouTube_1767628059034.mp3";
@@ -1480,14 +1480,14 @@ export default function Home() {
 
     // #파스닐공개의심 - 미니게임 타이틀
     { marker: "#파스닐공개의심", speaker: "", text: "파스닐 — 공개 의심", background: "black", isMinigameTitle: true, blackScreen: true, hideCharacter: true },
-    // #파스닐공개의심END - 거실에서 시작
-    { marker: "#파스닐공개의심END", speaker: "파스닐", text: "\"신라가 고지나 연구소랑 연관돼 있을 가능성이 있어요.\"", background: bgLivingRoom2, character: "파스닐" },
-    { speaker: "시스템", text: "방 안이 조용해진다.", background: bgLivingRoom2, isProgress: true },
-    { speaker: "데일", text: "\"…뭐?\"", background: bgLivingRoom2, character: "데일" },
-    { speaker: "하카", text: "\"와. 오늘 회의 안건 세네.\"", background: bgLivingRoom2, character: "하카" },
-    { speaker: "시스템", text: "렌쟈는 고개를 들지만 바로 말하지 않는다.", background: bgLivingRoom2, isProgress: true },
-    { speaker: "란", text: "\"…파스닐. 그 말, 무겁습니다.\"", background: bgLivingRoom2, character: "란" },
-    { speaker: "파스닐", text: "\"알아요. 그래서 지금 말하는 거예요.\"", background: bgLivingRoom2, character: "파스닐" },
+    // #파스닐공개의심END - 거실에서 시작 (파스닐2 캐릭터 표시)
+    { marker: "#파스닐공개의심END", speaker: "파스닐", text: "\"신라가 고지나 연구소랑 연관돼 있을 가능성이 있어요.\"", background: bgLivingRoom2, character: "파스닐2" },
+    { speaker: "시스템", text: "방 안이 조용해진다.", background: bgLivingRoom2, isProgress: true, character: "파스닐2" },
+    { speaker: "데일", text: "\"…뭐?\"", background: bgLivingRoom2, character: "파스닐2" },
+    { speaker: "하카", text: "\"와. 오늘 회의 안건 세네.\"", background: bgLivingRoom2, character: "파스닐2" },
+    { speaker: "시스템", text: "렌쟈는 고개를 들지만 바로 말하지 않는다.", background: bgLivingRoom2, isProgress: true, character: "파스닐2" },
+    { speaker: "란", text: "\"…파스닐. 그 말, 무겁습니다.\"", background: bgLivingRoom2, character: "파스닐2" },
+    { speaker: "파스닐", text: "\"알아요. 그래서 지금 말하는 거예요.\"", background: bgLivingRoom2, character: "파스닐2" },
 
     // #규칙 - 미니게임 규칙 설명
     { marker: "#규칙", speaker: "시스템", text: "[ 의심 게임 ]", background: "black", isMinigameRules: true, blackScreen: true, hideCharacter: true },
