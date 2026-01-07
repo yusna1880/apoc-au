@@ -1809,17 +1809,19 @@ export default function Home() {
   }, [dialogueIndex, currentDialogue?.choices, currentDialogue?.randomChoices]);
 
   const handleNext = useCallback(() => {
-    console.log('handleNext called, dialogueIndex:', dialogueIndex, 'hasChoices:', !!currentDialogue.choices);
-    if (currentDialogue.choices) return;
-    if (currentDialogue.isPuzzle) return;
+    const current = story[dialogueIndex];
+    console.log('handleNext called, dialogueIndex:', dialogueIndex, 'hasChoices:', !!current?.choices, 'speaker:', current?.speaker);
+    if (!current) return;
+    if (current.choices) return;
+    if (current.isPuzzle) return;
     
-    if (currentDialogue.onComplete) {
-      currentDialogue.onComplete();
+    if (current.onComplete) {
+      current.onComplete();
       return;
     }
 
-    if (currentDialogue.jumpIndex !== undefined) {
-      setDialogueIndex(currentDialogue.jumpIndex);
+    if (current.jumpIndex !== undefined) {
+      setDialogueIndex(current.jumpIndex);
       return;
     }
 
@@ -1829,7 +1831,7 @@ export default function Home() {
       setGameState("start");
       setDialogueIndex(0);
     }
-  }, [currentDialogue, dialogueIndex, story]);
+  }, [dialogueIndex, story]);
 
   const handleChoice = (targetIndex: number) => {
     console.log('handleChoice called with targetIndex:', targetIndex, 'current dialogueIndex:', dialogueIndex);
