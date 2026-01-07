@@ -65,6 +65,7 @@ import imgHaka2 from "@assets/하카2_1767637478411.png";
 import imgRan2 from "@assets/란수정_1767737558677.png";
 import imgRenja2 from "@assets/렌쟈2_1767637478408.png";
 import imgEl2 from "@assets/엘2_1767637478414.png";
+import imgPasnil2 from "@assets/파스닐2_1767745289498.png";
 
 // Assets - Audio
 import bgMusicStart from "@assets/Screen_Recording_20260106-003832_YouTube_1767628059034.mp3";
@@ -177,6 +178,7 @@ export default function Home() {
   const sparkleIdRef = useRef(0);
   const [hasSaveData, setHasSaveData] = useState(false);
   const [puzzleInput, setPuzzleInput] = useState("");
+  const [shuffledChoices, setShuffledChoices] = useState<Choice[]>([]);
   const [showMemo, setShowMemo] = useState(false);
   const [maxReachedIndex, setMaxReachedIndex] = useState(0);
 
@@ -1794,6 +1796,16 @@ export default function Home() {
     }
   }, [dialogueIndex, gameState, story]);
 
+  // Shuffle choices when dialogue with randomChoices is shown
+  useEffect(() => {
+    if (currentDialogue?.choices && currentDialogue?.randomChoices) {
+      const shuffled = [...currentDialogue.choices].sort(() => Math.random() - 0.5);
+      setShuffledChoices(shuffled);
+    } else {
+      setShuffledChoices([]);
+    }
+  }, [dialogueIndex, currentDialogue?.randomChoices]);
+
   const handleNext = useCallback(() => {
     if (currentDialogue.choices) return;
     if (currentDialogue.isPuzzle) return;
@@ -1917,8 +1929,12 @@ export default function Home() {
       case "소년1":
       case "신라": return imgSilla;
       case "파스닐": 
-        // Pasnil only visible in CLIP1 (indices 0-4)
-        return (index !== undefined && index <= 4) ? imgPasnil : null;
+        // Pasnil visible in CLIP1 (indices 0-4) and minigame scenes (1482+)
+        if (index !== undefined && index <= 4) return imgPasnil;
+        if (index !== undefined && index >= 1482) return imgPasnil2;
+        return null;
+      case "파스닐2":
+        return imgPasnil2;
       default: return null;
     }
   };
@@ -1993,13 +2009,51 @@ export default function Home() {
       );
     }
 
+    // Minigame Title Screen
+    if (currentDialogue.isMinigameTitle) {
+      return (
+        <div 
+          className="fixed inset-0 bg-black z-50 flex flex-col items-center justify-center cursor-pointer"
+          onClick={handleNext}
+        >
+          <motion.div
+            initial={{ opacity: 0, scale: 0.8 }}
+            animate={{ opacity: 1, scale: 1 }}
+            transition={{ duration: 0.8, ease: "easeOut" }}
+            className="text-center"
+          >
+            <motion.h1 
+              initial={{ opacity: 0, y: -30 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ delay: 0.3, duration: 0.6 }}
+              className="text-7xl font-black text-red-600 tracking-widest mb-4"
+              style={{ 
+                fontFamily: "'Oxanium', sans-serif",
+                textShadow: '0 0 80px rgba(220, 38, 38, 0.8), 0 0 160px rgba(220, 38, 38, 0.4)'
+              }}
+            >
+              {currentDialogue.text}
+            </motion.h1>
+            <motion.div
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 0.4 }}
+              transition={{ delay: 1.2, duration: 0.5 }}
+              className="mt-12 text-white/30 text-sm font-mono tracking-widest"
+            >
+              클릭하여 시작
+            </motion.div>
+          </motion.div>
+        </div>
+      );
+    }
+
     const charImgResult = currentDialogue.hideCharacter ? null : getCharacterImage(currentDialogue.character || currentDialogue.speaker, dialogueIndex);
     const charImg = charImgResult && typeof charImgResult === 'object' && 'src' in charImgResult ? charImgResult.src : charImgResult;
     const isSilhouette = charImgResult && typeof charImgResult === 'object' && 'silhouette' in charImgResult ? charImgResult.silhouette : false;
     
     // Effect class
     let effectClass = "";
-    if (currentDialogue.effect === "shake") effectClass = "animate-shake";
+    if (currentDialogue.effect === "shake" || currentDialogue.shakeOnEnter) effectClass = "animate-shake";
     if (currentDialogue.effect === "chase") effectClass = "animate-pulse scale-105 transition-transform duration-300";
     if (currentDialogue.effect === "carShake") effectClass = "animate-car-shake";
 
@@ -2117,11 +2171,11 @@ export default function Home() {
             {charImg && (
               <motion.div
                 key={`${currentDialogue.character || currentDialogue.speaker}-${dialogueIndex}`}
-                initial={{ opacity: 0, x: 20 }}
-                animate={{ opacity: 1, x: 0 }}
-                exit={{ opacity: 0, x: -20 }}
+                initial={{ opacity: 0, x: currentDialogue.centerCharacter ? 0 : 20, scale: currentDialogue.centerCharacter ? 0.9 : 1 }}
+                animate={{ opacity: 1, x: 0, scale: 1 }}
+                exit={{ opacity: 0, x: currentDialogue.centerCharacter ? 0 : -20, scale: currentDialogue.centerCharacter ? 0.9 : 1 }}
                 transition={{ duration: 0.5 }}
-                className="absolute bottom-[-15%] h-[100%] w-auto pointer-events-none z-10"
+                className={`absolute h-[100%] w-auto pointer-events-none z-10 ${currentDialogue.centerCharacter ? 'bottom-[-15%] left-1/2 -translate-x-1/2' : 'bottom-[-15%]'}`}
               >
                 <img 
                   src={charImg} 
@@ -2218,7 +2272,7 @@ export default function Home() {
                 </div>
               )}
 
-              {currentDialogue.choices && (
+              {currentDialogue.choices && !currentDialogue.randomChoices && (
                 <div className="mt-6 grid grid-cols-1 gap-2">
                   {currentDialogue.choices.map((choice, i) => (
                     <Button
@@ -2234,6 +2288,56 @@ export default function Home() {
                       {choice.text}
                     </Button>
                   ))}
+                </div>
+              )}
+              
+              {/* Random Choice Minigame Mode */}
+              {currentDialogue.choices && currentDialogue.randomChoices && shuffledChoices.length > 0 && (
+                <div className="mt-6 grid grid-cols-2 gap-4">
+                  {shuffledChoices.map((choice, i) => {
+                    const displayText = currentDialogue.hideNormalTag 
+                      ? choice.text.replace(/\s*\(일반 진행\)\s*/g, '')
+                      : choice.text;
+                    return (
+                      <motion.div
+                        key={i}
+                        initial={{ opacity: 0, y: 10 }}
+                        animate={{ opacity: 1, y: 0 }}
+                        transition={{ delay: i * 0.1 }}
+                        whileHover={{ scale: 1.03 }}
+                        whileTap={{ scale: 0.97 }}
+                        className="group relative"
+                      >
+                        {/* Gun Targeting Effect */}
+                        {currentDialogue.gunEffect && (
+                          <div className="absolute -left-6 top-1/2 -translate-y-1/2 opacity-0 group-hover:opacity-100 transition-all duration-200">
+                            <div className="w-5 h-5 rounded-full border-2 border-red-600 relative">
+                              <div className="absolute inset-0 flex items-center justify-center">
+                                <div className="w-1 h-1 rounded-full bg-red-600" />
+                              </div>
+                              <div className="absolute -top-1 left-1/2 -translate-x-1/2 w-[2px] h-2 bg-red-600" />
+                              <div className="absolute -bottom-1 left-1/2 -translate-x-1/2 w-[2px] h-2 bg-red-600" />
+                              <div className="absolute top-1/2 -left-1 -translate-y-1/2 w-2 h-[2px] bg-red-600" />
+                              <div className="absolute top-1/2 -right-1 -translate-y-1/2 w-2 h-[2px] bg-red-600" />
+                            </div>
+                          </div>
+                        )}
+                        <Button
+                          variant="ghost"
+                          className={`w-full justify-center py-6 text-lg font-bold border-2 transition-all rounded-md relative overflow-visible
+                            ${currentDialogue.gunEffect 
+                              ? 'border-red-600/50 bg-black/80 hover:bg-red-900/30 hover:border-red-500 text-white hover:shadow-[0_0_30px_rgba(220,38,38,0.4)]' 
+                              : 'border-white/10 bg-white/5 hover:bg-white/10 text-white/80'}`}
+                          onClick={(e) => {
+                            e.stopPropagation();
+                            handleChoice(choice.targetIndex);
+                          }}
+                        >
+                          {displayText}
+                        </Button>
+                      </motion.div>
+                    );
+                  })}
                 </div>
               )}
 
