@@ -2114,7 +2114,7 @@ export default function Home() {
                 size="icon"
                 className="h-7 w-7 text-white/20 hover:text-white/50 hover:bg-white/5 border border-white/5"
                 onClick={() => {
-                  setGameStarted(false);
+                  setGameState("start");
                   setDialogueIndex(0);
                 }}
                 data-testid="button-home"
