@@ -4,6 +4,8 @@ import path from "path";
 
 export function serveStatic(app: Express) {
   const distPath = path.resolve(__dirname, "public");
+  const attachedAssetsPath = path.resolve(__dirname, "..", "attached_assets");
+  
   if (!fs.existsSync(distPath)) {
     throw new Error(
       `Could not find the build directory: ${distPath}, make sure to build the client first`,
@@ -11,6 +13,7 @@ export function serveStatic(app: Express) {
   }
 
   app.use(express.static(distPath));
+  app.use("/attached_assets", express.static(attachedAssetsPath));
 
   // fall through to index.html if the file doesn't exist
   app.use("*", (_req, res) => {

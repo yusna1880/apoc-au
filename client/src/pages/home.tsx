@@ -1,6 +1,6 @@
 import { useState, useEffect, useRef, useCallback, useMemo } from "react";
 import { Button } from "@/components/ui/button";
-import { Volume2, VolumeX, Settings, Info, ChevronRight, Save, Send, Lock, Unlock, Zap, Activity, Shield, Cpu, LayoutGrid, Home as HomeIcon } from "lucide-react";
+import { Volume2, VolumeX, Settings, Info, ChevronRight, Save, Send, Zap, Activity, Shield, Cpu, Home as HomeIcon } from "lucide-react";
 import { motion, AnimatePresence } from "framer-motion";
 import { Input } from "@/components/ui/input";
 
@@ -46,10 +46,40 @@ import bgSillaRoom from "@assets/신라방_1767739540393.png";
 import imgMemo from "@assets/메모장_1767739540390.png";
 import bgForestRoad from "@assets/도로숲_1767739809224.png";
 import bgLivingRoom2 from "@assets/거실_1767739883546.png";
+// KakaoTalk scene backgrounds (attached_assets)
+import bgKakao1 from "@assets/KakaoTalk_20260112_011647402.png";
+import bgKakao1_01 from "@assets/KakaoTalk_20260112_011647402_01.png";
+import bgKakao1_02 from "@assets/KakaoTalk_20260112_011647402_02.png";
+import bgKakao1_03 from "@assets/KakaoTalk_20260112_011647402_03.png";
+import bgKakao1_04 from "@assets/KakaoTalk_20260112_011647402_04.png";
+import bgKakao1_05 from "@assets/KakaoTalk_20260112_011647402_05.png";
+import bgKakao1_06 from "@assets/KakaoTalk_20260112_011647402_06.png";
+import bgKakao1_07 from "@assets/KakaoTalk_20260112_011647402_07.png";
+import bgKakao1_08 from "@assets/KakaoTalk_20260112_011647402_08.png";
+import bgKakao1_09 from "@assets/KakaoTalk_20260112_011647402_09.png";
+import bgKakao1_10 from "@assets/KakaoTalk_20260112_011647402_10.png";
+import bgKakao1_11 from "@assets/KakaoTalk_20260112_011647402_11.png";
+import bgKakao1_12 from "@assets/KakaoTalk_20260112_011647402_12.png";
+import bgKakao1_13 from "@assets/KakaoTalk_20260112_011647402_13.png";
+import bgKakao1_14 from "@assets/KakaoTalk_20260112_011647402_14.png";
+import bgKakao1_15 from "@assets/KakaoTalk_20260112_011647402_15.png";
 
 // A2/A3 special backgrounds
 import bgA2 from "@assets/1_1767744832349.png";
 import bgA3 from "@assets/2_1767744832347.png";
+
+// S25-S30 backgrounds
+import bgS25 from "@assets/KakaoTalk_20260112_054117877.png";
+import bgS27 from "@assets/KakaoTalk_20260112_054117877_01.png";
+import bgS28 from "@assets/KakaoTalk_20260112_052853981.png";
+import bgS29 from "@assets/KakaoTalk_20260112_052853981_01.png";
+import bgS30 from "@assets/KakaoTalk_20260112_052853981_02.png";
+
+// S32-S35 backgrounds
+import bgS32 from "@assets/KakaoTalk_20260112_052853981_05.png";
+import bgS33 from "@assets/KakaoTalk_20260112_052853981_03.png";
+import bgS34 from "@assets/KakaoTalk_20260112_052853981_04.png";
+import bgS35 from "@assets/KakaoTalk_20260112_052853981_05.png";
 
 // Assets - Characters (Normal)
 import imgHaka from "@assets/하카_1767627793844.png";
@@ -59,6 +89,8 @@ import imgEl from "@assets/엘_1767627793842.png";
 import imgPasnil from "@assets/파스닐_1767631756273.png";
 import imgDale from "@assets/데일_1767642442612.png";
 import imgSilla from "@assets/신라_1767737204993.png";
+import imgGojina from "@assets/고지나.png";
+import imgGoryeo from "@assets/고려.png";
 
 // Assets - Characters (V2)
 import imgHaka2 from "@assets/하카2_1767637478411.png";
@@ -83,6 +115,9 @@ import audioItsNotYou from "@assets/Its_Not_You,_Its_Me_(Killing_Eve)_1767736641
 import audioRemember from "@assets/KaizanBlu_-_Remember_1767736641607.mp3";
 import audioMinigame from "@assets/DANGANRONPA_OST_1-01_DANGANRONPA_1767747082682.mp3";
 import audioSorryBaby from "@assets/Unloved_-_Sorry,_Baby_(Killing_Eve)_1767749633060.mp3";
+
+// Start Screen Audio
+const bgMusicStartScreen = "/attached_assets/new%20audio/59%20-%20apoc%20sample%202.m4a";
 
 // Audio imports - Sound Effects
 import sfxHeartBeat from "@assets/Heart_Beat_[SOUND_EFFECT]_1767734880437.mp3";
@@ -161,13 +196,7 @@ interface DustParticle {
   color?: string;
 }
 
-interface Chapter {
-  id: number;
-  title: string;
-  marker: string;
-  index: number;
-  locked: boolean;
-}
+
 
 export default function Home() {
   const [gameState, setGameState] = useState<SceneType>("start");
@@ -230,7 +259,8 @@ export default function Home() {
   }, []);
 
   // Story Data
-  const story: DialogueLine[] = useMemo(() => [
+  const story = useMemo<any[]>(() => [
+  
     // CLIP 1 (0-4)
     { marker: "BEGIN", speaker: "파스닐", text: "요즘 ai가 발전해서 내가 할 일이 없네", background: bgClip1, character: "파스닐", isMonologue: true },
     { speaker: "파스닐", expression: "이메일을 확인한다", text: "...", background: bgClip1, character: "파스닐", isMonologue: true },
@@ -1713,21 +1743,968 @@ export default function Home() {
     { speaker: "시스템", text: "아무도 그게 회복인지, 착각인지 확신하지 못한다.", background: bgLivingRoom2, isProgress: true },
     { speaker: "시스템", text: "하지만—", background: bgLivingRoom2, isProgress: true },
     { speaker: "시스템", text: "이제 방향은 정해졌다.", background: bgLivingRoom2, isProgress: true },
+    { speaker: "시스템", text: "이제 방향은 정해졌다.", background: bgLivingRoom2, isProgress: true },
+
+    // 추가된 장면: 별장까지 (S1-S5)
+    // S1
+    { marker: "#S1", speaker: "시스템", text: "경보는 예상보다 늦게 울렸다.", background: bgKakao1, isProgress: true },
+    { speaker: "시스템", text: "냉각수 수치가 한계선을 넘겼을 때, 이미 연구동 지하에서는 금속이 울부짖고 있었다.", background: bgKakao1, isProgress: true },
+    { speaker: "시스템", text: "고지나는 상황을 이해했다. 패닉은 없었다. 계산이 먼저였다.", background: bgKakao1, isProgress: true },
+    { speaker: "고지나", text: "늦었네.", background: bgKakao1, character: "고지나" },
+
+    // S2
+    { marker: "#S2", speaker: "시스템", text: "폭발은 한 박자 뒤에 왔다.", background: bgKakao1_01, isProgress: true },
+    { speaker: "시스템", text: "연구동 절반이 접히듯 무너졌고, 불꽃과 함께 고지나의 시야가 기울었다.", background: bgKakao1_01, isProgress: true },
+    { speaker: "시스템", text: "신체의 오른쪽 감각이 사라졌다.", background: bgKakao1_01, isProgress: true },
+    { speaker: "시스템", text: "고려는 그 순간에도 움직였다. 봉급도, 계약도 없이 고지나 곁에 붙어 있던 이유는 단순했다.", background: bgKakao1_01, isProgress: true },
+
+    // S3
+    { marker: "#S3", speaker: "고려", text: "박사님.", background: bgKakao1_02, character: "고려" },
+    { speaker: "시스템", text: "고려는 이미 알고 있었다. 고지나가 준비해둔 것을.", background: bgKakao1_02, isProgress: true },
+    { speaker: "시스템", text: "기계 신체는 저장 캡슐 안에서 잠들어 있었다. 살아남기 위한 장치가 아니라, 계속 연구하기 위한 몸이었다.", background: bgKakao1_02, isProgress: true },
+    { speaker: "고지나", text: "아직 끝난 게 아니야.", background: bgKakao1_02, character: "고지나" },
+    { speaker: "시스템", text: "기계 신체가 결합되는 동안, 연구소는 완전히 붕괴했다. 고려는 고지나를 안고 잔해를 빠져나왔다.", background: bgKakao1_02, isProgress: true },
+
+    // S4
+    { marker: "#S4", speaker: "시스템", text: "도시는 그날로 멈췄다.", background: "black", isProgress: true, blackScreen: true },
+
+    // S5
+    { marker: "#S5", speaker: "시스템", text: "아침 공기가 아직 차갑게 가라앉아 있었다.", background: bgLivingRoom, isProgress: true },
+    { speaker: "시스템", text: "별장 안은 조용했고, 창밖에서 새소리만 간헐적으로 들렸다.", background: bgLivingRoom, isProgress: true },
+    { speaker: "렌쟈", text: "우리가 다 나가도… 괜찮을까.", background: bgLivingRoom, character: "렌쟈" },
+    { speaker: "란", text: "엘의 상태를 생각하면, 지금은 움직이지 않는 편이 안전합니다.", background: bgLivingRoom, character: "란" },
+    { speaker: "렌쟈", text: "그래도 데일이랑 둘만 남겨두는 건 좀.", background: bgLivingRoom, character: "렌쟈" },
+    { speaker: "하카", text: "걱정할수록 사고 나더라.", background: bgLivingRoom, character: "하카" },
+    { speaker: "시스템", text: "잠시 뒤, 결정은 내려졌다. 엘과 데일은 별장에 남고, 나머지는 고지나 연구소 흔적을 찾으러 나가기로 했다.", background: bgLivingRoom, isProgress: true },
+
+    // S6 - 산길
+    { marker: "#S6", speaker: "시스템", text: "문이 열리고, 네 사람이 밖으로 나섰다.", background: bgKakao1_03, isProgress: true },
+    { speaker: "시스템", text: "하카가 자연스럽게 앞장섰고, 렌쟈가 그 뒤를 따랐다.", background: bgKakao1_03, isProgress: true },
+    { speaker: "시스템", text: "란은 약간 떨어진 위치에서 주변을 살폈고, 파스닐은 모두를 시야에 넣은 채 움직였다.", background: bgKakao1_03, isProgress: true },
+    { speaker: "시스템", text: "산길을 넘어갈수록 풍경이 달라졌다.", background: bgKakao1_03, isProgress: true },
+    { speaker: "시스템", text: "식생은 인위적으로 정리된 흔적이 있었고, 땅은 일정한 간격으로 눌려 있었다.", background: bgKakao1_03, isProgress: true },
+    { speaker: "시스템", text: "란은 발걸음을 멈췄다.", background: bgKakao1_03, isProgress: true },
+    { speaker: "란", text: "본부 지역에 가깝습니다.", background: bgKakao1_03, character: "란" },
+    { speaker: "시스템", text: "고지나 연구소 본부 주변은 이상할 정도로 조용했다.", background: bgKakao1_03, isProgress: true },
+    { speaker: "시스템", text: "건물은 멀리서도 보였고, 그 주변에는 감시를 피하려는 흔적이 남아 있었다.", background: bgKakao1_03, isProgress: true },
+    { speaker: "시스템", text: "렌쟈는 주변을 둘러보다가 낮은 소리를 냈다.", background: bgKakao1_03, isProgress: true },
+    { speaker: "렌쟈", text: "여기… 누군가 일부러 비워둔 느낌이야.", background: bgKakao1_03, character: "렌쟈" },
+    { speaker: "시스템", text: "사라진 게 아니라 숨긴 것처럼 보인다.", background: bgKakao1_03, isProgress: true },
+    { speaker: "시스템", text: "그 순간, 바스락거리는 소리가 들렸다.", background: bgKakao1_03, isProgress: true },
+    { speaker: "시스템", text: "잔해 사이에서 작은 형체가 튀어나왔다.", background: bgKakao1_03, isProgress: true },
+
+    // S7 - 작은 동물 출현 (캐릭터 없음)
+    { marker: "#S7", speaker: "시스템", text: "토끼보다 조금 큰 돌연변이 소형 동물이었다.", background: bgKakao1_04, isProgress: true, hideCharacter: true },
+    { speaker: "시스템", text: "몸의 비율은 어딘가 어긋나 있었다.", background: bgKakao1_04, isProgress: true, hideCharacter: true },
+    { speaker: "시스템", text: "하지만 움직임에는 경계심보다 호기심이 더 짙었다.", background: bgKakao1_04, isProgress: true, hideCharacter: true },
+
+    // S8 - 첫 전투 시작
+    { marker: "#S8", speaker: "시스템", text: "하카는 흥미롭다는 듯 고개를 기울였다.", background: bgKakao1_05, isProgress: true },
+    { speaker: "하카", text: "얘는 공격용은 아니네.", background: bgKakao1_05, character: "하카" },
+    { speaker: "시스템", text: "란은 손을 들어 모두를 제지했다.", background: bgKakao1_05, isProgress: true },
+    { speaker: "란", text: "뒤쪽.", background: bgKakao1_05, character: "란" },
+    { speaker: "시스템", text: "그 말과 동시에 다른 변이 개체의 기척이 느껴졌다.", background: bgKakao1_05, isProgress: true },
+    { speaker: "시스템", text: "공기가 순식간에 팽팽해졌다.", background: bgKakao1_05, isProgress: true },
+    { speaker: "시스템", text: "렌쟈는 망설임 없이 소형 동물을 끌어안았다.", background: bgKakao1_05, isProgress: true },
+    { speaker: "렌쟈", text: "이리 와.", background: bgKakao1_05, character: "렌쟈" },
+    { speaker: "시스템", text: "변이 개체가 접근해왔고, 네 사람은 각자 위치를 잡았다.", background: bgKakao1_05, isProgress: true },
+    { speaker: "시스템", text: "하카는 웃음을 지운 채 몸을 낮췄고, 란은 렌쟈와 동물 사이에 서서 시선을 고정했다.", background: bgKakao1_05, isProgress: true },
+    { speaker: "시스템", text: "렌쟈는 품에 안긴 동물을 내려다봤다.", background: bgKakao1_05, isProgress: true },
+    { speaker: "렌쟈", text: "연이.", background: bgKakao1_05, character: "렌쟈" },
+    { speaker: "시스템", text: "연이는 렌쟈의 손에서 벗어나지 않고 가만히 있었다.", background: bgKakao1_05, isProgress: true },
+    { speaker: "시스템", text: "그리고 그 순간, 이 탐사가 단순한 흔적 찾기가 아니라는 예감이 모두에게 스며들었다.", background: bgKakao1_05, isProgress: true },
+    { speaker: "시스템", text: "바스락거리는 소리는 하나가 아니었다.", background: bgKakao1_05, isProgress: true },
+    { speaker: "시스템", text: "잔해 너머, 철제 컨테이너 그림자 사이에서 또 다른 움직임이 겹쳐졌다.", background: bgKakao1_05, isProgress: true },
+    { speaker: "시스템", text: "연이는 렌쟈의 품 안에서 몸을 웅크렸다.", background: bgKakao1_05, isProgress: true },
+    { speaker: "시스템", text: "작은 숨소리가 규칙 없이 떨렸다.", background: bgKakao1_05, isProgress: true },
+    { speaker: "시스템", text: "란은 소리를 내지 않고 한 발 앞으로 나왔다.", background: bgKakao1_05, isProgress: true },
+    { speaker: "시스템", text: "시선은 렌쟈가 아니라, 어둠 속을 향해 고정돼 있었다.", background: bgKakao1_05, isProgress: true },
+    { speaker: "란", text: "좌측, 낮은 위치입니다.", background: bgKakao1_05, character: "란" },
+    { speaker: "시스템", text: "하카는 웃음을 지우고 손목을 풀었다.", background: bgKakao1_05, isProgress: true },
+    { speaker: "시스템", text: "평소의 느슨함은 사라지고, 눈만 가늘게 뜬 채 주변을 훑었다.", background: bgKakao1_05, isProgress: true },
+    { speaker: "하카", text: "숫자는 둘… 아니 셋.", background: bgKakao1_05, character: "하카" },
+
+    // S8 계속 - 여러 개체 접근
+    { speaker: "시스템", text: "철판이 긁히는 소리와 함께 첫 번째 변이 개체가 모습을 드러냈다.", background: bgKakao1_05, isProgress: true },
+    { speaker: "시스템", text: "개와 비슷한 체형이지만 관절의 방향이 어긋나 있었고, 턱은 필요 이상으로 벌어져 있었다.", background: bgKakao1_05, isProgress: true },
+    { speaker: "시스템", text: "렌쟈는 연이를 더 끌어안았다.", background: bgKakao1_05, isProgress: true },
+    { speaker: "시스템", text: "몸은 움직이지 않았지만, 숨을 들이마시는 속도가 분명히 빨라졌다.", background: bgKakao1_05, isProgress: true },
+    { speaker: "렌쟈", text: "란.", background: bgKakao1_05, character: "렌쟈" },
+    { speaker: "시스템", text: "란은 고개를 끄덕였다. 짧고 단정한 동작으로 신호를 넘겼다.", background: bgKakao1_05, isProgress: true },
+    { speaker: "시스템", text: "두 번째 개체가 컨테이너 위에서 뛰어내렸다.", background: bgKakao1_05, isProgress: true },
+    { speaker: "시스템", text: "착지와 동시에 바닥이 울렸다.", background: bgKakao1_05, isProgress: true },
+    { speaker: "시스템", text: "하카가 먼저 움직였다.", background: bgKakao1_05, isProgress: true },
+    { speaker: "시스템", text: "낮게 파고들어 시선을 끌고, 반 박자 늦춰 뒤로 빠졌다.", background: bgKakao1_05, isProgress: true },
+    { speaker: "하카", text: "야, 이쪽이야.", background: bgKakao1_05, character: "하카" },
+    { speaker: "시스템", text: "그 틈에 란이 렌쟈 앞으로 완전히 자리를 잡았다.", background: bgKakao1_05, isProgress: true },
+    { speaker: "시스템", text: "자연스러웠고, 망설임이 없었다.", background: bgKakao1_05, isProgress: true },
+    { speaker: "란", text: "누님, 뒤로 한 걸음만.", background: bgKakao1_05, character: "란" },
+    { speaker: "시스템", text: "렌쟈는 말없이 지시에 따랐다.", background: bgKakao1_05, isProgress: true },
+    { speaker: "시스템", text: "연이의 귀가 순간적으로 바짝 섰다.", background: bgKakao1_05, isProgress: true },
+    { speaker: "시스템", text: "세 번째 개체가 측면에서 튀어나왔다.", background: bgKakao1_05, isProgress: true },
+    { speaker: "시스템", text: "렌쟈가 몸을 틀어 연이를 감쌌다.", background: bgKakao1_05, isProgress: true },
+    { speaker: "시스템", text: "그 순간, 란이 몸을 비틀어 공격선을 가로막았다.", background: bgKakao1_05, isProgress: true },
+    { speaker: "시스템", text: "금속과 뼈가 부딪히는 둔탁한 소리.", background: bgKakao1_05, isProgress: true },
+    { speaker: "시스템", text: "개체가 방향을 잃고 바닥을 굴렀다.", background: bgKakao1_05, isProgress: true },
+    { speaker: "시스템", text: "하카는 그 틈을 놓치지 않았다.", background: bgKakao1_05, isProgress: true },
+    { speaker: "시스템", text: "웃음기 없는 얼굴로, 짧고 정확한 움직임.", background: bgKakao1_05, isProgress: true },
+    { speaker: "시스템", text: "컨테이너 사이로 울리는 긁히는 소리.", background: bgKakao1_05, isProgress: true },
+    { speaker: "시스템", text: "이번엔 렌쟈가 먼저 멈춰 섰다.", background: bgKakao1_05, isProgress: true },
+    { speaker: "시스템", text: "손을 들어 올렸다. 짧고 분명한 제스처.", background: bgKakao1_05, isProgress: true },
+    { speaker: "렌쟈", text: "멈춰.", background: bgKakao1_05, character: "렌쟈" },
+    { speaker: "시스템", text: "하카가 즉각 발을 멈췄고, 란은 말없이 렌쟈의 시선이 향한 방향으로 몸을 틀었다.", background: bgKakao1_05, isProgress: true },
+    { speaker: "시스템", text: "렌쟈는 연이를 내려놓지 않았다.", background: bgKakao1_05, isProgress: true },
+    { speaker: "시스템", text: "대신 한 손으로 허리 쪽을 더 끌어당겼다.", background: bgKakao1_05, isProgress: true },
+    { speaker: "시스템", text: "시선은 어둠, 호흡은 일정했다.", background: bgKakao1_05, isProgress: true },
+    { speaker: "렌쟈", text: "세 개야. 하나는 위.", background: bgKakao1_05, character: "렌쟈" },
+    { speaker: "시스템", text: "말이 끝나기 무섭게, 컨테이너 위에서 그림자가 튀어나왔다.", background: bgKakao1_05, isProgress: true },
+
+    // S9 - 전투 중 (캐릭터 없음)
+    { marker: "#S9", speaker: "시스템", text: "란이 반응하려는 순간, 렌쟈가 먼저 움직였다.", background: bgKakao1_06, isProgress: true, hideCharacter: true },
+    { speaker: "시스템", text: "발을 반 박자 옮겨 각도를 틀고, 연이를 품 안쪽으로 완전히 숨겼다.", background: bgKakao1_06, isProgress: true, hideCharacter: true },
+    { speaker: "시스템", text: "변이 개체의 발톱이 허공을 긁었다.", background: bgKakao1_06, isProgress: true, hideCharacter: true },
+    { speaker: "시스템", text: "렌쟈는 피하지 않았다.", background: bgKakao1_06, isProgress: true, hideCharacter: true },
+    { speaker: "시스템", text: "몸을 낮춰 충돌 각을 바꾸는 선택을 했다.", background: bgKakao1_06, isProgress: true, hideCharacter: true },
+    { speaker: "시스템", text: "둔탁한 소리. 개체가 균형을 잃고 옆으로 쏠렸다.", background: bgKakao1_06, isProgress: true, hideCharacter: true },
+    { speaker: "하카", text: "…와.", background: bgKakao1_06, character: "하카", hideCharacter: true },
+    { speaker: "렌쟈", text: "지금.", background: bgKakao1_06, character: "렌쟈", hideCharacter: true },
+    { speaker: "시스템", text: "그 한마디에 란이 들어갔다.", background: bgKakao1_06, isProgress: true, hideCharacter: true },
+    { speaker: "시스템", text: "불필요한 움직임 없이, 이미 렌쟈가 만들어둔 빈틈으로.", background: bgKakao1_06, isProgress: true, hideCharacter: true },
+    { speaker: "시스템", text: "두 번째 개체가 측면에서 접근했다.", background: bgKakao1_06, isProgress: true, hideCharacter: true },
+    { speaker: "시스템", text: "렌쟈는 고개도 돌리지 않았다.", background: bgKakao1_06, isProgress: true, hideCharacter: true },
+    { speaker: "렌쟈", text: "하카, 왼쪽. 거리 짧아.", background: bgKakao1_06, character: "렌쟈", hideCharacter: true },
+    { speaker: "시스템", text: "하카가 웃음기 없는 얼굴로 몸을 던졌다.", background: bgKakao1_06, isProgress: true, hideCharacter: true },
+    { speaker: "하카", text: "주문 정확하네.", background: bgKakao1_06, character: "하카", hideCharacter: true },
+    { speaker: "시스템", text: "세 번째 개체가 연이를 향해 시선을 고정했다.", background: bgKakao1_06, isProgress: true, hideCharacter: true },
+    { speaker: "시스템", text: "그 순간, 렌쟈의 손이 움직였다.", background: bgKakao1_06, isProgress: true, hideCharacter: true },
+    { speaker: "시스템", text: "연이를 품에서 내려놓으며 동시에 한 발 앞으로.", background: bgKakao1_06, isProgress: true, hideCharacter: true },
+    { speaker: "시스템", text: "위협선을 자기 쪽으로 완전히 끌어왔다.", background: bgKakao1_06, isProgress: true, hideCharacter: true },
+
+    // S10 - 전투 완료
+    { marker: "#S10", speaker: "렌쟈", text: "나 봐.", background: bgKakao1_05, character: "렌쟈" },
+    { speaker: "시스템", text: "목소리는 크지 않았지만, 흔들림이 없었다.", background: bgKakao1_05, isProgress: true },
+    { speaker: "시스템", text: "개체가 반응했다. 그게 실수였다.", background: bgKakao1_05, isProgress: true },
+    { speaker: "시스템", text: "렌쟈는 공격이 아니라 '유도'를 택했다.", background: bgKakao1_05, isProgress: true },
+    { speaker: "시스템", text: "개체가 움직인 방향 그대로 몸을 틀어, 하카와 란이 설계한 위치로 밀어 넣었다.", background: bgKakao1_05, isProgress: true },
+    { speaker: "시스템", text: "짧은 총격음. 그리고 정적.", background: bgKakao1_05, isProgress: true },
+    { speaker: "시스템", text: "숨이 가라앉았다.", background: bgKakao1_05, isProgress: true },
+    { speaker: "시스템", text: "렌쟈는 연이를 다시 안았다.", background: bgKakao1_05, isProgress: true },
+    { speaker: "시스템", text: "손끝에 떨림은 없었다.", background: bgKakao1_05, isProgress: true },
+    { speaker: "시스템", text: "란이 주변을 확인하고 고개를 숙였다.", background: bgKakao1_05, isProgress: true },
+    { speaker: "시스템", text: "연이는 렌쟈의 소매를 꽉 붙잡았다.", background: bgKakao1_05, isProgress: true },
+    { speaker: "시스템", text: "도망치지 않았다.", background: bgKakao1_05, isProgress: true },
+    { speaker: "하카", text: "야, 얘 사람 보는 눈 있네.", background: bgKakao1_05, character: "하카" },
+    { speaker: "렌쟈", text: "우릴 본 게 아니라, 내가 멈출 줄 아는 걸 본 거겠지.", background: bgKakao1_05, character: "렌쟈" },
+    { speaker: "시스템", text: "그 말은 농담처럼 들렸지만, 아무도 웃지 않았다.", background: bgKakao1_05, isProgress: true },
+    { speaker: "시스템", text: "남은 개체들은 더 다가오지 않았다.", background: bgKakao1_05, isProgress: true },
+    { speaker: "시스템", text: "몇 초간의 정적 후, 그림자 속으로 흩어졌다.", background: bgKakao1_05, isProgress: true },
+    { speaker: "시스템", text: "숨소리만 남았다.", background: bgKakao1_05, isProgress: true },
+    { speaker: "시스템", text: "렌쟈는 그제야 연이를 내려다봤다.", background: bgKakao1_05, isProgress: true },
+    { speaker: "시스템", text: "연이는 도망치지 않고, 렌쟈의 소매를 앞발로 붙잡고 있었다.", background: bgKakao1_05, isProgress: true },
+    { speaker: "렌쟈", text: "괜찮아… 이제.", background: bgKakao1_05, character: "렌쟈" },
+    { speaker: "시스템", text: "란은 주변을 한 번 더 확인한 뒤, 천천히 고개를 숙였다.", background: bgKakao1_05, isProgress: true },
+    { speaker: "란", text: "누님 다치진 않았나요?", background: bgKakao1_05, character: "란" },
+    { speaker: "하카", text: "연이는 운 좋네. 우리 편 골라서.", background: bgKakao1_05, character: "하카" },
+    { speaker: "렌쟈", text: "이 아이, 데려가자.", background: bgKakao1_05, character: "렌쟈" },
+    { speaker: "시스템", text: "연이는 그 말이 이해된 것처럼, 렌쟈 쪽으로 더 가까이 붙었다.", background: bgKakao1_05, isProgress: true },
+    { speaker: "시스템", text: "그리고 그 순간부터, 이 탐사는 단순한 수색이 아니라 동행이 되었다.", background: bgKakao1_05, isProgress: true },
+
+    // S11 - 별장
+    { marker: "#S11", speaker: "시스템", text: "한편 별장", background: bgKakao1_07, isProgress: true },
+    { speaker: "시스템", text: "별장은 조용했다.", background: bgKakao1_07, isProgress: true },
+    { speaker: "시스템", text: "너무 조용해서, 작은 소리도 부딪혀 크게 울렸다.", background: bgKakao1_07, isProgress: true },
+    { speaker: "시스템", text: "엘은 창가에 서 있었고, 데일은 테이블 근처를 서성였다.", background: bgKakao1_07, isProgress: true },
+    { speaker: "시스템", text: "서로를 보지 않은 채 공기가 먼저 날카로워졌다.", background: bgKakao1_07, isProgress: true },
+    { speaker: "데일", text: "진짜 다들 나 버리고 간 기분이네.", background: bgKakao1_07, character: "데일" },
+    { speaker: "시스템", text: "엘은 대답하지 않았다.", background: bgKakao1_07, isProgress: true },
+    { speaker: "시스템", text: "시선을 돌리지도 않았다.", background: bgKakao1_07, isProgress: true },
+    { speaker: "데일", text: "야, 들었으면 뭐라고 좀 해. 항상 그 꼴이야. 렌쟈 말만 듣고, 란 말만 듣고.", background: bgKakao1_07, character: "데일" },
+    { speaker: "엘", text: "네가 남아도 된다고 판단했을 뿐이야.", background: bgKakao1_07, character: "엘" },
+    { speaker: "시스템", text: "짧고 건조한 말. 데일의 얼굴이 일그러졌다.", background: bgKakao1_07, isProgress: true },
+    { speaker: "데일", text: "판단? 너 뭐 신이야?", background: bgKakao1_07, character: "데일" },
+    { speaker: "시스템", text: "엘이 천천히 돌아봤다.", background: bgKakao1_07, isProgress: true },
+    { speaker: "시스템", text: "눈빛이 날이 서 있었다.", background: bgKakao1_07, isProgress: true },
+    { speaker: "엘", text: "신 아니야. 그래서 더 짜증 나.", background: bgKakao1_07, character: "엘" },
+    { speaker: "시스템", text: "데일이 웃었다. 비웃음에 가까웠다.", background: bgKakao1_07, isProgress: true },
+    { speaker: "데일", text: "아, 맞다. 넌 항상 효율이었지. 나 같은 건 귀찮고.", background: bgKakao1_07, character: "데일" },
+    { speaker: "엘", text: "응, 당연하지.", background: bgKakao1_07, character: "엘" },
+    { speaker: "데일", text: "나 같은 건 버려도 되는 거지?", background: bgKakao1_07, character: "데일" },
+    { speaker: "시스템", text: "말이 끝나기도 전에 데일이 앞으로 다가왔다.", background: bgKakao1_07, isProgress: true },
+    { speaker: "시스템", text: "거리는 너무 가까웠다.", background: bgKakao1_07, isProgress: true },
+    { speaker: "엘", text: "물러나.", background: bgKakao1_07, character: "엘" },
+    { speaker: "데일", text: "싫어.", background: bgKakao1_07, character: "데일" },
+    { speaker: "시스템", text: "손이 먼저 나갔다.", background: bgKakao1_07, isProgress: true },
+    { speaker: "시스템", text: "의도라기보단 쌓인 감정이 튀어나온 움직임이었다.", background: bgKakao1_07, isProgress: true },
+    { speaker: "시스템", text: "둔탁한 소리. 엘의 팔이 테이블 모서리에 부딪혔다.", background: bgKakao1_07, isProgress: true },
+    { speaker: "시스템", text: "얼굴 쪽으로 날아온 손이 스쳤고, 따끔한 감각이 남았다.", background: bgKakao1_07, isProgress: true },
+    { speaker: "시스템", text: "엘은 반사적으로 데일의 손목을 잡았다.", background: bgKakao1_07, isProgress: true },
+    { speaker: "시스템", text: "힘 조절이 늦었다.", background: bgKakao1_07, isProgress: true },
+    { speaker: "엘", text: "…그만해.", background: bgKakao1_07, character: "엘" },
+    { speaker: "데일", text: "맨날 그 말이지.", background: bgKakao1_07, character: "데일" },
+    { speaker: "시스템", text: "데일이 몸을 틀며 버텼다.", background: bgKakao1_07, isProgress: true },
+    { speaker: "시스템", text: "균형이 무너졌다.", background: bgKakao1_07, isProgress: true },
+    { speaker: "시스템", text: "바닥에 먼저 닿은 건 데일의 몸이었다.", background: bgKakao1_07, isProgress: true },
+    { speaker: "시스템", text: "숨이 한 박자 늦게 따라왔다.", background: bgKakao1_07, isProgress: true },
+    { speaker: "시스템", text: "엘은 즉시 손을 놓았다. 한 걸음 물러났다.", background: bgKakao1_07, isProgress: true },
+    { speaker: "엘", text: "…내가 그러게 ㅡ", background: bgKakao1_07, character: "엘" },
+    { speaker: "시스템", text: "데일은 대답하지 못했다.", background: bgKakao1_07, isProgress: true },
+    { speaker: "시스템", text: "옆구리를 붙잡은 채 숨을 몰아쉬었다.", background: bgKakao1_07, isProgress: true },
+    { speaker: "시스템", text: "엘의 팔에는 긁힌 자국이 남았고, 광대 쪽엔 얕은 상처가 번졌다.", background: bgKakao1_07, isProgress: true },
+    { speaker: "시스템", text: "데일은 일어나지 못했다.", background: bgKakao1_07, isProgress: true },
+    { speaker: "시스템", text: "고통을 삼키느라 얼굴이 하얗게 질렸다.", background: bgKakao1_07, isProgress: true },
+    { speaker: "시스템", text: "엘은 한동안 그대로 서 있었다.", background: bgKakao1_07, isProgress: true },
+    { speaker: "시스템", text: "눈앞의 상황을 '정리'하려는 표정이었다.", background: bgKakao1_07, isProgress: true },
+    { speaker: "엘", text: "... 그러게", background: bgKakao1_07, character: "엘" },
+    { speaker: "시스템", text: "말을 멈췄다. 설명도, 변명도 의미 없다는 걸 알았다.", background: bgKakao1_07, isProgress: true },
+    { speaker: "시스템", text: "데일의 숨이 점점 거칠어졌다.", background: bgKakao1_07, isProgress: true },
+    { speaker: "시스템", text: "바닥에 등을 붙인 채 한동안 움직이지 않던 몸이, 아주 천천히 꿈틀거렸다.", background: bgKakao1_07, isProgress: true },
+    { speaker: "시스템", text: "데일은 이를 악물었다.", background: bgKakao1_07, isProgress: true },
+    { speaker: "시스템", text: "통증 때문에가 아니라, 밀려오는 감정 때문이었다.", background: bgKakao1_07, isProgress: true },
+    { speaker: "데일", text: "…이렇게 끝낼 거면.", background: bgKakao1_07, character: "데일" },
+    { speaker: "시스템", text: "엘은 미세하게 긴장했다. 한 발짝 더 물러섰다.", background: bgKakao1_07, isProgress: true },
+    { speaker: "엘", text: "움직이지 마.", background: bgKakao1_07, character: "엘" },
+    { speaker: "데일", text: "진짜로.", background: bgKakao1_07, character: "데일" },
+    { speaker: "시스템", text: "데일의 손이 바닥을 짚었다.", background: bgKakao1_07, isProgress: true },
+    { speaker: "시스템", text: "비틀거리며 몸을 일으켰다. 균형이 무너질 뻔했지만 억지로 버텼다.", background: bgKakao1_07, isProgress: true },
+    { speaker: "엘", text: "데일.", background: bgKakao1_07, character: "엘" },
+    { speaker: "시스템", text: "데일은 대답하지 않았다.", background: bgKakao1_07, isProgress: true },
+    { speaker: "시스템", text: "대신, 바로 앞으로 몸을 던졌다.", background: bgKakao1_07, isProgress: true },
+    { speaker: "시스템", text: "충돌음이 별장 안을 울렸다.", background: bgKakao1_07, isProgress: true },
+    { speaker: "시스템", text: "엘의 어깨가 벽에 세게 부딪혔다.", background: bgKakao1_07, isProgress: true },
+    { speaker: "시스템", text: "아까 생긴 상처 위로 다시 충격이 겹쳤다.", background: bgKakao1_07, isProgress: true },
+
+    // S12 - 싸움 전개 (캐릭터 없음)
+    { marker: "#S12", speaker: "시스템", text: "엘은 이를 악물며 데일의 팔을 붙잡았다.", background: bgKakao1_08, isProgress: true, hideCharacter: true },
+    { speaker: "시스템", text: "이번엔 망설이지 않았다.", background: bgKakao1_08, isProgress: true, hideCharacter: true },
+    { speaker: "데일", text: "맨날— 이렇게—", background: bgKakao1_08, character: "데일", hideCharacter: true },
+    { speaker: "시스템", text: "숨이 끊어지듯 이어졌다.", background: bgKakao1_08, isProgress: true, hideCharacter: true },
+    { speaker: "데일", text: "위에서 내려다보는 눈이 제일 싫어.", background: bgKakao1_08, character: "데일", hideCharacter: true },
+    { speaker: "엘", text: "그런 적 없어.", background: bgKakao1_08, character: "엘", hideCharacter: true },
+    { speaker: "데일", text: "있었어.", background: bgKakao1_08, character: "데일", hideCharacter: true },
+    { speaker: "시스템", text: "데일의 이마가 엘의 턱 아래로 들이받혔다.", background: bgKakao1_08, isProgress: true, hideCharacter: true },
+    { speaker: "시스템", text: "둔한 통증이 머리까지 울렸다.", background: bgKakao1_08, isProgress: true, hideCharacter: true },
+    { speaker: "시스템", text: "엘은 균형을 잃지 않으려 데일의 어깨를 밀어냈다.", background: bgKakao1_08, isProgress: true, hideCharacter: true },
+    { speaker: "시스템", text: "하지만 데일은 물러서지 않았다.", background: bgKakao1_08, isProgress: true, hideCharacter: true },
+    { speaker: "시스템", text: "서로의 팔이 얽혔다.", background: bgKakao1_08, isProgress: true, hideCharacter: true },
+    { speaker: "시스템", text: "힘과 체중이 뒤엉킨 채 가구에 부딪히고, 다시 바닥으로 밀려났다.", background: bgKakao1_08, isProgress: true, hideCharacter: true },
+    { speaker: "시스템", text: "숨소리가 섞였다.", background: bgKakao1_08, isProgress: true, hideCharacter: true },
+    { speaker: "시스템", text: "거칠고, 불규칙하고, 제어되지 않은 상태.", background: bgKakao1_08, isProgress: true, hideCharacter: true },
+    { speaker: "엘", text: "그만좀해!", background: bgKakao1_08, character: "엘", hideCharacter: true },
+    { speaker: "데일", text: "이제 와서?", background: bgKakao1_08, character: "데일", hideCharacter: true },
+    { speaker: "시스템", text: "데일의 주먹이 엘의 옆구리를 스쳤다.", background: bgKakao1_08, isProgress: true, hideCharacter: true },
+    { speaker: "시스템", text: "완전히 들어가지 않았는데도 숨이 막혔다.", background: bgKakao1_08, isProgress: true, hideCharacter: true },
+    { speaker: "시스템", text: "엘은 반사적으로 데일의 허리를 붙잡아 바닥으로 넘겼다.", background: bgKakao1_08, isProgress: true, hideCharacter: true },
+    { speaker: "시스템", text: "이번엔 데일이 제대로 떨어졌다.", background: bgKakao1_08, isProgress: true, hideCharacter: true },
+    { speaker: "시스템", text: "둔탁한 소리. 짧은 비명.", background: bgKakao1_08, isProgress: true, hideCharacter: true },
+    { speaker: "시스템", text: "데일은 몸을 말아 쥐었다.", background: bgKakao1_08, isProgress: true, hideCharacter: true },
+    { speaker: "시스템", text: "이번엔 쉽게 일어나지 못했다.", background: bgKakao1_08, isProgress: true, hideCharacter: true },
+    { speaker: "시스템", text: "엘은 위에서 내려다보다가, 그 시선을 스스로 깨닫고 고개를 돌렸다.", background: bgKakao1_08, isProgress: true, hideCharacter: true },
+    { speaker: "엘", text: "... ", background: bgKakao1_08, character: "엘", hideCharacter: true },
+    { speaker: "시스템", text: "데일은 웃었다. 웃음이라고 부르기 어려운 소리였다.", background: bgKakao1_08, isProgress: true, hideCharacter: true },
+    { speaker: "데일", text: "그래. 항상 그 말이지.", background: bgKakao1_08, character: "데일", hideCharacter: true },
+    { speaker: "시스템", text: "엘은 한참을 서 있었다.", background: bgKakao1_08, isProgress: true, hideCharacter: true },
+    { speaker: "시스템", text: "도와야 할지, 떨어져야 할지 판단이 늦어졌다.", background: bgKakao1_08, isProgress: true, hideCharacter: true },
+    { speaker: "시스템", text: "결국 다가가려는 순간, 데일의 손이 엘의 옷깃을 붙잡았다.", background: bgKakao1_08, isProgress: true, hideCharacter: true },
+    { speaker: "데일", text: "도망치지 마.", background: bgKakao1_08, character: "데일", hideCharacter: true },
+    { speaker: "시스템", text: "힘은 거의 없었다.", background: bgKakao1_08, isProgress: true, hideCharacter: true },
+    { speaker: "시스템", text: "하지만 놓지 않겠다는 의지만은 분명했다.", background: bgKakao1_08, isProgress: true, hideCharacter: true },
+
+    // S13 - 침묵
+    { marker: "#S13", speaker: "시스템", text: "별장은 다시 조용해졌다.", background: bgKakao1_09, isProgress: true },
+    { speaker: "시스템", text: "이번엔, 둘 다 움직이지 않았다.", background: bgKakao1_09, isProgress: true },
+    { speaker: "시스템", text: "별장 안은 고요하다.", background: bgKakao1_09, isProgress: true },
+    { speaker: "시스템", text: "너무 고요해서, 숨소리마저 늦게 도착한다.", background: bgKakao1_09, isProgress: true },
+
+    // S14 - 귀환
+    { marker: "#S14", speaker: "시스템", text: "얼마나 지났을까.", background: bgKakao1_09, isProgress: true },
+    { speaker: "시스템", text: "문이 열린다. 바깥 공기가 밀려들고, 발소리가 겹친다.", background: bgKakao1_09, isProgress: true },
+    { speaker: "시스템", text: "렌쟈는 들어오자마자 멈춘다. 시선이 바닥으로 떨어진다.", background: bgKakao1_09, isProgress: true },
+    { speaker: "시스템", text: "엘과 데일. 서로 닿을 듯 말 듯한 거리로 쓰러져 있다.", background: bgKakao1_09, isProgress: true },
+    { speaker: "시스템", text: "가구 하나가 옆으로 밀려 있고, 바닥엔 마른 핏자국이 남아 있다.", background: bgKakao1_09, isProgress: true },
+    { speaker: "렌쟈", text: "…설마.", background: bgKakao1_09, character: "렌쟈" },
+    { speaker: "시스템", text: "하카는 말없이 주변을 훑는다.", background: bgKakao1_09, isProgress: true },
+    { speaker: "시스템", text: "부러진 의자 다리, 긁힌 벽, 어긋난 호흡.", background: bgKakao1_09, isProgress: true },
+    { speaker: "시스템", text: "하카는 낮게 숨을 뱉는다. 웃지도, 농담도 하지 않는다.", background: bgKakao1_09, isProgress: true },
+    { speaker: "시스템", text: "란은 한 발 늦게 들어온다.", background: bgKakao1_09, isProgress: true },
+    { speaker: "시스템", text: "상황을 보는 순간, 시선이 흔들린다. 그러나 소리 내지 않는다.", background: bgKakao1_09, isProgress: true },
+    { speaker: "시스템", text: "렌쟈는 바로 무릎을 꿇는다.", background: bgKakao1_09, isProgress: true },
+    { speaker: "시스템", text: "엘부터 본다. 얼굴, 팔, 호흡. 손이 빠르게 움직인다.", background: bgKakao1_09, isProgress: true },
+    { speaker: "시스템", text: "엘의 얼굴을 두드린다. 세게는 아니다. 정확하다.", background: bgKakao1_09, isProgress: true },
+    { speaker: "렌쟈", text: "엘. 오빠.", background: bgKakao1_09, character: "렌쟈" },
+    { speaker: "시스템", text: "잠시 후, 엘의 눈꺼풀이 떨린다.", background: bgKakao1_09, isProgress: true },
+    { speaker: "시스템", text: "숨이 크게 들어온다. 엘은 고개를 돌리려다 멈춘다.", background: bgKakao1_09, isProgress: true },
+    { speaker: "엘", text: "…뭐야.", background: bgKakao1_09, character: "엘" },
+    { speaker: "시스템", text: "렌쟈는 안도의 숨을 삼킨다. 그걸 들키지 않으려는 얼굴이다.", background: bgKakao1_09, isProgress: true },
+    { speaker: "렌쟈", text: "다녀왔어.", background: bgKakao1_09, character: "렌쟈" },
+    { speaker: "시스템", text: "엘의 시선이 천천히 옆으로 이동한다. 바닥에 누운 데일을 본다.", background: bgKakao1_09, isProgress: true },
+    { speaker: "엘", text: "…데일은.", background: bgKakao1_09, character: "엘" },
+    { speaker: "렌쟈", text: "아직.", background: bgKakao1_09, character: "렌쟈" },
+    { speaker: "시스템", text: "렌쟈는 바로 데일 쪽으로 이동한다.", background: bgKakao1_09, isProgress: true },
+    { speaker: "시스템", text: "이번엔 더 조심스럽다. 피부색, 체온, 숨의 깊이.", background: bgKakao1_09, isProgress: true },
+    { speaker: "시스템", text: "란은 말없이 렌쟈 곁에 선다. 손을 쥔 채, 움직이지 않는다.", background: bgKakao1_09, isProgress: true },
+    { speaker: "란", text: "…제가 도울 건 없을까요.", background: bgKakao1_09, character: "란" },
+    { speaker: "렌쟈", text: "데일 좀 방으로 옮겨줘.", background: bgKakao1_09, character: "렌쟈" },
+    { speaker: "시스템", text: "란은 고개를 끄덕인다. 묻지 않는다.", background: bgKakao1_09, isProgress: true },
+    { speaker: "시스템", text: "하카는 벽에 기대 서 있다. 시선이 엘과 데일 사이를 오간다.", background: bgKakao1_09, isProgress: true },
+    { speaker: "시스템", text: "엘은 대답하지 않는다. 눈을 감는다.", background: bgKakao1_09, isProgress: true },
+    { speaker: "시스템", text: "고통보다 먼저 온 피로에 잠식된다.", background: bgKakao1_09, isProgress: true },
+    { speaker: "시스템", text: "엘은 렌쟈한테 상처를 소독받고 있다.", background: bgKakao1_09, isProgress: true },
+    { speaker: "렌쟈", text: "앞으론 싸우지마. 우리 의약품 구해오느라 같이 고생했잖아. 넘쳐나지 않은거 알면서.", background: bgKakao1_09, character: "렌쟈" },
+    { speaker: "시스템", text: "엘은 아무말도 하지 못한다.", background: bgKakao1_09, isProgress: true },
+    { speaker: "시스템", text: "그날 밤이 지나고, 다음 날도 지나간다.", background: bgKakao1_09, isProgress: true },
+    { speaker: "시스템", text: "엘은 아침 일찍 깨어난다. 상처는 얕다.", background: bgKakao1_09, isProgress: true },
+    { speaker: "시스템", text: "움직일 때마다 욱신거리지만, 의식은 또렷하다.", background: bgKakao1_09, isProgress: true },
+    { speaker: "시스템", text: "렌쟈는 약을 갈아준다. 말은 적다.", background: bgKakao1_09, isProgress: true },
+    { speaker: "렌쟈", text: "움직이지 마.", background: bgKakao1_09, character: "렌쟈" },
+    { speaker: "엘", text: "….", background: bgKakao1_09, character: "엘" },
+    { speaker: "렌쟈", text: "아직이야.", background: bgKakao1_09, character: "렌쟈" },
+    { speaker: "시스템", text: "엘은 고개를 돌린다. 더 묻지 않는다.", background: bgKakao1_09, isProgress: true },
+    { speaker: "시스템", text: "란은 문가에 앉아 있다.", background: bgKakao1_09, isProgress: true },
+    { speaker: "시스템", text: "책을 읽는 척하지만, 시선은 계속 안쪽으로 향한다.", background: bgKakao1_09, isProgress: true },
+    { speaker: "란", text: "누님, 물 드실래요.", background: bgKakao1_09, character: "란" },
+    { speaker: "렌쟈", text: "응. 고마워.", background: bgKakao1_09, character: "렌쟈" },
+    { speaker: "시스템", text: "하카는 밖에서 담배를 만지작거린다. 피우지는 않는다.", background: bgKakao1_09, isProgress: true },
+
+    // S15 - 회복 중 (캐릭터 없음)
+    { marker: "#S15", speaker: "시스템", text: "이틀째 밤이 끝날 즈음,", background: bgKakao1_10, isProgress: true, hideCharacter: true },
+    { speaker: "시스템", text: "하카와 란, 파스닐은 데일곁에 있다.", background: bgKakao1_10, isProgress: true, hideCharacter: true },
+    { speaker: "란", text: "살아있는게 신기한 부상이네요. 데일씨가 일어날 수 있을까요?", background: bgKakao1_10, character: "란", hideCharacter: true },
+    { speaker: "하카", text: "걱정마라. 내가 볼땐 오늘안에 일어나.", background: bgKakao1_10, character: "하카", hideCharacter: true },
+    { speaker: "란", text: "아니 이정도 부상에 무슨...", background: bgKakao1_10, character: "란", hideCharacter: true },
+    { speaker: "시스템", text: "하카가 코웃음을 친다.", background: bgKakao1_10, isProgress: true, hideCharacter: true },
+    { speaker: "하카", text: "오늘안에 일어나면 아까 너 누님한테 받은 초코바 내놔", background: bgKakao1_10, character: "하카", hideCharacter: true },
+    { speaker: "시스템", text: "그때 데일의 손가락이 미세하게 움직인다.", background: bgKakao1_10, isProgress: true, hideCharacter: true },
+    { speaker: "시스템", text: "눈이 열린다. 초점이 없다가, 천천히 맞춰진다.", background: bgKakao1_10, isProgress: true, hideCharacter: true },
+    { speaker: "데일", text: "…여기.", background: bgKakao1_10, character: "데일", hideCharacter: true },
+    { speaker: "하카", text: "거봐. 초코바 내놔.", background: bgKakao1_10, character: "하카", hideCharacter: true },
+    { speaker: "시스템", text: "데일은 한숨을 쉬려다, 몸이 말을 듣지 않는 걸 깨닫는다.", background: bgKakao1_10, isProgress: true, hideCharacter: true },
+    { speaker: "데일", text: "…아.", background: bgKakao1_10, character: "데일", hideCharacter: true },
+    { speaker: "란", text: "사람이 저 꼴에 어제 열이 42°c까지 올랐는데요?", background: bgKakao1_10, character: "란", hideCharacter: true },
+    { speaker: "하카", text: "아 등신아 쟨 외계인이잖아", background: bgKakao1_10, character: "하카", hideCharacter: true },
+    { speaker: "시스템", text: "데일은 눈을 옆으로 굴린다.", background: bgKakao1_10, isProgress: true, hideCharacter: true },
+    { speaker: "시스템", text: "잠깐의 정적.", background: bgKakao1_10, isProgress: true, hideCharacter: true },
+    { speaker: "데일", text: "나 얼마나 다쳤냐.", background: bgKakao1_10, character: "데일", hideCharacter: true },
+    { speaker: "란", text: "알고싶어요?", background: bgKakao1_10, character: "란", hideCharacter: true },
+
+    // S16 - 진단 (캐릭터 없음)
+    { marker: "#S16", speaker: "란", text: "뇌진탕, 갈비뼈 골절, 왼팔 골절, 오른발 인대 파열, 이마랑 입가 그리고 귀쪽이 찢어졌고요 피 많이나서 더 늦었으면 수혈해야 했어요. 어제 저녁엔 고열도 있었고요.", background: bgKakao1_11, character: "란", hideCharacter: true },
+    { speaker: "시스템", text: "데일은 아무 말도 하지 않는다.", background: bgKakao1_11, isProgress: true, hideCharacter: true },
+    { speaker: "시스템", text: "눈을 다시 감는다.", background: bgKakao1_11, isProgress: true, hideCharacter: true },
+    { speaker: "란", text: "아 뿔도 부러졌습니다.", background: bgKakao1_11, character: "란", hideCharacter: true },
+    { speaker: "시스템", text: "렌쟈가 들어온다.", background: bgKakao1_11, isProgress: true, hideCharacter: true },
+    { speaker: "렌쟈", text: "언니 일어났네. 오늘안에 일어날 줄 알았어.", background: bgKakao1_11, character: "렌쟈", hideCharacter: true },
+    { speaker: "란", text: "왜 저빼고 알고 있던건가요.", background: bgKakao1_11, character: "란", hideCharacter: true },
+    { speaker: "데일", text: "렌쟈야.", background: bgKakao1_11, character: "데일", hideCharacter: true },
+    { speaker: "렌쟈", text: "응. 언니.", background: bgKakao1_11, character: "렌쟈", hideCharacter: true },
+    { speaker: "데일", text: "...엘은 얼마나 다쳤냐.", background: bgKakao1_11, character: "데일", hideCharacter: true },
+    { speaker: "렌쟈", text: "언니가 더 잘 알지 않아?", background: bgKakao1_11, character: "렌쟈", hideCharacter: true },
+    { speaker: "시스템", text: "별장은 다시 조용해진다.", background: bgKakao1_11, isProgress: true, hideCharacter: true },
+    { speaker: "시스템", text: "이번엔, 모두 숨을 쉬고 있다.", background: bgKakao1_11, isProgress: true, hideCharacter: true },
+
+    // S17 - 11일차 아침
+    { marker: "#S17", speaker: "시스템", text: "11일차. 아침 공기가 한결 가볍다.", background: bgKakao1_12, isProgress: true },
+    { speaker: "시스템", text: "위험은 완전히 사라진 게 아니지만, 오늘은 숨을 고를 수 있는 날이다.", background: bgKakao1_12, isProgress: true },
+    { speaker: "시스템", text: "데일은 아직 움직이지 못한다. 침대에 누운 채 천장을 보고 있다.", background: bgKakao1_12, isProgress: true },
+    { speaker: "시스템", text: "붕대를 감은 몸은 조금만 숨을 크게 쉬어도 반응한다.", background: bgKakao1_12, isProgress: true },
+    { speaker: "시스템", text: "렌쟈는 밖으로 나갈 준비를 한다. 가방을 메는 사이, 작은 그림자가 발치에 붙어 다닌다.", background: bgKakao1_12, isProgress: true },
+    { speaker: "시스템", text: "연이다. 짧은 꼬리가 바닥을 쓸며 따라온다.", background: bgKakao1_12, isProgress: true },
+    { speaker: "렌쟈", text: "너도 가고 싶어?", background: bgKakao1_12, character: "렌쟈" },
+    { speaker: "시스템", text: "연이가 고개를 갸웃한다. 눈이 반짝인다.", background: bgKakao1_12, isProgress: true, hideCharacter: true },
+    { speaker: "시스템", text: "하카는 문 옆에 서 있다. 차 키를 손에서 굴린다.", background: bgKakao1_12, isProgress: true },
+    { speaker: "하카", text: "가볍게만 보자. 오늘은.", background: bgKakao1_12, character: "하카" },
+    { speaker: "렌쟈", text: "응.", background: bgKakao1_12, character: "렌쟈" },
+    { speaker: "시스템", text: "렌쟈가 고개를 끄덕인다. 란은 이미 장비를 정리해 놓았다. 렌쟈가 움직이면 바로 옆으로 붙는다.", background: bgKakao1_12, isProgress: true },
+    { speaker: "란", text: "누님, 돌아오는 시간은 짧게 잡으시는 게 좋겠습니다.", background: bgKakao1_12, character: "란" },
+    { speaker: "렌쟈", text: "응. 데일도 있고.", background: bgKakao1_12, character: "렌쟈" },
+    { speaker: "시스템", text: "파스닐이 연이를 힐끔 본다.", background: bgKakao1_12, isProgress: true },
+    { speaker: "파스닐", text: "점점 사람 같아진다.", background: bgKakao1_12, isMonologue: true, hideCharacter: true },
+    { speaker: "시스템", text: "문이 닫힌다. 별장 안에는 엘, 데일만 남는다.", background: bgKakao1_12, isProgress: true, hideCharacter: true },
+
+    // S18 - 탐사
+    { marker: "#S18", speaker: "시스템", text: "탐사는 짧다. 고지나 연구소 외곽, 이미 몇 번 훑었던 구역이다.", background: bgKakao1_13, isProgress: true },
+    { speaker: "시스템", text: "렌쟈는 앞에 선다. 연이는 렌쟈의 발밑을 벗어나지 않는다.", background: bgKakao1_13, isProgress: true },
+    { speaker: "시스템", text: "낡은 구조물 사이에서 작은 소음이 튄다. 연이가 먼저 반응한다. 등의 털이 곤두선다.", background: bgKakao1_13, isProgress: true },
+    { speaker: "시스템", text: "란은 즉시 한 발 물러난다. 하카는 웃음기 없는 얼굴로 주변을 본다.", background: bgKakao1_13, isProgress: true },
+    { speaker: "시스템", text: "돌연변이 소형 개체. 날카로운 앞발, 불안정한 움직임.", background: bgKakao1_13, isProgress: true },
+    { speaker: "하카", text: "둘이 동족은 아닌가봐. 비슷하게 생겼는데.", background: bgKakao1_13, character: "하카" },
+    { speaker: "시스템", text: "연이가 낮게 울음소리를 낸다. 상대가 반응한다.", background: bgKakao1_13, isProgress: true },
+    { speaker: "시스템", text: "순간, 란이 앞으로 나선다. 망설임 없다.", background: bgKakao1_13, isProgress: true },
+    { speaker: "시스템", text: "발을 디디는 각도, 팔의 궤적. 짧고 정확하다.", background: bgKakao1_13, isProgress: true },
+    { speaker: "시스템", text: "충돌은 짧다. 소음도 크지 않다.", background: bgKakao1_13, isProgress: true },
+    { speaker: "시스템", text: "란의 손도끼에 걸죽한 액체가 묻어있다.", background: bgKakao1_13, isProgress: true },
+    { speaker: "하카", text: "렌쟈야 쟨 안데려가냐.", background: bgKakao1_13, character: "하카" },
+    { speaker: "렌쟈", text: "오빠는 내가 애니멀호더인줄 알아? 나 아무거나 안키워.", background: bgKakao1_13, character: "렌쟈" },
+    { speaker: "파스닐", text: "아니구나.", background: bgKakao1_13, isMonologue: true },
+    { speaker: "하카", text: "그래서 엘같은거 집에 두고 키우냐.", background: bgKakao1_13, character: "하카" },
+    { speaker: "시스템", text: "연이는 렌쟈 뒤에 숨듯 붙는다. 위험이 사라진 걸 알아차린 뒤, 다시 꼬리를 흔든다.", background: bgKakao1_13, isProgress: true },
+    { speaker: "렌쟈", text: "다쳤어?", background: bgKakao1_13, character: "렌쟈" },
+    { speaker: "시스템", text: "연이는 고개를 젓는다. 그걸 보고 렌쟈는 웃는다.", background: bgKakao1_13, isProgress: true },
+    { speaker: "렌쟈", text: "역시 연이.", background: bgKakao1_13, character: "렌쟈" },
+    { speaker: "란", text: "아.", background: bgKakao1_13, character: "란" },
+    { speaker: "렌쟈", text: "왜그래?", background: bgKakao1_13, character: "렌쟈" },
+    { speaker: "란", text: "이거 왜 안닦여요?", background: bgKakao1_13, character: "란" },
+    { speaker: "시스템", text: "란이 손도끼를 손수건으로 박박 닦고있다.", background: bgKakao1_13, isProgress: true },
+    { speaker: "렌쟈", text: "피는 원래 물이랑 천으로는 완전히 안지워져. 과산화수소 구해갈까?", background: bgKakao1_13, character: "렌쟈" },
+    { speaker: "란", text: "곤란하네요. 녹이 있어서 과산화수소 쓰면 산화때문이 오히려 녹이 심해질거같은데.", background: bgKakao1_13, character: "란" },
+    { speaker: "파스닐", text: "뭐라는거야.", background: bgKakao1_13, isMonologue: true, hideCharacter: true },
+    { speaker: "하카", text: "란 쟤는 문과인데 별걸 다알아.", background: bgKakao1_13, character: "하카" },
+    { speaker: "하카", text: "애초에 왜 과산화수소라고 하는거야. 그냥 표백제라고 하라고.", background: bgKakao1_13, character: "하카" },
+    { speaker: "란", text: "멋있잖아요.", background: bgKakao1_13, character: "란" },
+    { speaker: "시스템", text: "렌쟈와 하카는 주변을 탐사하고 있다. 얼마 없는 쉬는시간에도 그들은 고지나의 흔적을 쫓아야한다.", background: bgKakao1_13, isProgress: true },
+    { speaker: "시스템", text: "연이는 앞발로 나무 조각을 굴린다. 이빨은 보이지 않는다. 대신 코로 냄새를 맡고, 귀가 먼저 반응한다.", background: bgKakao1_13, isProgress: true },
+    { speaker: "시스템", text: "파스닐이 그 모습을 유심히 본다. 란은 연이에서 시선을 떼지 않는다.", background: bgKakao1_13, isProgress: true },
+    { speaker: "파스닐", text: "공격성은 낮아. 너무 낮다.", background: bgKakao1_13, isMonologue: true, hideCharacter: true },
+    { speaker: "파스닐", text: "란, 쟤 말이에요.", background: bgKakao1_13, hideCharacter: true },
+    { speaker: "란", text: "네.", background: bgKakao1_13, character: "란" },
+    { speaker: "파스닐", text: "육식 같아 보이나요?", background: bgKakao1_13, hideCharacter: true },
+    { speaker: "시스템", text: "란은 잠깐 생각한다. 대답 전에 연이를 한 번 더 본다.", background: bgKakao1_13, isProgress: true },
+    { speaker: "란", text: "이빨 구조만 보면... 애매합니다.", background: bgKakao1_13, character: "란" },
+    { speaker: "파스닐", text: "애매?", background: bgKakao1_13, hideCharacter: true },
+    { speaker: "란", text: "앞니는 작고, 어금니도 뾰족하지 않습니다. 완전한 육식동물의 치열은 아니에요.", background: bgKakao1_13, character: "란" },
+    { speaker: "시스템", text: "연이는 그 순간 고개를 들어 란을 본다. 눈이 마주치자 꼬리를 한 번 흔든다.", background: bgKakao1_13, isProgress: true },
+    { speaker: "파스닐", text: "사람 반응을 학습했다.", background: bgKakao1_13, isMonologue: true, hideCharacter: true },
+    { speaker: "파스닐", text: "그럼 초식?", background: bgKakao1_13, hideCharacter: true },
+    { speaker: "란", text: "초식동물도 아닙니다. 소화기관 반응이 달라요. 아까 말린 고기 냄새에 반응했지만, 흥분하지는 않았죠.", background: bgKakao1_13, character: "란" },
+    { speaker: "파스닐", text: "잡식.", background: bgKakao1_13, hideCharacter: true },
+    { speaker: "란", text: "네. 원래는 잡식이었을 가능성이 큽니다.", background: bgKakao1_13, character: "란" },
+    { speaker: "시스템", text: "연이는 렌쟈가 찾아온 말린 과일 조각을 툭 건드린다. 먹지는 않는다. 냄새만 맡는다.", background: bgKakao1_13, isProgress: true },
+    { speaker: "파스닐", text: "원래 뭐였을까.", background: bgKakao1_13, hideCharacter: true },
+    { speaker: "시스템", text: "란은 시선을 아래로 내린다. 연이의 다리, 꼬리, 체형을 천천히 훑는다.", background: bgKakao1_13, isProgress: true },
+    { speaker: "란", text: "너구리나 족제비 계열일 가능성이 있습니다.", background: bgKakao1_13, character: "란" },
+    { speaker: "파스닐", text: "아... 그래서 손 쓰는 게 능숙하구나.", background: bgKakao1_13, hideCharacter: true },
+    { speaker: "시스템", text: "연이가 나무 조각을 앞발로 세워본다. 균형을 잡으려다 넘어뜨린다.", background: bgKakao1_13, isProgress: true },
+    { speaker: "란", text: "그리고—", background: bgKakao1_13, character: "란" },
+    { speaker: "파스닐", text: "응?", background: bgKakao1_13, hideCharacter: true },
+    { speaker: "란", text: "사람을 무서워하지 않습니다. 야생 개체라면 설명이 어려워요.", background: bgKakao1_13, character: "란" },
+    { speaker: "파스닐", text: "돌연변이 + 인간 환경 적응...", background: bgKakao1_13, isMonologue: true, hideCharacter: true },
+    { speaker: "파스닐", text: "그러면 인간이 키우던... 연구 대상이었을 가능성도 있겠네요.", background: bgKakao1_13, hideCharacter: true },
+    { speaker: "시스템", text: "란은 고개를 끄덕이지 않는다. 부정도 하지 않는다.", background: bgKakao1_13, isProgress: true },
+    { speaker: "란", text: "확정하긴 이릅니다.", background: bgKakao1_13, character: "란" },
+    { speaker: "란", text: "하지만 누님이 위험하다고 느끼지 않는다는 점은 중요합니다.", background: bgKakao1_13, character: "란" },
+    { speaker: "파스닐", text: "렌쟈씨 기준 신뢰도는 꽤 높은거 같아요.", background: bgKakao1_13, hideCharacter: true },
+    { speaker: "파스닐", text: "둘다.", background: bgKakao1_13, isMonologue: true, hideCharacter: true },
+    { speaker: "시스템", text: "연이는 그 이름이 들리자 귀를 쫑긋 세운다. 그리고 렌쟈 쪽을 본다.", background: bgKakao1_13, isProgress: true },
+    { speaker: "란", text: "반응이 빠릅니다.", background: bgKakao1_13, character: "란" },
+    { speaker: "파스닐", text: "지능도 평균 이상이고.", background: bgKakao1_13, hideCharacter: true },
+    { speaker: "시스템", text: "연이는 하품을 한다. 송곳니가 잠깐 보이지만, 위협적이지 않다.", background: bgKakao1_13, isProgress: true },
+    { speaker: "파스닐", text: "연이는 무기보다 '증거'에 가깝다.", background: bgKakao1_13, isMonologue: true, hideCharacter: true },
+    { speaker: "시스템", text: "란은 잠시 침묵한다. 그러다 부드럽게 말한다.", background: bgKakao1_13, isProgress: true },
+    { speaker: "란", text: "그렇다면... 관찰이 우선이겠군요.", background: bgKakao1_13, character: "란" },
+    { speaker: "시스템", text: "연이는 그 사이 렌쟈 발치로 가서 몸을 말아 눕는다. 완전히 안심한 모습이다.", background: bgKakao1_13, isProgress: true },
+    { speaker: "파스닐", text: "원래 저런 동물이었던게 아니라... 진화하는 걸까.", background: bgKakao1_13, isMonologue: true, hideCharacter: true },
+
+    // S19 - 별장 귀환
+    { marker: "#S19", speaker: "시스템", text: "별장으로 돌아오자 분위기가 달라진다. 안은 여전히 미묘하다.", background: bgKakao1_14, isProgress: true },
+    { speaker: "시스템", text: "엘은 의자에 앉아 있다. 팔에 붕대. 얼굴의 상처는 이미 굳어 있다.", background: bgKakao1_14, isProgress: true },
+    { speaker: "시스템", text: "데일은 침대에 반쯤 몸을 세운다. 시선이 엘 쪽으로 가지 않는다.", background: bgKakao1_14, isProgress: true },
+    { speaker: "시스템", text: "정적.", background: bgKakao1_14, isProgress: true },
+    { speaker: "시스템", text: "하카는 벽에 기대 선다. 란은 두 사람 사이를 보며 서 있다.", background: bgKakao1_14, isProgress: true },
+    { speaker: "란", text: "차 드시겠어요?", background: bgKakao1_14, character: "란" },
+    { speaker: "데일", text: "응.", background: bgKakao1_14, character: "데일" },
+    { speaker: "시스템", text: "엘도 고개를 끄덕인다.", background: bgKakao1_14, isProgress: true },
+    { speaker: "시스템", text: "렌쟈는 연이를 데리고 들어온다. 연이는 데일을 보자 잠시 멈춘다. 그러다 천천히 다가간다.", background: bgKakao1_14, isProgress: true },
+    { speaker: "시스템", text: "데일은 처음엔 경계한다. 하지만 연이가 조심스럽게 침대 옆에 앉는 걸 보고 시선을 내린다.", background: bgKakao1_14, isProgress: true },
+    { speaker: "데일", text: "쟤 뭐야.", background: bgKakao1_14, character: "데일" },
+    { speaker: "렌쟈", text: "연이.", background: bgKakao1_14, character: "렌쟈" },
+    { speaker: "데일", text: "그건 이름이고.", background: bgKakao1_14, character: "데일" },
+    { speaker: "렌쟈", text: "응. 맞아.", background: bgKakao1_14, character: "렌쟈" },
+    { speaker: "데일", text: "하...", background: bgKakao1_14, character: "데일" },
+    { speaker: "시스템", text: "엘은 그 장면을 본다. 아무 말도 하지 않는다.", background: bgKakao1_14, isProgress: true },
+    { speaker: "시스템", text: "하카는 낮게 웃는다.", background: bgKakao1_14, isProgress: true },
+    { speaker: "시스템", text: "연이는 데일의 손에 코를 들이민다. 데일은 잠시 망설이다가, 손가락을 조금 움직인다.", background: bgKakao1_14, isProgress: true },
+    { speaker: "시스템", text: "작은 접촉. 아주 작은 변화.", background: bgKakao1_14, isProgress: true },
+    { speaker: "시스템", text: "별장은 아직 어색하다. 하지만, 무너지지는 않는다.", background: bgKakao1_14, isProgress: true },
+    { speaker: "시스템", text: "별장은 조용하다. 너무 조용해서, 바람 소리마저 눈에 띈다.", background: bgKakao1_14, isProgress: true },
+    { speaker: "렌쟈", text: "미안하지만 둘이 가서 외벽수리좀 해줘.", background: bgKakao1_14, character: "렌쟈" },
+    { speaker: "하카", text: "모처럼 휴식인데.. 귀찮아.", background: bgKakao1_14, character: "하카" },
+    { speaker: "렌쟈", text: "오빠말고 신체 멀쩡한 남정네가 없어.", background: bgKakao1_14, character: "렌쟈" },
+    { speaker: "파스닐", text: "난 포함 안해주나보다.", background: bgKakao1_14, isMonologue: true, hideCharacter: true },
+    { speaker: "파스닐", text: "란은 어깨만 두번 다쳤고, 엘은....", background: bgKakao1_14, isMonologue: true, hideCharacter: true },
+    { speaker: "하카", text: "그럼 얘도 데려갈래. 혼자 가기엔 나 너무 가녀리잖아.", background: bgKakao1_14, character: "하카" },
+
+    // S20 - 외벽 수리 (선택지 분기)
+    { marker: "#S20", speaker: "시스템", text: "별장 뒤편. 외벽 판자 몇 장이 들떠 있다.", background: bgNearForest, isProgress: true },
+    { speaker: "시스템", text: "하카는 사다리를 세워두고 팔짱을 낀 채 올려다본다.", background: bgNearForest, isProgress: true },
+    { speaker: "하카", text: "비 오면 여기부터 새. 지금 안 막으면 밤에 다 젖어.", background: bgNearForest, character: "하카" },
+    { speaker: "시스템", text: "파스닐이 장갑을 낀다. 망치, 못, 임시 보강판.", background: bgNearForest, isProgress: true },
+    { speaker: "파스닐", text: "쉬는 날이라는 말은, 안 죽어도 된다는 뜻은 아니다.", background: bgNearForest, isMonologue: true, hideCharacter: true },
+    { speaker: "파스닐", text: "사다리좀 잡아줘요.", background: bgNearForest, hideCharacter: true },
+    { speaker: "시스템", text: "하카는 말없이 사다리 한쪽을 발로 고정한다. 눈은 이미 주변 숲을 훑고 있다.", background: bgNearForest, isProgress: true },
+    { speaker: "하카", text: "소리 나면 바로 내려와.", background: bgNearForest, character: "하카" },
+    { speaker: "파스닐", text: "감염자 때문인가요?", background: bgNearForest, hideCharacter: true },
+    { speaker: "하카", text: "아니. 소리 듣고 오는 건 꼭 감염자만은 아니거든.", background: bgNearForest, character: "하카" },
+    { speaker: "시스템", text: "파스닐은 고개를 끄덕이고 사다리를 오른다. 판자 하나를 떼어내자, 안쪽 구조가 드러난다.", background: bgNearForest, isProgress: true },
+    { speaker: "시스템", text: "그때— 멀리서, 짧은 자갈 굴러가는 소리.", background: bgNearForest, isProgress: true },
+    { speaker: "시스템", text: "하카의 고개가 즉각 돌아간다.", background: bgNearForest, isProgress: true },
+    { speaker: "하카", text: "멈춰.", background: bgNearForest, character: "하카" },
+    { speaker: "시스템", text: "파스닐은 그대로 굳는다. 망치도 들지 않는다.", background: bgNearForest, isProgress: true },
+    { speaker: "파스닐", text: "지금 선택해야 한다.", background: bgNearForest, isMonologue: true, hideCharacter: true },
+    { choices: [{ text: "바로 내려간다", nextMarker: "#S20_1" }, { text: "조용히 작업을 마저 끝낸다", nextMarker: "#S21" }], speaker: "선택", background: bgNearForest },
+
+    // S20 - 선택지 1: 바로 내려간다
+    { marker: "#S20_1", speaker: "시스템", text: "파스닐은 망치를 판자 위에 얹고, 한 칸 한 칸 천천히 내려온다.", background: bgNearForest, isProgress: true },
+    { speaker: "시스템", text: "사다리에서 발을 떼는 순간— 숲 가장자리에서 작은 그림자가 스친다.", background: bgNearForest, isProgress: true },
+    { speaker: "시스템", text: "하카는 총을 들지 않는다. 대신 돌 하나를 집어 반대 방향으로 던진다.", background: bgNearForest, isProgress: true },
+    { speaker: "시스템", text: "딱. 소리.", background: bgNearForest, isProgress: true },
+    { speaker: "시스템", text: "그림자는 그쪽으로 사라진다.", background: bgNearForest, isProgress: true },
+    { speaker: "하카", text: "잘 내려왔다.", background: bgNearForest, character: "하카" },
+    { speaker: "파스닐", text: "작업은—", background: bgNearForest, hideCharacter: true },
+    { speaker: "하카", text: "안 급한 건 나중에 해. 사람 먼저 남아야지.", background: bgNearForest, character: "하카" },
+    { speaker: "시스템", text: "파스닐은 숨을 고른다.", background: bgNearForest, isProgress: true },
+    { speaker: "파스닐", text: "죽지 않은건가?", background: bgNearForest, isMonologue: true, hideCharacter: true },
+    { speaker: "시스템", text: "하카는 사다리를 접으며 덧붙인다.", background: bgNearForest, isProgress: true },
+    { speaker: "하카", text: "아포칼립스에서 제일 오래 가는 놈들 특징 알아?", background: bgNearForest, character: "하카" },
+    { speaker: "파스닐", text: "도망 잘 치는 사람?", background: bgNearForest, hideCharacter: true },
+    { speaker: "하카", text: "아니. 나랑 같이있는놈. 난 무조건 살거든.", background: bgNearForest, character: "하카" },
+    { speaker: "파스닐", text: "어디서 나오는 자신감일까. 경험?", background: bgNearForest, isMonologue: true, hideCharacter: true },
+    { speaker: "시스템", text: "작업은 절반만 끝났다. 하지만 외벽은 임시로 버틴다.", background: bgNearForest, isProgress: true },
+    { speaker: "시스템", text: "하카는 담배 대신 나뭇조각을 씹는다.", background: bgNearForest, isProgress: true, hideCharacter: true },
+
+    // S21 - 12일차 아침
+    { marker: "#S21", speaker: "시스템", text: "12일차. 아침이 늦게 시작된다.", background: bgKakao1_15, isProgress: true },
+    { speaker: "시스템", text: "별장 안은 드물게 조용하다.", background: bgKakao1_15, isProgress: true },
+    { speaker: "시스템", text: "전날 새벽에 비가 왔던 탓에 창밖 숲은 젖은 빛을 머금고 있다.", background: bgKakao1_15, isProgress: true },
+    { speaker: "시스템", text: "하카는 주방 테이블에 앉아 지도 위에 컵을 올려놓는다.", background: bgKakao1_15, isProgress: true },
+    { speaker: "하카", text: "여기 커피 자국 남기면 이제 여기가 거점이야.", background: bgKakao1_15, character: "하카" },
+    { speaker: "데일", text: "그런 미신 좀 그만 믿어.", background: bgKakao1_15, character: "데일" },
+    { speaker: "하카", text: "미신 아니고 경험이지.", background: bgKakao1_15, character: "하카" },
+    { speaker: "시스템", text: "데일은 소파에 반쯤 누운 채 다친 쪽 다리를 뻗어두고 있다. 완전히 회복되진 않았지만 숨은 안정적이다.", background: bgKakao1_15, isProgress: true },
+    { speaker: "시스템", text: "엘은 창가에 서 있다. 밖을 보지만, 초점은 멀다.", background: bgKakao1_15, isProgress: true },
+    { speaker: "시스템", text: "렌쟈는 테이블 옆에 앉아 연필로 지도를 돌려가며 선을 긋는다.", background: bgKakao1_15, isProgress: true },
+    { speaker: "렌쟈", text: "오늘은 멀리 안 가. 외곽 한 바퀴만.", background: bgKakao1_15, character: "렌쟈" },
+    { speaker: "파스닐", text: "'오늘'이라는 단어를 아직 쓸 수 있다는 게 이상하다.", background: bgKakao1_15, isMonologue: true, hideCharacter: true },
+    { speaker: "시스템", text: "란은 메모를 정리한다. 종이를 가지런히 맞추는 동작이 조심스럽다.", background: bgKakao1_15, isProgress: true },
+    { speaker: "란", text: "물류창고 쪽은 이미 한 번 지나갔습니다.", background: bgKakao1_15, character: "란" },
+    { speaker: "란", text: "같은 루트는 피하는 게 좋겠습니다.", background: bgKakao1_15, character: "란" },
+    { speaker: "렌쟈", text: "응. 그래서 여기.", background: bgKakao1_15, character: "렌쟈" },
+    { speaker: "시스템", text: "렌쟈는 지도에 표시된 산자락 아래쪽을 가리킨다.", background: bgKakao1_15, isProgress: true },
+    { speaker: "렌쟈", text: "고지나 본부로 바로 안 가고 주변부터 훑어보자. 표식이 남아 있을 수도 있어.", background: bgKakao1_15, character: "렌쟈" },
+    { speaker: "하카", text: "탐사팀 나눌까? 나 가고싶어.", background: bgKakao1_15, character: "하카" },
+    { speaker: "렌쟈", text: "그럴까. 그럼 오빠, 데일언니 데려가.", background: bgKakao1_15, character: "렌쟈" },
+    { speaker: "시스템", text: "데일이 눈을 뜬다.", background: bgKakao1_15, isProgress: true },
+    { speaker: "데일", text: "?? 나?", background: bgKakao1_15, character: "데일" },
+    { speaker: "렌쟈", text: "응. 오늘은 연습 같은 거야.", background: bgKakao1_15, character: "렌쟈" },
+    { speaker: "시스템", text: "엘은 그 말을 듣고 고개를 아주 조금 돌린다.", background: bgKakao1_15, isProgress: true },
+    { speaker: "엘", text: "할머니껜 재활이 더 맞는말 아닐까.", background: bgKakao1_15, character: "엘" },
+    { speaker: "데일", text: "지랄 진짜.", background: bgKakao1_15, character: "데일" },
+    { speaker: "시스템", text: "지도에 표시하는 렌쟈가 유독 신중하다. 아직 상태가 안좋은 데일을 신경쓰는 거겠지.", background: bgKakao1_15, isProgress: true },
+    { speaker: "하카", text: "아주 꼼꼼하시네.", background: bgKakao1_15, character: "하카" },
+    { speaker: "렌쟈", text: "습관은 위기 때 나온다.", background: bgKakao1_15, character: "렌쟈" },
+    { speaker: "하카", text: "그래서 난 항상 위기야.", background: bgKakao1_15, character: "하카" },
+    { speaker: "시스템", text: "하카가 웃는다.", background: bgKakao1_15, isProgress: true },
+    { speaker: "란", text: "누님. 엘씨 상태는?", background: bgKakao1_15, character: "란" },
+    { speaker: "시스템", text: "렌쟈는 바로 답하지 않는다. 연필을 내려놓고 잠깐 숨을 고른다.", background: bgKakao1_15, isProgress: true },
+    { speaker: "렌쟈", text: "지금은 괜찮아. 그래서 더 확인해야지.", background: bgKakao1_15, character: "렌쟈" },
+    { speaker: "파스닐", text: "괜찮다는 말이 안심용이라는 걸 다들 알고 있다.", background: bgKakao1_15, isMonologue: true, hideCharacter: true },
+    { speaker: "시스템", text: "연이는 난로 옆에서 작게 몸을 말고 있다. 꼬리가 한 번 흔들린다.", background: bgKakao1_15, isProgress: true },
+    { speaker: "렌쟈", text: "얘도 데려갈까?", background: bgKakao1_15, character: "렌쟈" },
+    { speaker: "데일", text: "쟤 전투력 생각보다 높아.", background: bgKakao1_15, character: "데일" },
+    { speaker: "하카", text: "렌쟈 닮았네.", background: bgKakao1_15, character: "하카" },
+    { speaker: "렌쟈", text: "그럼 데려가야지.", background: bgKakao1_15, character: "렌쟈" },
+    { speaker: "시스템", text: "란은 연이를 한 번 바라본다. 눈길이 부드럽다.", background: bgKakao1_15, isProgress: true },
+    { speaker: "란", text: "위험하면 바로 뒤로 물리겠습니다.", background: bgKakao1_15, character: "란" },
+    { speaker: "렌쟈", text: "응. 네 판단 믿어.", background: bgKakao1_15, character: "렌쟈" },
+    { speaker: "시스템", text: "하카는 의자를 밀며 일어난다.", background: bgKakao1_15, isProgress: true },
+    { speaker: "하카", text: "그럼 오전 탐사 출발하자.", background: bgKakao1_15, character: "하카" },
+    { speaker: "데일", text: "별장은?", background: bgKakao1_15, character: "데일" },
+    { speaker: "하카", text: "파스닐이랑 렌쟈.", background: bgKakao1_15, character: "하카" },
+    { speaker: "데일", text: "조합 특이하네.", background: bgKakao1_15, character: "데일" },
+    { speaker: "하카", text: "엘도 있잖아.", background: bgKakao1_15, character: "하카" },
+    { speaker: "데일", text: "더 이상해졌어.", background: bgKakao1_15, character: "데일" },
+    { speaker: "시스템", text: "엘은 아무 말 하지 않는다.", background: bgKakao1_15, isProgress: true },
+    { speaker: "시스템", text: "렌쟈는 그 모습을 잠깐 바라보다가 말을 잇는다.", background: bgKakao1_15, isProgress: true },
+    { speaker: "렌쟈", text: "돌아와서 다시 정리하자.", background: bgKakao1_15, character: "렌쟈" },
+    { speaker: "시스템", text: "란은 조용히 장비를 챙긴다.", background: bgKakao1_15, isProgress: true },
+    { speaker: "시스템", text: "연이는 렌쟈 발치로 다가와 짧게 울음 비슷한 소리를 낸다.", background: bgKakao1_15, isProgress: true },
+    { speaker: "시스템", text: "문이 열리고 아침 공기가 들어온다.", background: bgKakao1_15, isProgress: true },
+    { speaker: "데일", text: "... 나 란이랑 나가는건 처음인거같은데.", background: bgKakao1_15, character: "데일" },
+    { speaker: "시스템", text: "지금은 아직, 평화의 연장선이다. 별장은 다시 움직이기 시작한다.", background: bgKakao1_15, isProgress: true },
+    { speaker: "시스템", text: "아침 공기가 아직 차갑다.", background: bgKakao1_15, isProgress: true },
+    { speaker: "시스템", text: "현관 앞에서 장비 소리가 짧게 울린다.", background: bgKakao1_15, isProgress: true },
+    { speaker: "하카", text: "그럼 다녀온다. 오늘은 짧게 볼 거야.", background: bgKakao1_15, character: "하카" },
+    { speaker: "시스템", text: "데일은 헐렁하게 재킷을 걸친 채 표정 없이 끈을 조인다.", background: bgKakao1_15, isProgress: true },
+    { speaker: "데일", text: "해 지기 전엔 돌아온다.", background: bgKakao1_15, character: "데일" },
+    { speaker: "시스템", text: "란은 마지막으로 별장 안을 한 번 더 본다. 시선이 자연스럽게 렌쟈 쪽에 머문다.", background: bgKakao1_15, isProgress: true },
+    { speaker: "란", text: "누님. 무리하지 마십시오.", background: bgKakao1_15, character: "란" },
+    { speaker: "파스닐", text: "누가보면 렌쟈가 나가는거같다.", background: bgKakao1_15, isMonologue: true, hideCharacter: true },
+    { speaker: "렌쟈", text: "너희가 더 조심해. 길 잃지 말고.", background: bgKakao1_15, character: "렌쟈" },
+    { speaker: "엘", text: "말없이 고개만 끄덕인다.", background: bgKakao1_15, character: "엘" },
+    { speaker: "시스템", text: "문이 닫히고 엔진 소리가 멀어진다.", background: bgKakao1_15, isProgress: true },
+    { speaker: "시스템", text: "별장은 다시 조용해진다.", background: bgKakao1_15, isProgress: true, hideCharacter: true },
+
+    // S22 - 실내 보급 정리
+    { marker: "#S22", speaker: "시스템", text: "실내.", background: bgKakao1_12, isProgress: true },
+    { speaker: "시스템", text: "파스닐은 테이블 위에 물자 상자를 늘어놓는다.", background: bgKakao1_12, isProgress: true },
+    { speaker: "시스템", text: "통조림, 약품, 배터리. 종류별로 나눈다.", background: bgKakao1_12, isProgress: true },
+    { speaker: "시스템", text: "렌쟈는 반대편에 앉아 라벨을 읽으며 분류를 돕는다.", background: bgKakao1_12, isProgress: true },
+    { speaker: "렌쟈", text: "이거 유통기한 아직 남았네. 완전 보물이지.", background: bgKakao1_12, character: "렌쟈" },
+    { speaker: "파스닐", text: "이제 유통기한보다 개봉 여부가 더 중요하네요.", background: bgKakao1_12, hideCharacter: true },
+    { speaker: "렌쟈", text: "현실적이네. 처음 만났을 땐 이런 말 할 사람 아니었는데.", background: bgKakao1_12, character: "렌쟈" },
+    { speaker: "파스닐", text: "그땐 선택지가 있었고 지금은 남아 있는 걸 지킬 차례다.", background: bgKakao1_12, isMonologue: true, hideCharacter: true },
+    { speaker: "시스템", text: "엘은 창가에서 떨어져 의자에 앉아 있다. 붕대를 풀었다 다시 감는다.", background: bgKakao1_12, isProgress: true },
+    { speaker: "렌쟈", text: "아직 아파?", background: bgKakao1_12, character: "렌쟈" },
+    { speaker: "엘", text: "견딜 만해.", background: bgKakao1_12, character: "엘" },
+    { speaker: "렌쟈", text: "그 말, 믿기 어렵다.", background: bgKakao1_12, character: "렌쟈" },
+    { speaker: "엘", text: "안 믿어도 돼.", background: bgKakao1_12, character: "엘" },
+    { speaker: "시스템", text: "렌쟈는 더 묻지 않는다. 대신 약 상자를 앞으로 밀어준다.", background: bgKakao1_12, isProgress: true },
+    { speaker: "렌쟈", text: "필요하면 바로 말해. 참는 건 미덕 아니야.", background: bgKakao1_12, character: "렌쟈" },
+    { speaker: "엘", text: "잠깐 멈췄다가 고개를 끄덕인다.", background: bgKakao1_12, character: "엘" },
+    { speaker: "파스닐", text: "걱정하는 쪽이 더 조심스럽다.", background: bgKakao1_12, isMonologue: true, hideCharacter: true },
+    { speaker: "시스템", text: "연이는 바닥에 앉아 통조림 상자를 냄새 맡는다. 꼬리가 느리게 흔들린다.", background: bgKakao1_12, isProgress: true },
+    { speaker: "렌쟈", text: "쟤 요즘 배가 불러서 그런지 눈빛이 순해졌어.", background: bgKakao1_12, character: "렌쟈" },
+    { speaker: "파스닐", text: "원래 초식인가요, 육식인가요?", background: bgKakao1_12, hideCharacter: true },
+    { speaker: "렌쟈", text: "글쎄. 지금은 렌쟈식 잡식.", background: bgKakao1_12, character: "렌쟈" },
+    { speaker: "엘", text: "별걸 다 키운다.", background: bgKakao1_12, character: "엘" },
+    { speaker: "렌쟈", text: "오빠도 아직 키우잖아.", background: bgKakao1_12, character: "렌쟈" },
+    { speaker: "엘", text: "너 그거 하카한테서 배운거지.", background: bgKakao1_12, character: "엘" },
+    { speaker: "렌쟈", text: "헐.", background: bgKakao1_12, character: "렌쟈" },
+    { speaker: "엘", text: "돌아오기만 해봐라. 멀대새끼.", background: bgKakao1_12, character: "엘" },
+    { speaker: "파스닐", text: "이 정도면 오늘은 괜찮은 날이다.", background: bgKakao1_12, isMonologue: true, hideCharacter: true },
+    { speaker: "시스템", text: "렌쟈는 상자를 닫으며 말한다.", background: bgKakao1_12, isProgress: true },
+    { speaker: "렌쟈", text: "파스닐. 오늘은 남아줘서 고마워.", background: bgKakao1_12, character: "렌쟈" },
+    { speaker: "파스닐", text: "제가 더 편해요. 가끔은 안 나가도 되니까.", background: bgKakao1_12, hideCharacter: true },
+    { speaker: "렌쟈", text: "맞아. 안 움직이는 날도 필요해.", background: bgKakao1_12, character: "렌쟈" },
+    { speaker: "시스템", text: "창밖에서 바람이 나뭇잎을 흔든다.", background: bgKakao1_12, isProgress: true },
+    { speaker: "시스템", text: "별장 안은 잠시 동안 아무 위협도 없는 공간처럼 느껴진다.", background: bgKakao1_12, isProgress: true },
+    { speaker: "파스닐", text: "이런 시간은 나중에 가장 먼저 떠오른다.", background: bgKakao1_12, isMonologue: true, hideCharacter: true },
+
+    // S23 - 저녁 귀환
+    { marker: "#S23", speaker: "시스템", text: "해가 막 넘어갈때쯤, 탐사조가 돌아온다.", background: bgKakao1_12, isProgress: true },
+    { speaker: "시스템", text: "식탁 위엔 김이 아직 올라오는 스튜가 놓여 있다.", background: bgKakao1_12, isProgress: true },
+    { speaker: "시스템", text: "렌쟈가 그릇을 밀어주고, 파스닐은 조용히 컵을 채운다.", background: bgKakao1_12, isProgress: true },
+    { speaker: "시스템", text: "밖은 완전히 어두워졌고, 별장 안은 오랜만에 사람 온기로 가득하다.", background: bgKakao1_12, isProgress: true },
+    { speaker: "데일", text: "오늘 진짜 별거 다 있었어.", background: bgKakao1_12, character: "데일" },
+    { speaker: "하카", text: "네 기준에서 별거 없었던 날이 있었나.", background: bgKakao1_12, character: "하카" },
+    { speaker: "데일", text: "야, 이번엔 진짜라니까.", background: bgKakao1_12, character: "데일" },
+    { speaker: "란", text: "숲 남쪽에서 예상보다 가까운 거리에서 움직임이 있었습니다.", background: bgKakao1_12, character: "란" },
+    { speaker: "렌쟈", text: "가까웠다고?", background: bgKakao1_12, character: "렌쟈" },
+    { speaker: "란", text: "네. 발자국이 남아 있었고, 일부러 피해 다닌 흔적도 보였습니다.", background: bgKakao1_12, character: "란" },
+    { speaker: "파스닐", text: "우릴 인식하고 있었다는 말이네요.", background: bgKakao1_12, character: "파스닐" },
+    { speaker: "데일", text: "그게 제일 기분 나빴어. 달려들지도 않고, 그냥... 보고만 있는 느낌.", background: bgKakao1_12, character: "데일" },
+    { speaker: "하카", text: "지켜본다는 건 생각하고 있다는 거지.", background: bgKakao1_12, character: "하카" },
+    { speaker: "데일", text: "너가 없는 그거.", background: bgKakao1_12, character: "데일" },
+    { speaker: "렌쟈", text: "그래도 다친 사람은 없잖아.", background: bgKakao1_12, character: "렌쟈" },
+    { speaker: "데일", text: "응. 그건 운 좋았지.", background: bgKakao1_12, character: "데일" },
+    { speaker: "하카", text: "운만으로 살아남은 건 아니고.", background: bgKakao1_12, character: "하카" },
+    { speaker: "란", text: "대형을 유지한 게 컸습니다. 누님이 평소에 말한 그대로 움직였어요.", background: bgKakao1_12, character: "란" },
+    { speaker: "렌쟈", text: "난 그냥 잔소리한 것뿐인데.", background: bgKakao1_12, character: "렌쟈" },
+    { speaker: "시스템", text: "잠깐 웃음이 흐른다. 데일은 스튜를 한 숟갈 더 뜨고, 천천히 말을 잇는다.", background: bgKakao1_12, isProgress: true },
+    { speaker: "데일", text: "그래도 솔직히 말하면... 오늘은 이상하게 편했어.", background: bgKakao1_12, character: "데일" },
+    { speaker: "렌쟈", text: "편했다고?", background: bgKakao1_12, character: "렌쟈" },
+    { speaker: "데일", text: "응. 돌아올 곳이 있다는 느낌.", background: bgKakao1_12, character: "데일" },
+    { speaker: "하카", text: "그건 인정.", background: bgKakao1_12, character: "하카" },
+    { speaker: "란", text: "별장이 있어서 다행입니다.", background: bgKakao1_12, character: "란" },
+    { speaker: "하카", text: "내가 부자라서 다행인거겠지.", background: bgKakao1_12, character: "하카" },
+    { speaker: "데일", text: "의미있나 이제. 우리 다죽으면 이 별장도 먼저 잡은 사람이 임자일걸.", background: bgKakao1_12, character: "데일" },
+    { speaker: "엘", text: "네가 늙었다고 심술부리지마. 얘넌 20대잖아.", background: bgKakao1_12, character: "엘" },
+    { speaker: "하카", text: "지는 아닌줄. 미친.", background: bgKakao1_12, character: "하카" },
+    { speaker: "시스템", text: "렌쟈는 아무 말 없이 웃으며 테이블을 둘러본다. 다들 피곤해 보이지만, 경계로 굳어 있진 않다.", background: bgKakao1_12, isProgress: true },
+    { speaker: "파스닐", text: "이런 날이 계속됐으면 좋겠네요.", background: bgKakao1_12, character: "파스닐" },
+    { speaker: "렌쟈", text: "계속되진 않겠지.", background: bgKakao1_12, character: "렌쟈" },
+    { speaker: "데일", text: "그래도 오늘은 오늘이잖아.", background: bgKakao1_12, character: "데일" },
+    { speaker: "렌쟈", text: "그래. 오늘은 그냥 먹고 자자.", background: bgKakao1_12, character: "렌쟈" },
+    { speaker: "시스템", text: "숟가락 소리만 조용히 이어진다. 별장 안엔 오랜만에, 정말 평화로운 밤이 흐른다.", background: bgKakao1_12, isProgress: true, hideCharacter: true },
+
+    // S25 - Day 2. 관찰자들 & Day 4. 개입
+    { marker: "#S25", speaker: "시스템", text: "도시 외곽 고지. 이셋은 망원 장치를 통해 아래를 내려다보고 있었다.", background: bgS25, isProgress: true, hideCharacter: true },
+    { speaker: "신라", text: "생존 집단 발견.", background: bgS25, hideCharacter: true },
+    { speaker: "시스템", text: "고지나는 화면을 넘겨받았다. 체계적인 이동, 역할 분담, 불필요한 소음 없음.", background: bgS25, isProgress: true, hideCharacter: true },
+    { speaker: "고지나", text: "흥미롭네.", background: bgS25, hideCharacter: true },
+    { speaker: "시스템", text: "그들은 살아남은 사람들을 구조 대상으로 보지 않았다. 변수였다.", background: bgS25, isProgress: true, hideCharacter: true },
+    { speaker: "시스템", text: "관찰은 그날부터 시작됐다.", background: bgS25, isProgress: true, hideCharacter: true },
+    { speaker: "고지나", text: "붕괴가 필요해.", background: bgS25, hideCharacter: true },
+    { speaker: "시스템", text: "고려는 고개를 끄덕였다.", background: bgS25, isProgress: true, hideCharacter: true },
+    { speaker: "고지나", text: "감염 하나면 충분하겠지.", background: bgS25, hideCharacter: true },
+    { speaker: "시스템", text: "그들이 선택한 건, 그들이 향한 건물이었다. 탈출 경로가 제한된 구조. 감염자는 미리 심어두었다.", background: bgS25, isProgress: true, hideCharacter: true },
+    { speaker: "시스템", text: "결과는 즉각적이었다.", background: bgS25, isProgress: true, hideCharacter: true },
+    { speaker: "신라", text: "감염 확인. 대상은 남성, 반응 속도 양호.", background: bgS25, hideCharacter: true },
+    { speaker: "시스템", text: "엘이었다.", background: bgS25, isProgress: true, hideCharacter: true },
+    { speaker: "시스템", text: "이셋은 단체 붕괴를 예상했다. 공포, 불신, 분열.", background: bgS25, isProgress: true, hideCharacter: true },
+    { speaker: "시스템", text: "하지만 시간이 지나도 상황은 무너지지 않았다.", background: bgS25, isProgress: true, hideCharacter: true },
+    { speaker: "고려", text: "이상합니다.", background: bgS25, hideCharacter: true },
+    { speaker: "시스템", text: "고지나는 데이터를 다시 들여다봤다.", background: bgS25, isProgress: true, hideCharacter: true },
+    { speaker: "고지나", text: "느려.", background: bgS25, hideCharacter: true },
+    { speaker: "시스템", text: "감염 진행 속도가 지나치게 느렸다. 면역도 아니고, 단순한 저항도 아니었다.", background: bgS25, isProgress: true, hideCharacter: true },
+    { speaker: "시스템", text: "고지나의 눈이 빛났다.", background: bgS25, isProgress: true, hideCharacter: true },
+    { speaker: "고지나", text: "되돌릴 수 있겠어.", background: bgS25, hideCharacter: true },
+    { speaker: "시스템", text: "물류창고로 향하는 무리를 확인했을 때, 고지나는 이미 결정을 내린 상태였다.", background: bgS25, isProgress: true, hideCharacter: true },
+    { speaker: "고지나", text: "신라.", background: bgS25, hideCharacter: true },
+    { speaker: "시스템", text: "소년은 고아원 출신이었다. 이름도, 미래도 없던 아이를 거둔 건 고지나였다.", background: bgS25, isProgress: true, hideCharacter: true },
+    { speaker: "시스템", text: "신라는 고지나를 구원자라고 믿었다. 그래서 의심하지 않았다.", background: bgS25, isProgress: true, hideCharacter: true },
+    { speaker: "고지나", text: "들어가서 봐. 그리고 보고해.", background: bgS25, hideCharacter: true },
+    { speaker: "시스템", text: "약탈자들에게 정보가 흘러갔다. 의도된 위기, 의도된 구조.", background: bgS25, isProgress: true, hideCharacter: true },
+    { speaker: "시스템", text: "신라는 무리에 섞였다.", background: bgS25, isProgress: true, hideCharacter: true },
+    { speaker: "시스템", text: "엘의 상태, 밤의 반응, 동료들의 선택. 모든 것이 보고됐다.", background: bgS25, isProgress: true, hideCharacter: true },
+    { speaker: "시스템", text: "고지나는 만족했다.", background: bgS25, isProgress: true, hideCharacter: true },
+    { speaker: "고지나", text: "좋아. 충분해.", background: bgS25, hideCharacter: true },
+    { speaker: "시스템", text: "그리고 신라가 쫓겨나던 그날, 알게 되었다.", background: bgS25, isProgress: true, hideCharacter: true },
+    { speaker: "고지나", text: "우릴 쫓고 있어.", background: bgS25, hideCharacter: true },
+    { speaker: "시스템", text: "관찰 대상이던 생존자들이, 이제는 추적자가 되고 있었다.", background: bgS25, isProgress: true, hideCharacter: true },
+    { speaker: "시스템", text: "고지나는 웃었다.", background: bgS25, isProgress: true, hideCharacter: true },
+    { speaker: "고지나", text: "그럼… 직접 만나야겠네.", background: bgS25, hideCharacter: true },
+
+    // S27 - 차 안의 여정
+    { marker: "#S27", speaker: "시스템", text: "차 안이 이상하게 조용하다. 엔진 소리만 남아 있고, 말이 없다.", background: bgS27, isProgress: true, hideCharacter: true },
+    { speaker: "시스템", text: "란은 도로와 지도를 번갈아 보고 있다. 표정은 늘 그렇듯 온화하지만, 눈은 한 번도 옆을 보지 않는다.", background: bgS27, isProgress: true },
+    { speaker: "시스템", text: "렌쟈는 가방을 센터콘솔에 올려둔다. 빨간 머리칼이 창문 빛에 반사되어 유리처럼 보인다.", background: bgS27, isProgress: true },
+    { speaker: "렌쟈", text: "이 길 맞아. 조금만 더 가면 고도 내려간다.", background: bgS27, character: "렌쟈" },
+    { speaker: "란", text: "알겠습니다, 누님.", background: bgS27, character: "란" },
+    { speaker: "렌쟈", text: "조용하네. 란이 집중 잘 하고 있나.", background: bgS27, character: "렌쟈" },
+    { speaker: "란", text: "네, 누님.", background: bgS27, character: "란" },
+    { speaker: "시스템", text: "란의 손가락이 운전대 위에서 미세하게 힘을 준다. 그걸 렌쟈가 알아챈다.", background: bgS27, isProgress: true },
+    { speaker: "렌쟈", text: "너 긴장했네.", background: bgS27, character: "렌쟈" },
+    { speaker: "란", text: "조금요.", background: bgS27, character: "란" },
+    { speaker: "렌쟈", text: "이상하네. 지금까지 중 제일 안전한 구간인데.", background: bgS27, character: "렌쟈" },
+    { speaker: "시스템", text: "란은 잠시 침을 삼킨다.", background: bgS27, isProgress: true },
+    { speaker: "란", text: "다시 돌아올땐 더 나은 기분이겠죠.", background: bgS27, character: "란" },
+    { speaker: "시스템", text: "렌쟈는 웃는다. 짧고, 가볍고, 어딘가 안심시키는 웃음이다.", background: bgS27, isProgress: true },
+    { speaker: "렌쟈", text: "괜찮아.", background: bgS27, character: "렌쟈" },
+    { speaker: "시스템", text: "차는 계속 앞으로 나아간다.", background: bgS27, isProgress: true, hideCharacter: true },
+
+    // S28 - 연구소 침입 & 최종 대면
+    { marker: "#S28", speaker: "시스템", text: "연구소 본부 내부는 예상보다 조용했다. 정전된 복도, 꺼진 안내등, 벽에 남은 손자국들만이 이곳이 살아있던 장소였음을 증명하고 있었다.", background: bgS28, isProgress: true },
+    { speaker: "시스템", text: "렌쟈는 앞장섰다. 란은 주변을 살폈다.", background: bgS28, isProgress: true },
+    { speaker: "시스템", text: "우리는 기록실에 도착했다. 금속 문을 여는 순간, 자동 방어 시스템이 작동했다.", background: bgS28, isProgress: true },
+    { speaker: "시스템", text: "천장에서 떨어지는 와이어, 바닥에서 튀어나오는 감염체의 잔존 개체. 즉사할 수 있는 선택지가 몇 번이나 스쳐갔다.", background: bgS28, isProgress: true },
+    { speaker: "시스템", text: "하지만 나는 죽지 않았다. 성장한걸 느낀다.", background: bgS28, isProgress: true },
+    { speaker: "시스템", text: "렌쟈는 망설임이 없이 전면으로 나섰다.", background: bgS28, isProgress: true },
+    { speaker: "시스템", text: "렌쟈는 와이어를 끊어내고, 배트로 감염체의 머리를 정확히 파괴했다. 속도도 판단도 정확했다. 전투는 익숙한 사람처럼 움직였다.", background: bgS28, isProgress: true },
+    { speaker: "시스템", text: "란은 뒤에서 지원했다. 기록 장치를 확보했다.", background: bgS28, isProgress: true },
+    { speaker: "시스템", text: "연구 기록은 하나의 폴더로 정리돼 있었다. 엘의 감염 반응, 느린 진행, 되돌림 가능성. 그리고 약의 조합식.", background: bgS28, isProgress: true },
+    { speaker: "시스템", text: "란은 숨을 삼켰다.", background: bgS28, isProgress: true },
+    { speaker: "란", text: "있습니다. 되돌릴 수 있습니다.", background: bgS28, character: "란" },
+    { speaker: "란", text: "마치 가져가란듯 둔게 조금 꺼림칙하네요.", background: bgS28, character: "란" },
+    { speaker: "시스템", text: "렌쟈는 고개를 끄덕였다.", background: bgS28, isProgress: true },
+    { speaker: "렌쟈", text: "그럼 옥상으로 나가.", background: bgS28, character: "렌쟈" },
+    { speaker: "시스템", text: "우리가 옥상 출입문으로 향했을 때, 누군가 길을 막아섰다. 고려였다.", background: bgS28, isProgress: true },
+    { speaker: "시스템", text: "눈은 광기에 젖어 있었지만, 몸은 떨고 있었다.", background: bgS28, isProgress: true },
+    { speaker: "고려", text: "박사님을 방해하지 마.", background: bgS28, hideCharacter: true },
+    { speaker: "시스템", text: "렌쟈는 즉시 판단했다.", background: bgS28, isProgress: true },
+    { speaker: "렌쟈", text: "란. 가.", background: bgS28, character: "렌쟈" },
+    { speaker: "란", text: "누님—", background: bgS28, character: "란" },
+    { speaker: "렌쟈", text: "명령이야.", background: bgS28, character: "렌쟈" },
+    { speaker: "시스템", text: "란은 뒤로 물러났다. 출입문이 닫히는 순간, 안쪽에서 둔탁한 소리가 났다.", background: bgS28, isProgress: true },
+    { speaker: "시스템", text: "짧았다. 너무 짧았다.", background: bgS28, isProgress: true },
+    { speaker: "시스템", text: "고려는 렌쟈의 손에 쓰러졌다. 저항은 거의 없었다.", background: bgS28, isProgress: true },
+    { speaker: "시스템", text: "그 순간, 박수가 울렸다.", background: bgS28, isProgress: true },
+    { speaker: "시스템", text: "고지나였다.", background: bgS28, isProgress: true },
+    { speaker: "시스템", text: "기계 신체가 조용히 움직이며 렌쟈의 뒤에 섰다. 렌쟈가 돌아보는 순간, 이미 늦었다.", background: bgS28, isProgress: true },
+    { speaker: "시스템", text: "주사 바늘이 목을 찔렀다.", background: bgS28, isProgress: true },
+    { speaker: "렌쟈", text: "약은… 이미 갔겠지.", background: bgS28, character: "렌쟈" },
+    { speaker: "시스템", text: "고지나는 미소를 지었다.", background: bgS28, isProgress: true },
+    { speaker: "시스템", text: "렌쟈는 고지나를 보지 않았다. 자신의 선택을 이미 끝낸 얼굴이었다.", background: bgS28, isProgress: true },
+    { speaker: "렌쟈", text: "여기서 끝내.", background: bgS28, character: "렌쟈" },
+    { speaker: "고지나", text: "재미없네. 좀더 저항하고 그런건 없어? 너가 없으면 너네는 붕괴될거같은데.", background: bgS28, hideCharacter: true },
+    { speaker: "렌쟈", text: "계속 관찰하고 있었구나. 상관없겠지. 당신이 고지나야?", background: bgS28, character: "렌쟈" },
+    { speaker: "고지나", text: "그래. 연구기록에서 용케 봤네. 관찰력이 좋구나.", background: bgS28, hideCharacter: true },
+    { speaker: "렌쟈", text: "날 계속 봤으면 알고있었잖아?", background: bgS28, character: "렌쟈" },
+    { speaker: "시스템", text: "고지나는 숨이 끊어진 고려와 목을 감싸는 렌쟈를 번갈아 본다.", background: bgS28, isProgress: true },
+    { speaker: "렌쟈", text: "충신이 죽었잖아. 내 얘기만 해도 괜찮겠어?", background: bgS28, character: "렌쟈" },
+    { speaker: "고지나", text: "이미 죽었는데 의미가 있나.", background: bgS28, hideCharacter: true },
+    { speaker: "렌쟈", text: "죽고나서도 청각은 몇분간 남아있는데.", background: bgS28, character: "렌쟈" },
+    { speaker: "고지나", text: "관심없어.", background: bgS28, hideCharacter: true },
+    { speaker: "렌쟈", text: "이번생은 요절이네.", background: bgS28, character: "렌쟈" },
+    { speaker: "고지나", text: "너가 몇살이더라.", background: bgS28, hideCharacter: true },
+    { speaker: "렌쟈", text: "알거 없어.", background: bgS28, character: "렌쟈" },
+    { speaker: "시스템", text: "렌쟈는 망설임 없이 단검을 정동맥에 댄다. 깔끔하게 긋는다.", background: bgS28, isProgress: true },
+    { speaker: "고지나", text: "데려갈걸 그랬나, 고려도 이제 없는데.", background: bgS28, hideCharacter: true },
+    { speaker: "시스템", text: "신라가 뒤에서 나타난다.", background: bgS28, isProgress: true },
+    { speaker: "신라", text: "박사님. 떠나요. 엘은 이미 감염자가 됐어요.", background: bgS28, hideCharacter: true },
+    { speaker: "고지나", text: "이번 연구는 실패네. 아쉽다. 다음은 어디로 갈까.", background: bgS28, hideCharacter: true },
+    { speaker: "시스템", text: "란은 천천히 돌아봤다. 옥상 문 너머로 아직 연기가 가시지 않았다. 피 냄새가 바람을 타고 올라왔다.", background: bgS28, isProgress: true },
+    { speaker: "시스템", text: "란은 나를 보지 않았다. 난 그게 더 무서웠다.", background: bgS28, isProgress: true },
+    { speaker: "란", text: "누님은… 혼자 두면 안 됩니다.", background: bgS28, character: "란" },
+    { speaker: "시스템", text: "한 발 다가섰다. 손에 든 약과 기록이 무겁게 느껴졌다.", background: bgS28, isProgress: true },
+    { speaker: "시스템", text: "이건 선택지가 아니다. 누군가는 살아서 돌아가야 한다.", background: bgS28, isProgress: true, hideCharacter: true },
+    { speaker: "시스템", text: "그는 란에게 말한다.", background: bgS28, isProgress: true, hideCharacter: true },
+    { speaker: "시스템", text: "그는 그제야 나를 봤다. 눈은 울지 않았다. 이미 결론을 낸 얼굴이었다.", background: bgS28, isProgress: true },
+    { speaker: "란", text: "여기까지 와서요. 저만 살겠다는 선택은… 못 하겠습니다.", background: bgS29, character: "란" },
+    { speaker: "시스템", text: "옥상 아래에서 구조물이 무너지는 소리가 났다. 연구소는 오래 버티지 못할 것이다.", background: bgS28, isProgress: true },
+    { speaker: "시스템", text: "엘은.", background: bgS28, isProgress: true, hideCharacter: true },
+    { speaker: "시스템", text: "란의 눈이 잠깐 흔들렸다. 하지만 고개는 돌아가지 않았다.", background: bgS29, isProgress: true },
+    { speaker: "란", text: "엘은… 살아 있는 사람이 살려야죠.", background: bgS29, character: "란" },
+    { speaker: "시스템", text: "그 말은 파스닐을 향한 것이었다. 스스로를 버리는 방식으로, 파스닐을 밀어냈다.", background: bgS28, isProgress: true },
+    { speaker: "시스템", text: "파스닐은 더 말하지 않았다. 말해도 돌아오지 않을 걸 알았다.", background: bgS28, isProgress: true },
+    { speaker: "시스템", text: "란은 선택을 나에게 넘긴 게 아니다. 나에게 떠넘긴 거다.", background: bgS28, isProgress: true, hideCharacter: true },
+    { speaker: "시스템", text: "파스닐은 옥상 문을 열었다. 바깥 공기가 차갑게 폐로 들어왔다.", background: bgS28, isProgress: true },
+    { speaker: "시스템", text: "뒤돌아보지 않았다. 뒤돌아보면, 남을 것 같았다.", background: bgS28, isProgress: true },
+    { speaker: "시스템", text: "계단을 내려오면서 몇 번이나 발이 꼬였다. 머릿속에는 계속 같은 장면이 반복됐다.", background: bgS28, isProgress: true },
+    { speaker: "시스템", text: "렌쟈의 마지막 눈. 란의 뒷모습.", background: bgS28, isProgress: true },
+    { speaker: "시스템", text: "살아남는 건 이렇게 더러운 일이구나.", background: bgS28, isProgress: true, hideCharacter: true },
+    { speaker: "시스템", text: "연구소를 빠져나올 때, 건물이 크게 흔들렸다. 안쪽 어딘가가 무너졌다.", background: bgS28, isProgress: true },
+    { speaker: "시스템", text: "파스닐은 멈추지 않았다. 멈추면 돌아가게 될 것 같았다.", background: bgS28, isProgress: true },
+    { speaker: "시스템", text: "그리고 그 선택이, 나를 평생 놓아주지 않을 거라는 것도 이미 알고 있었다.", background: bgS28, isProgress: true },
+    { speaker: "시스템", text: "돌아가야할까.", background: bgS28, isProgress: true, hideCharacter: true },
+    { speaker: "시스템", text: "별장으로 향하는 대신 다른곳으로 간다. 이 모든걸 잊기로했다.", background: bgS28, isProgress: true, hideCharacter: true },
+
+    // S29 - 별장 귀환 대기
+    { marker: "#S29", speaker: "시스템", text: "별장 입구. 햇빛이 길게 그림자를 만든다.", background: bgS29, isProgress: true },
+    { speaker: "시스템", text: "파스닐은 문을 밀고 들어간다. 손에는 약과 기록이 있다.", background: bgS29, isProgress: true },
+    { speaker: "시스템", text: "지하에서는 여전히 엘이 묶여 있을 것이다.", background: bgS29, isProgress: true },
+    { speaker: "시스템", text: "파스닐은 약을 꺼낸다. 용량을 맞추고, 주사기에 담는다.", background: bgS29, isProgress: true },
+    { speaker: "시스템", text: "손이 떨린다. 성공률이 몇 퍼센트인지는 적혀있지 않았다.", background: bgS29, isProgress: true },
+    { speaker: "시스템", text: "만약 실패하면.", background: bgS29, isProgress: true, hideCharacter: true },
+    { speaker: "시스템", text: "그 생각은 끝내지 않는다.", background: bgS29, isProgress: true, hideCharacter: true },
+    { speaker: "시스템", text: "계단을 내려간다. 어두운 지하로.", background: bgS29, isProgress: true, hideCharacter: true },
+
+    // S30 - 침묵의 결단
+    { marker: "#S30", speaker: "시스템", text: "지하. 침묵만 있다.", background: bgS30, isProgress: true, hideCharacter: true },
+    { speaker: "시스템", text: "엘은 움직이지 않는다.", background: bgS30, isProgress: true, hideCharacter: true },
+    { speaker: "시스템", text: "이제야 깨달았다. 렌쟈와 란의 선택을.", background: bgS30, isProgress: true, hideCharacter: true },
+    { speaker: "시스템", text: "약이 들어간다. 청색의 액체가 엘의 혈관을 타고 흐른다.", background: bgS30, isProgress: true, hideCharacter: true },
+    { speaker: "시스템", text: "아무 변화도 없다. 시간이 지난다.", background: bgS30, isProgress: true, hideCharacter: true },
+    { speaker: "시스템", text: "약이 없으면, 난 뭐지?", background: bgS30, isProgress: true, hideCharacter: true },
+    { speaker: "시스템", text: "엘의 눈이 천천히 초점을 맞춘다.", background: bgS30, isProgress: true, hideCharacter: true },
+    { speaker: "시스템", text: "지하의 침묵이 더 깊어진다.", background: bgS30, isProgress: true, hideCharacter: true },
+
+    // S31 - 지하의 깨어남
+    { marker: "#S31", speaker: "시스템", text: "지하. 공기는 차가웠다. 곰팡이 냄새와 금속 냄새가 섞여 있었다.", background: bgS30, isProgress: true },
+    { speaker: "시스템", text: "엘은 그대로 있었다. 자세도, 각도도 아침 그대로였다.", background: bgS30, isProgress: true },
+    { speaker: "시스템", text: "그런데— 눈이 달랐다.", background: bgKakao1_12, isProgress: true },
+    { speaker: "데일", text: "무의식적으로 걸음을 멈췄다.", background: bgKakao1_12, character: "데일" },
+    { speaker: "데일", text: "...야.", background: bgKakao1_12, character: "데일" },
+    { speaker: "하카", text: "도 눈치를 챘다. 엘의 눈은 더 이상 흐리지 않았다.", background: bgKakao1_12, character: "하카" },
+    { speaker: "시스템", text: "초점이 맞아 있었다. 어디를 보는지 명확하지 않았는데도 '보고 있다'는 느낌만은 분명했다.", background: bgKakao1_12, isProgress: true },
+    { speaker: "하카", text: "한 발짝 다가갔다.", background: bgKakao1_12, character: "하카" },
+    { speaker: "하카", text: "엘.", background: bgKakao1_12, character: "하카" },
+    { speaker: "시스템", text: "대답은 없었다. 하지만 숨의 리듬이 바뀌었다. 느리게. 깊게.", background: bgKakao1_12, isProgress: true },
+    { speaker: "데일", text: "방금— 움직인 거 아니냐.", background: bgKakao1_12, character: "데일" },
+    { speaker: "하카", text: "아니.", background: bgKakao1_12, character: "하카" },
+    { speaker: "시스템", text: "하카는 단정했다. 하지만 시선을 떼지 않았다. 엘의 손가락이 미세하게 떨렸다.", background: bgKakao1_12, isProgress: true },
+    { speaker: "데일", text: "...돌아오면 바로 말해야겠지.", background: bgKakao1_12, character: "데일" },
+    { speaker: "하카", text: "그래.", background: bgKakao1_12, character: "하카" },
+    { speaker: "시스템", text: "하카는 고개를 끄덕였다. 그 순간까지도, 상황을 통제하고 있다고 믿고 있었다. 그리고 그 다음 순간—", background: bgKakao1_12, isProgress: true },
+    { speaker: "시스템", text: "엘은 아무 전조 없이 움직였다. 엘은 완전 감염 상태였다. 눈은 이미 사람의 것이 아니었다.", background: bgKakao1_12, isProgress: true },
+    { speaker: "데일", text: "우리 망한거같지?", background: bgKakao1_12, character: "데일" },
+    { speaker: "하카", text: "...", background: bgKakao1_12, character: "하카" },
+    { speaker: "시스템", text: "엘은 아무 전조 없이 하카를 기습했다. 망설임도, 주저도 없었다. 그건 공격이 아니라 반사에 가까웠다.", background: bgKakao1_12, isProgress: true },
+    { speaker: "시스템", text: "하카는 밀려났고, 비명을 지르지도 않았다. 그저 이를 악물었다. 그리고 물렸다.", background: bgKakao1_12, isProgress: true },
+    { speaker: "시스템", text: "엘을 붙잡았다. 로프를 걸고, 가구를 밀고, 몸으로 눌렀다. 엘은 저항했다. 인간의 힘이 아니었다.", background: bgKakao1_12, isProgress: true },
+    { speaker: "시스템", text: "엘을 묶는 동안 둘은 울지 않았다. 소리를 내면, 뭔가 돌이킬 수 없게 될 것 같았다.", background: bgKakao1_12, isProgress: true },
+    { speaker: "시스템", text: "되돌릴 수 없었다. 약은 의미를 잃었다. 연구 기록도, 계산도, 선택도.", background: bgKakao1_12, isProgress: true },
+
+    // S33 - 지하 감염
+    { marker: "#S33", speaker: "시스템", text: "지하. 공기는 차가웠다. 곰팡이 냄새와 금속 냄새가 섞여 있었다.", background: bgS33, isProgress: true },
+    { speaker: "시스템", text: "엘은 그대로 있었다. 자세도, 각도도 아침 그대로였다.", background: bgS33, isProgress: true },
+    { speaker: "시스템", text: "그런데— 눈이 달랐다.", background: bgS33, isProgress: true },
+    { speaker: "데일", text: "무의식적으로 걸음을 멈췄다.", background: bgS33, character: "데일" },
+    { speaker: "데일", text: "...야.", background: bgS33, character: "데일" },
+    { speaker: "하카", text: "도 눈치를 챘다. 엘의 눈은 더 이상 흐리지 않았다.", background: bgS33, character: "하카" },
+    { speaker: "시스템", text: "초점이 맞아 있었다. 어디를 보는지 명확하지 않았는데도 '보고 있다'는 느낌만은 분명했다.", background: bgS33, isProgress: true },
+    { speaker: "하카", text: "한 발짝 다가갔다.", background: bgS33, character: "하카" },
+    { speaker: "하카", text: "엘.", background: bgS33, character: "하카" },
+    { speaker: "시스템", text: "대답은 없었다. 하지만 숨의 리듬이 바뀌었다. 느리게. 깊게.", background: bgS33, isProgress: true },
+    { speaker: "데일", text: "방금— 움직인 거 아니냐.", background: bgS33, character: "데일" },
+    { speaker: "하카", text: "아니.", background: bgS33, character: "하카" },
+    { speaker: "시스템", text: "하카는 단정했다. 하지만 시선을 떼지 않았다. 엘의 손가락이 미세하게 떨렸다.", background: bgS33, isProgress: true },
+    { speaker: "데일", text: "...돌아오면 바로 말해야겠지.", background: bgS33, character: "데일" },
+    { speaker: "하카", text: "그래.", background: bgS33, character: "하카" },
+    { speaker: "시스템", text: "하카는 고개를 끄덕였다. 그 순간까지도, 상황을 통제하고 있다고 믿고 있었다. 그리고 그 다음 순간—", background: bgS33, isProgress: true },
+    { speaker: "시스템", text: "엘은 아무 전조 없이 움직였다. 엘은 완전 감염 상태였다. 눈은 이미 사람의 것이 아니었다.", background: bgS33, isProgress: true },
+    { speaker: "데일", text: "우리 망한거같지?", background: bgS33, character: "데일" },
+    { speaker: "하카", text: "...", background: bgS33, character: "하카" },
+    { speaker: "시스템", text: "엘은 아무 전조 없이 하카를 기습했다. 망설임도, 주저도 없었다. 그건 공격이 아니라 반사에 가까웠다.", background: bgS33, isProgress: true },
+    { speaker: "시스템", text: "하카는 밀려났고, 비명을 지르지도 않았다. 그저 이를 악물었다. 그리고 물렸다.", background: bgS33, isProgress: true },
+    { speaker: "시스템", text: "엘을 붙잡았다. 로프를 걸고, 가구를 밀고, 몸으로 눌렀다. 엘은 저항했다. 인간의 힘이 아니었다.", background: bgS33, isProgress: true },
+    { speaker: "시스템", text: "엘을 묶는 동안 둘은 울지 않았다. 소리를 내면, 뭔가 돌이킬 수 없게 될 것 같았다.", background: bgS33, isProgress: true },
+    { speaker: "시스템", text: "되돌릴 수 없었다. 약은 의미를 잃었다. 연구 기록도, 계산도, 선택도.", background: bgS33, isProgress: true },
+
+    // S34 - 연구소 후
+    { marker: "#S34", speaker: "시스템", text: "며칠이 지나서야 겨우 렌쟈가 남겨놓은 여분의 지도를 따라 연구소 본부에 도달했다. 렌쟈와 란은..", background: bgS34, isProgress: true },
+    { speaker: "하카", text: "죽고 못살더니 꼴 좋네.", background: bgS34, character: "하카" },
+    { speaker: "시스템", text: "하카는 웃지 않는다. 마지막으로 하카가 웃는걸 본게 언제였더라.", background: bgS34, isProgress: true },
+    { speaker: "데일", text: "이 상황에 쓰기엔 더없이 잔인한 말이네. 진짜 싸패야?", background: bgS34, character: "데일" },
+    { speaker: "시스템", text: "파스닐은 사라졌다. 근처에서 연구기록과 약을 발견했다.", background: bgS34, isProgress: true },
+    { speaker: "데일", text: "...정말로? 이게 있으면 너라도 살 수있다고.", background: bgS34, character: "데일" },
+    { speaker: "하카", text: "난 괜찮아. 이건 감염이 아니야.", background: bgS34, character: "하카" },
+    { speaker: "시스템", text: "하카는 자신을 특별하다고 말했다. 이유는 없었다. 근거도 없었다. 확신만 있었다.", background: bgS34, isProgress: true },
+    { speaker: "시스템", text: "그 확신은 설명이 아니라 태도였다. 상처를 확인하지 않으려 했고, 피를 닦으면서도 시선을 돌렸다.", background: bgS34, isProgress: true },
+    { speaker: "하카", text: "봐. 멀쩡하잖아.", background: bgS34, character: "하카" },
+    { speaker: "데일", text: "...", background: bgS34, character: "데일" },
+    { speaker: "하카", text: "왜 그렇게 봐.", background: bgS34, character: "하카" },
+    { speaker: "데일", text: "…뭘.", background: bgS34, character: "데일" },
+    { speaker: "하카", text: "너 말이야.", background: bgS34, character: "하카" },
+    { speaker: "시스템", text: "하카의 눈이 가늘어졌다. 계산하는 눈이었다. 사람을 볼 때 쓰는 눈이 아니라, 변수를 볼 때 쓰는 눈이었다.", background: bgS34, isProgress: true },
+    { speaker: "하카", text: "너, 물린 거 아니야? 왜 이렇게 멀쩡해.", background: bgS34, character: "하카" },
+    { speaker: "데일", text: "야, 내가 물렸으면 지금 이러고 있겠냐.", background: bgS34, character: "데일" },
+    { speaker: "하카", text: "그게 문제라는 거야.", background: bgS34, character: "하카" },
+    { speaker: "하카", text: "엘 봤지. 진행 느린 것도 있었잖아.", background: bgS34, character: "하카" },
+    { speaker: "시스템", text: "데일의 표정이 굳었다. 하카는 그 미세한 변화를 놓치지 않았다.", background: bgS34, isProgress: true },
+    { speaker: "하카", text: "왜 대답이 늦어.", background: bgS34, character: "하카" },
+    { speaker: "데일", text: "말 같지도 않아서.", background: bgS34, character: "데일" },
+    { speaker: "시스템", text: "데일은 그렇게 말했지만 목소리에 힘이 없었다. 처음엔 짜증을 냈다. 말끝을 세웠고, 하카의 시선을 밀어냈다.", background: bgS34, isProgress: true },
+
+    // S35 - 의심과 거리
+    { marker: "#S35", speaker: "시스템", text: "그리고 어느 순간부터 아무 말도 하지 않았다.", background: bgS35, isProgress: true },
+    { speaker: "시스템", text: "데일은 벽 쪽으로 물러났다. 하카와 거리를 두었다. 의도적이었다.", background: bgS35, isProgress: true },
+    { speaker: "하카", text: "왜 떨어져.", background: bgS35, character: "하카" },
+    { speaker: "데일", text: "가까이 오지 말라고 했잖아.", background: bgS35, character: "데일" },
+    { speaker: "하카", text: "내가?", background: bgS35, character: "하카" },
+    { speaker: "데일", text: "그래. 네가.", background: bgS35, character: "데일" },
+    { speaker: "시스템", text: "하카는 웃지 않았다. 평소 같으면 비웃었을 상황이었다. 대신 한 발짝 다가섰다가, 다시 멈췄다.", background: bgS35, isProgress: true },
+    { speaker: "하카", text: "…역시 이상해.", background: bgS35, character: "하카" },
+    { speaker: "데일", text: "믿기 싫으면 믿지 마.", background: bgS35, character: "데일" },
+    { speaker: "시스템", text: "그 말은 방어가 아니었다. 체념에 가까웠다.", background: bgS35, isProgress: true },
+    { speaker: "하카", text: "나는 괜찮아. 나는 달라.", background: bgS35, character: "하카" },
+    { speaker: "데일", text: "...", background: bgS35, character: "데일" },
+
+    // S36 - 침묵
+    { marker: "#S36", speaker: "시스템", text: "별장 안에는 두 사람의 숨소리만 남았다.", background: bgKakao1_12, isProgress: true },
+    { speaker: "시스템", text: "하나는 점점 거칠어졌고, 하나는 점점 조용해졌다.", background: bgKakao1_12, isProgress: true },
+    { speaker: "시스템", text: "의심은 이미 시작됐고, 되돌릴 기회는 조용히 지나가고 있었다.", background: bgKakao1_12, isProgress: true },
+
+    // S37 - 헬기 탈출
+    { marker: "#S37", speaker: "시스템", text: "구조 헬기가 왔을 때, 하카는 가장 먼저 반응했다. 신호탄을 쐈고, 연막을 피웠다.", background: bgKakao1_12, isProgress: true },
+    { speaker: "하카", text: "여기 있으면 다 죽어. 난 살아야 해.", background: bgKakao1_12, character: "하카" },
+    { speaker: "시스템", text: "하카는 이미 헬기에 올라 있었다. 문이 닫혔다. 헬기는 떠올랐다. 데일을 두고 떠났다.", background: bgKakao1_12, isProgress: true },
+    { speaker: "시스템", text: "얼마 지나지 않아, 하늘에서 연기가 보였다. 불길이 꼬리를 끌었다.", background: bgKakao1_12, isProgress: true },
+    { speaker: "시스템", text: "헬기는 추락했다. 소리는 늦게 들렸다. 땅이 울렸다.", background: bgKakao1_12, isProgress: true },
+    { speaker: "데일", text: "확인하지 않았다. 확인할 필요도 없었다. 이미 알고 있었다.", background: bgKakao1_12, character: "데일" },
+    { speaker: "시스템", text: "그날 이후로 별장은 의미를 잃었다. 머무를 이유도, 지킬 사람도 없었다.", background: bgKakao1_12, isProgress: true },
+
+    // S38 - 떠돌이
+    { marker: "#S38", speaker: "시스템", text: "데일은 떠돌았다. 지도 없이 움직였고, 목적 없이 걷다가, 총성과 불빛을 피해 방향을 틀었다.", background: bgKakao1_12, isProgress: true },
+    { speaker: "시스템", text: "생존자 캠프에 도착했을 때, 누군가 이름을 물었다.", background: bgKakao1_12, isProgress: true },
+    { speaker: "데일", text: "...", background: bgKakao1_12, character: "데일" },
+    { speaker: "시스템", text: "데일은 대답하지 않았다. 데일은 살아 있었다. 맥박도, 숨도 있었다.", background: bgKakao1_12, isProgress: true },
+    { speaker: "시스템", text: "그러나 안에 아무것도 남아 있지 않았다. 분노도, 슬픔도, 증오도.", background: bgKakao1_12, isProgress: true },
+    { speaker: "시스템", text: "그는 그냥 존재하고 있었다. 살아 있다는 상태만 유지한 채.", background: bgKakao1_12, isProgress: true },
+    { speaker: "시스템", text: "그날 밤, 신라가 캠프에 감염자 무리를 풀어놓았다.", background: bgKakao1_12, isProgress: true },
+    { speaker: "신라", text: "아는 얼굴이 있네.", background: bgKakao1_12, hideCharacter: true },
+    { speaker: "데일", text: "...", background: bgKakao1_12, character: "데일" },
+    { speaker: "시스템", text: "비명과 총성이 섞였다.", background: bgKakao1_12, isProgress: true },
+
+    // S39 - 지하 재회
+    { marker: "#S39", speaker: "시스템", text: "별장 지하다. 빛이 거의 들지 않는 공간이다. 전기가 끊긴 지 오래고, 공기는 눅눅하다.", background: bgKakao1_12, isProgress: true },
+    { speaker: "시스템", text: "시간이 얼마나 지났지? 묶여 있던 엘은 움직이지 않는다. 로프는 살을 파고들었고, 금속 고리는 녹슬어 있다.", background: bgKakao1_12, isProgress: true },
+    { speaker: "시스템", text: "엘은 고통에 반응하지 않는다. 그 앞에 그림자가 드리운다. 연이다.", background: bgKakao1_12, isProgress: true },
+    { speaker: "시스템", text: "과거의 모습과는 비교할 수 없을 만큼 변해 있었다. 몸은 커졌고, 형태는 더 이상 하나의 종으로 정의할 수 없었다.", background: bgKakao1_12, isProgress: true },
+    { speaker: "시스템", text: "근육은 불필요한 움직임 없이 정렬돼 있었고, 눈은 단순한 반사가 아닌 판단을 담고 있었다.", background: bgKakao1_12, isProgress: true },
+    { speaker: "엘", text: "...", background: bgKakao1_12, character: "엘" },
+    { speaker: "시스템", text: "연이는 소리를 내지 않는다. 숨소리도 없다. 필요하지 않기 때문이다.", background: bgKakao1_12, isProgress: true },
+    { speaker: "시스템", text: "연이는 엘을 관찰한다. 고개를 기울이고, 맥박을 듣고, 눈의 움직임을 읽는다. 실험하듯이, 그러나 잔인하지 않게.", background: bgKakao1_12, isProgress: true },
+    { speaker: "시스템", text: "연이는 천천히 엘의 결박을 풀었다. 이빨을 쓰지 않았다. 발톱으로도 찢지 않았다.", background: bgKakao1_12, isProgress: true },
+    { speaker: "시스템", text: "고리를 정확히 눌러 풀었다. 힘의 사용은 최소였다. 판단은 명확했다.", background: bgKakao1_12, isProgress: true },
+    { speaker: "시스템", text: "엘은 고개를 들었다. 눈이 마주친다.", background: bgKakao1_12, isProgress: true },
+    { speaker: "시스템", text: "그 순간, 엘은 공격하지 않는다. 연이 또한 물러서지 않는다.", background: bgKakao1_12, isProgress: true },
+    { speaker: "시스템", text: "두 존재는 서로를 인식한다. 적도, 동료도 아닌 상태로.", background: bgKakao1_12, isProgress: true },
+    { speaker: "시스템", text: "연이는 방향을 튼다. 출구 쪽이다.", background: bgKakao1_12, isProgress: true },
+    { speaker: "시스템", text: "엘은 잠시 멈춘다. 명령은 없다. 끌림만 있다.", background: bgKakao1_12, isProgress: true },
+    { speaker: "시스템", text: "엘은 일어선다. 묶여 있던 흔적이 바닥에 남는다.", background: bgKakao1_12, isProgress: true },
+    { speaker: "시스템", text: "계단을 오른다. 한 계단씩, 천천히. 지상으로 향한다.", background: bgKakao1_12, isProgress: true },
+
+    // S40 - 새로운 시작
+    { marker: "#S40", speaker: "시스템", text: "밖은 조용하다. 이미 많은 것이 끝난 뒤의 세계다.", background: bgKakao1_12, isProgress: true },
+    { speaker: "시스템", text: "연이는 먼저 나간다. 엘은 뒤따른다.", background: bgKakao1_12, isProgress: true },
+    { speaker: "시스템", text: "그들은 말을 하지 않는다. 말은 필요하지 않다.", background: bgKakao1_12, isProgress: true },
+    { speaker: "시스템", text: "감염자로서, 그러나 혼자가 아닌 존재로, 세상으로 나간다.", background: bgKakao1_12, isProgress: true },
+    { speaker: "시스템", text: "남겨진 별장은 침묵한다. 아무도 그들을 부르지 않는다. 아무도 막지 않는다.", background: bgKakao1_12, isProgress: true },
+    { speaker: "시스템", text: "이야기는 그렇게 끝난다.", background: bgKakao1_12, isProgress: true, hideCharacter: true },
 
     // 현재 스토리 끝
     { marker: "END", speaker: "시스템", text: "현재 스토리의 끝입니다.", isProgress: true, background: bgLivingRoom2, onComplete: () => { setGameState("start"); setDialogueIndex(0); } }
   ], [dialogueIndex]);
-  const chapters: Chapter[] = useMemo(() => [
-    { id: 1, title: "1장: 프롤로그", marker: "BEGIN", index: 0, locked: false },
-    { id: 2, title: "2장: 별장 도착", marker: "#C3", index: 62, locked: false },
-    { id: 3, title: "3장: 탐색과 조우", marker: "#C9", index: 175, locked: false },
-    { id: 4, title: maxReachedIndex >= 240 ? "4장: 병원 잠입" : "4장: ???", marker: "#C13", index: 240, locked: maxReachedIndex < 240 },
-    { id: 5, title: maxReachedIndex >= 493 ? "5장: 긴박한 탈출" : "5장: ???", marker: "#D8", index: 493, locked: maxReachedIndex < 493 },
-    { id: 6, title: maxReachedIndex >= 565 ? "6장: 데일의 생환" : "6장: ???", marker: "#C20", index: 565, locked: maxReachedIndex < 565 },
-    { id: 7, title: maxReachedIndex >= 800 ? "7장: 산길" : "7장: ???", marker: "#2_Mountain", index: 800, locked: maxReachedIndex < 800 },
-    { id: 8, title: maxReachedIndex >= 920 ? "8장: 의문의 소년" : "8장: ???", marker: "#7_Return", index: 920, locked: maxReachedIndex < 920 },
-    { id: 9, title: maxReachedIndex >= 960 ? "9장: 평화로운 낮" : "9장: ???", marker: "#8_Day6", index: 960, locked: maxReachedIndex < 960 }
-  ], [maxReachedIndex]);
+
 
   const currentDialogue = story[dialogueIndex];
 
@@ -1736,6 +2713,7 @@ export default function Home() {
     const backgrounds = [
       bgStart, bgClip1, bgClip2, bgLivingRoom, bgBalcony, 
       bgNearForest, bgStorage, bgCity1, bgMart, bgNearHospital, bgHospital,
+      bgKakao1, bgKakao1_01, bgKakao1_02, bgKakao1_03, bgKakao1_04, bgKakao1_05, bgKakao1_06, bgKakao1_07, bgKakao1_08, bgKakao1_09, bgKakao1_10, bgKakao1_11, bgKakao1_12, bgKakao1_13, bgKakao1_14, bgKakao1_15,
       bgC16, bgHospitalNew, bgNearHospitalNew, bgLivingRoomNew,
       bgD1, bgD2, bgD3, bgD5, bgD5_New, bgD6, bgH1, bgD10, bgF2, bgF3, bgLivingRoomUpdate, bgG2, bg_2, bg_4, bg_5
     ];
@@ -1779,8 +2757,11 @@ export default function Home() {
     } else if (gameState === "start") {
       if (audioRef.current) {
         audioRef.current.pause();
-        audioRef.current = null;
       }
+      audioRef.current = new Audio(bgMusicStartScreen);
+      audioRef.current.loop = true;
+      audioRef.current.volume = isMuted ? 0 : 0.4;
+      audioRef.current.play().catch(() => {});
     }
     return () => {
       if (gameState === "start" && audioRef.current) {
@@ -1788,7 +2769,7 @@ export default function Home() {
         audioRef.current = null;
       }
     };
-  }, [gameState, currentDialogue?.audio, currentDialogue?.marker]);
+  }, [gameState, currentDialogue?.audio, currentDialogue?.marker, isMuted]);
 
   // Audio handling - Sound Effects (overlay)
   useEffect(() => {
@@ -1878,6 +2859,11 @@ export default function Home() {
     setTimeout(() => {
       setSparkles(prev => prev.filter(s => s.id !== newSparkle.id));
     }, 600);
+    
+    // Try to play audio on user interaction (fixes autoplay policy)
+    if (gameState === "start" && audioRef.current) {
+      audioRef.current.play().catch(() => {});
+    }
   };
 
   const saveGame = (e: React.MouseEvent) => {
@@ -1930,13 +2916,7 @@ export default function Home() {
     }
   };
 
-  const jumpToChapter = (index: number) => {
-    setDialogueIndex(index);
-    setGameState("story");
-    // Start appropriate audio for this chapter
-    const audio = findAudioForIndex(index);
-    startAudio(audio);
-  };
+
 
   const getCharacterImage = (name?: string, index?: number) => {
     if (!name || name === "시스템" || name === "TV" || name === "TV 앵커") return null;
@@ -1950,6 +2930,8 @@ export default function Home() {
       case "렌쟈": return isV2 ? imgRenja2 : imgRenja;
       case "엘": return isV2 ? imgEl2 : imgEl;
       case "데일": return imgDale;
+      case "고지나": return imgGojina;
+      case "고려": return imgGoryeo;
       case "소년": return { src: imgSilla, silhouette: true };
       case "소년1":
       case "신라": return imgSilla;
@@ -2546,14 +3528,19 @@ export default function Home() {
 
               {currentDialogue.choices && !currentDialogue.randomChoices && (
                 <div className="mt-6 grid grid-cols-1 gap-2">
-                  {currentDialogue.choices.map((choice, i) => (
+                  {currentDialogue.choices.map((choice: any, i: number) => (
                     <Button
                       key={i}
                       variant="ghost"
                       className="w-full justify-start py-4 text-base font-medium border border-white/10 bg-white/5 hover:bg-white/10 hover:text-white transition-all rounded-none text-white/80"
                       onClick={(e) => {
                         e.stopPropagation();
-                        handleChoice(choice.targetIndex);
+                        const targetIdx = choice.targetIndex !== undefined 
+                          ? choice.targetIndex 
+                          : choice.nextMarker 
+                            ? story.findIndex(s => s.marker === choice.nextMarker)
+                            : dialogueIndex + 1;
+                        handleChoice(targetIdx);
                       }}
                     >
                       <span className="mr-4 text-red-600 font-bold opacity-50">{i + 1}</span>
@@ -2602,7 +3589,15 @@ export default function Home() {
                               : 'border-white/10 bg-white/5 hover:bg-white/10 text-white/80'}`}
                           onClick={(e) => {
                             e.stopPropagation();
-                            handleChoice(choice.targetIndex);
+                           const targetIdx =
+  (choice as any).targetIndex !== undefined
+    ? (choice as any).targetIndex
+    : (choice as any).nextMarker
+      ? story.findIndex(
+          (s) => s.marker === (choice as any).nextMarker
+        )
+      : dialogueIndex + 1;
+                            handleChoice(targetIdx);
                           }}
                         >
                           {displayText}
@@ -2732,34 +3727,7 @@ export default function Home() {
             2026
           </motion.h2>
           
-          <div className="mt-16 flex flex-col gap-2">
-            <div className="flex items-center gap-3 text-white/20 mb-4">
-              <LayoutGrid className="w-4 h-4" />
-              <span className="text-[10px] font-mono tracking-widest uppercase italic">Chapter Selection Protocol</span>
-            </div>
-            <div className="h-[200px] overflow-y-auto overflow-x-hidden chapter-scroll pr-2">
-              <div className="grid grid-cols-2 gap-3 w-[450px]">
-                {chapters.map(chapter => (
-                  <Button
-                    key={chapter.id}
-                    variant="ghost"
-                    disabled={chapter.locked}
-                    onClick={() => jumpToChapter(chapter.index)}
-                    className={`h-12 justify-between px-4 border border-white/5 rounded-none font-mono text-[10px] tracking-widest uppercase transition-all
-                      ${chapter.locked 
-                        ? "bg-white/5 text-white/10 cursor-not-allowed" 
-                        : "bg-red-600/5 text-white/60 hover:bg-red-600/20 hover:text-white hover:border-red-600/30"}`}
-                  >
-                    <div className="flex items-center gap-3">
-                      <span className="text-red-600/40">0{chapter.id}</span>
-                      {chapter.title}
-                    </div>
-                    {chapter.locked ? <Lock className="w-3 h-3" /> : <Unlock className="w-3 h-3 text-red-600/40" />}
-                  </Button>
-                ))}
-              </div>
-            </div>
-          </div>
+
         </div>
 
         <div className="flex flex-col gap-4">
